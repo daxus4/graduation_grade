@@ -1,0 +1,3 @@
+class LaudeException implements Exception {
+
+}
