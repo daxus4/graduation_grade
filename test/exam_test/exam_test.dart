@@ -1,6 +1,7 @@
 //Test of Exam class
 
 import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/global_data.dart';
 import 'package:test/test.dart';
 
 final examName = "Math";
@@ -15,10 +16,10 @@ void main() {
 
   test("Ensure constructor fromMapObject works", () {
     var eMap = {
-      'name': examName,
-      'cfu': examCfu,
-      'mark': 0,
-      'cumLaude': false,
+      GlobalData.examNameAttribute: examName,
+      GlobalData.examCfuAttribute: examCfu,
+      GlobalData.examMarkAttribute: 0,
+      GlobalData.examLaudeAttribute: false,
     };
     var exam = Exam.fromMapObject(eMap);
     expect(exam.name, examName);
@@ -28,10 +29,10 @@ void main() {
   test("Ensure toMap works", () {
     var exam = Exam(examName, examCfu);
     var eMap = exam.toMap();
-    expect(eMap['name'], examName);
-    expect(eMap['cfu'], examCfu);
-    expect(eMap['mark'], 0);
-    expect(eMap['cumLaude'], false);
+    expect(eMap[GlobalData.examNameAttribute], examName);
+    expect(eMap[GlobalData.examCfuAttribute], examCfu);
+    expect(eMap[GlobalData.examMarkAttribute], 0);
+    expect(eMap[GlobalData.examLaudeAttribute], false);
   });
 
   test("Ensure toString works", () {

@@ -1,6 +1,7 @@
 //Test of PassedExam class
 
 import 'package:graduation_grade/exam/passed_exam.dart';
+import 'package:graduation_grade/global_data.dart';
 import 'package:test/test.dart';
 
 final examName = "Math";
@@ -39,10 +40,10 @@ void main() {
   group('Ensure constructor fromMapObject works', () {
     test("Ensure constructor fromMapObject normally works", () {
       var eMap = {
-        'name': examName,
-        'cfu': examCfu,
-        'mark': examMark,
-        'cumLaude': cumLaude,
+        GlobalData.examNameAttribute: examName,
+        GlobalData.examCfuAttribute: examCfu,
+        GlobalData.examMarkAttribute: examMark,
+        GlobalData.examLaudeAttribute: cumLaude,
       };
       var exam = PassedExam.fromMapObject(eMap);
       expect(exam.name, examName);
@@ -53,10 +54,10 @@ void main() {
 
     test("Ensure constructor fromMapObject throw LaudeException", () {
       var eMap = {
-        'name': examName,
-        'cfu': examCfu,
-        'mark': 29,
-        'cumLaude': true,
+        GlobalData.examNameAttribute: examName,
+        GlobalData.examCfuAttribute: examCfu,
+        GlobalData.examMarkAttribute: 29,
+        GlobalData.examLaudeAttribute: true,
       };
       try {
         PassedExam.fromMapObject(eMap);
@@ -68,10 +69,10 @@ void main() {
 
     test("Ensure constructor fromMapObject throw MarkException", () {
       var eMap = {
-        'name': examName,
-        'cfu': examCfu,
-        'mark': 31,
-        'cumLaude': false,
+        GlobalData.examNameAttribute: examName,
+        GlobalData.examCfuAttribute: examCfu,
+        GlobalData.examMarkAttribute: 31,
+        GlobalData.examLaudeAttribute: false,
       };
       try {
         PassedExam.fromMapObject(eMap);
@@ -84,10 +85,10 @@ void main() {
   test("Ensure toMap works", () {
     var exam = PassedExam(examName, examCfu, examMark, cumLaude);
     var eMap = exam.toMap();
-    expect(eMap['name'], examName);
-    expect(eMap['cfu'], examCfu);
-    expect(eMap['mark'], examMark);
-    expect(eMap['cumLaude'], cumLaude);
+    expect(eMap[GlobalData.examNameAttribute], examName);
+    expect(eMap[GlobalData.examCfuAttribute], examCfu);
+    expect(eMap[GlobalData.examMarkAttribute], examMark);
+    expect(eMap[GlobalData.examLaudeAttribute], cumLaude);
   });
 
   test("Ensure toString works", () {
