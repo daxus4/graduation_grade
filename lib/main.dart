@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_grade/database_management/db_helper.dart';
 import 'package:graduation_grade/global_data.dart';
 
+final examDbHelper = DbHelper();
 
-void main() {
+void main() async {
+  await examDbHelper.initDatabase();
   runApp(MaterialApp(
     title: GlobalData.appName,
     home: TutorialHome(),
