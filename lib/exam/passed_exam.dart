@@ -12,6 +12,14 @@ class PassedExam extends Exam {
     if (this.cumLaude && mark != 30) throw LaudeException(mark);
   }
 
+  PassedExam.fromMapObject(Map<String, dynamic> examMap)
+      : mark = examMap['mark'],
+        cumLaude = examMap['cumLaude'],
+        super.fromMapObject(examMap) {
+    if (this.mark < 18 || this.mark > 30) throw MarkException(mark);
+    if (this.cumLaude && mark != 30) throw LaudeException(mark);
+  }
+
   @override
   Map<String, dynamic> toMap() {
     return {
@@ -21,11 +29,6 @@ class PassedExam extends Exam {
       'cumLaude': cumLaude,
     };
   }
-
-  PassedExam.fromMapObject(Map<String, dynamic> examMap)
-      : mark = examMap['mark'],
-        cumLaude = examMap['cumLaude'],
-        super.fromMapObject(examMap);
 
   @override
   String toString() {
