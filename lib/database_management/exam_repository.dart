@@ -5,6 +5,7 @@ import 'package:sqflite/sqflite.dart';
 import 'db_helper.dart';
 
 class ExamRepository {
+  //SQL insert of a exam
   static Future<void> addArticle(Exam exam) async {
     await db.insert(GlobalData.examTableName, exam.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
