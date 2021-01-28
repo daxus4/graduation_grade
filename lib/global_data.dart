@@ -12,8 +12,4 @@ class GlobalData {
   static final examMarkAttribute = 'mark';
   static final examLaudeAttribute = 'cumLaude';
 
-
-
-
-
 }
