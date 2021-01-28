@@ -1,7 +1,7 @@
 //Class that represent a university exam
 
 import '../global_data.dart';
-
+//TODO pattern decorator
 class Exam {
   final String name;
   final int cfu;
