@@ -1,3 +1,5 @@
+//Interface for decorator of ExamBase
+
 import 'exam.dart';
 
 abstract class ExamDecorator extends Exam {

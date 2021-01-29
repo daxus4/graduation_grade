@@ -1,3 +1,5 @@
+//Decorator for ExamBase, used when an exam is taken
+
 import 'package:graduation_grade/exam/exam_decorator.dart';
 import 'package:graduation_grade/exception/laude_exception.dart';
 import 'package:graduation_grade/exception/mark_exception.dart';
