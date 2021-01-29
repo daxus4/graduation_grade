@@ -9,13 +9,13 @@ import 'db_helper.dart';
 //TODO command pattern per non chiamare db
 class ExamRepository {
   //SQL insert of a exam
-  static Future<void> addArticle(ExamBase exam) async {
+  static Future<void> addExam(Exam exam) async {
     await db.insert(GlobalData.examTableName, exam.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
   //Retrieve list of all exams in the database
-  static Future<List<ExamBase>> getExamsFromDb() async {
+  static Future<List<Exam>> getExamsFromDb() async {
     //Query the table
     final List<Map<String, dynamic>> maps =
         await db.query(GlobalData.examTableName);
@@ -28,5 +28,32 @@ class ExamRepository {
             maps[i][GlobalData.examLaudeAttribute]);
       return exam;
     });
+  }
+
+  //SQL update of an exam
+  static Future<void> updateExam(Exam exam) async {
+    await db.update(
+      GlobalData.examTableName,
+      exam.toMap(),
+
+      //Ensure that the Exam has a matching id
+      where: "${GlobalData.examNameAttribute} = ?",
+
+      //Prevent SQL injection
+      whereArgs: [exam.getName()],
+    );
+  }
+
+  //SQL deletion of an exam
+  static Future<void> deleteExam(Exam exam) async {
+    await db.delete(
+      GlobalData.examTableName,
+
+      //Ensure that the Exam has a matching id
+      where: "${GlobalData.examNameAttribute} = ?",
+
+      //Prevent SQL injection
+      whereArgs: [exam.getName()],
+    );
   }
 }
