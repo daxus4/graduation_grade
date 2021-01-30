@@ -1,14 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/database_management/db_helper.dart';
+import 'package:graduation_grade/design_data.dart';
 import 'package:graduation_grade/global_data.dart';
+
+import 'form_exam/exam_form.dart';
 
 final examDbHelper = DbHelper();
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
   await examDbHelper.initDatabase();
   runApp(MaterialApp(
     title: GlobalData.appName,
-    home: TutorialHome(),
+    theme: DesignData.lightTheme,
+    home:  HomePage(),
   ));
 }
 
