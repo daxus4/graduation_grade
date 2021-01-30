@@ -25,7 +25,7 @@ class ExamRepository {
       Exam exam = ExamBase.fromMapObject(maps[i]);
       if (maps[i][GlobalData.examMarkAttribute] != 0)
         exam = PassedExam(exam, maps[i][GlobalData.examMarkAttribute],
-            maps[i][GlobalData.examLaudeAttribute]);
+            maps[i][GlobalData.examLaudeAttribute] == 0 ? false : true);
       return exam;
     });
   }

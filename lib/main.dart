@@ -13,7 +13,10 @@ void main() async {
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
-    home:  HomePage(),
+    home:  Scaffold(
+      appBar: AppBar(title: Text("Input Validation"),),
+      body: ExamForm(),
+    ),
   ));
 }
 

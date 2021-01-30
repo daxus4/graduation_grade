@@ -1,140 +1,153 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:graduation_grade/database_management/exam_repository.dart';
+import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/exam/exam_base.dart';
+import 'package:graduation_grade/exam/passed_exam.dart';
 
-class HomePage extends StatefulWidget {
+class ExamForm extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _ExamFormState createState() => _ExamFormState();
 }
 
-class _HomePageState extends State<HomePage> {
-  String _username,_email,_password= "";
+class _ExamFormState extends State<ExamForm> {
+  String _examName= "";
+  int _examCfu,_examMark;
+  bool _cumLaude = false;
   final _formKey = GlobalKey<FormState>();
 
-  FocusNode _usernameFocusNode;
-  FocusNode _emailFocusNode;
-  FocusNode _passwordFocusNode;
-
-  @override
-  void initState() {
-    super.initState();
-    _usernameFocusNode = FocusNode();
-    _emailFocusNode = FocusNode();
-    _passwordFocusNode = FocusNode();
-  }
-
-  @override
-  void dispose() {
-    _usernameFocusNode.dispose();
-    _emailFocusNode.dispose();
-    _passwordFocusNode.dispose();
-    super.dispose();
-  }
-
+  FocusNode _examNameFocusNode;
+  FocusNode _examCfuFocusNode;
+  FocusNode _examMarkFocusNode;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Input Validation"),),
-      body: HomePageBody(),
-    );
-  }
-
-  Widget HomePageBody() {
     return Container(
       padding: const EdgeInsets.all(16),
       child: Form(
         key: _formKey,
         child: Column(
           children: <Widget>[
-            NameInput(),
+            examNameInput(),
             SizedBox(height: 16,),
-            EmailInput(),
+            examCfuInput(),
             SizedBox(height: 16,),
-            PasswordInput(),
+            examMarkInput(),
             SizedBox(height: 16,),
-            SubmitButton()
+            examLaudeInput(),
+            SizedBox(height: 16,),
+            submitButton(context)
           ],
         ),
       ),
     );
   }
 
-  Widget NameInput() {
+
+  Widget examNameInput() {
     return TextFormField(
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.text ,
       decoration: InputDecoration(
-        labelText: "Username",
-        hintText: "e.g Morgan",
+        labelText: "Exam name",
+        hintText: "Physic 101",
       ),
       textInputAction: TextInputAction.next,
       validator: (name){
         Pattern pattern =
             r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
-        if (!regex.hasMatch(name))
-          return 'Invalid username';
-        else
-          return null;
+        return !regex.hasMatch(name) ? 'Invalid exam name' : null;
 
       },
-      onSaved: (name)=> _username = name,
-      focusNode: _usernameFocusNode,
+      onSaved: (name)=> _examName = name,
+      focusNode: _examNameFocusNode,
       autofocus: true,
       onFieldSubmitted: (_){
-        fieldFocusChange(context, _usernameFocusNode, _emailFocusNode);
+        fieldFocusChange(context, _examNameFocusNode, _examCfuFocusNode);
       },
     );
   }
 
-  Widget EmailInput() {
+  Widget examCfuInput() {
     return TextFormField(
-      keyboardType: TextInputType.emailAddress ,
+      keyboardType: TextInputType.number ,
       decoration: InputDecoration(
-        labelText: "Email",
-        hintText: "e.g abc@gmail.com",
+        labelText: "Exam CFU",
+        hintText: "10",
       ),
       textInputAction: TextInputAction.next,
-      validator: (email)=> email.length!=0 ? null:"Invalid email address",
-      onSaved: (email)=> _email = email,
-      focusNode: _emailFocusNode,
+      validator: (cfu){
+        if(cfu.isEmpty)
+          return 'Invalid CFU number';
+        int intCfu = int.parse(cfu);
+        return (intCfu > 0 && intCfu <= 100) ? null : 'Invalid CFU number';
+      },
+      onSaved: (cfu)=> _examCfu = int.parse(cfu),
+      focusNode: _examCfuFocusNode,
       onFieldSubmitted: (_){
-        fieldFocusChange(context, _emailFocusNode, _passwordFocusNode);
+        fieldFocusChange(context, _examCfuFocusNode, _examMarkFocusNode);
       },
     );
   }
 
-  Widget PasswordInput() {
+  Widget examMarkInput() {
     return TextFormField(
-      keyboardType: TextInputType.text ,
-      obscureText: true,
+      keyboardType: TextInputType.number ,
       decoration: InputDecoration(
-        labelText: "Password",
-        suffixIcon: Icon(Icons.lock),
+        labelText: "Exam Mark",
+        hintText: "From 18 to 30",
       ),
       textInputAction: TextInputAction.done,
-      validator: (password){
-        Pattern pattern =
-            r'^(?=.*[0-9]+.*)(?=.*[a-zA-Z]+.*)[0-9a-zA-Z]{6,}$';
-        RegExp regex = new RegExp(pattern);
-        if (!regex.hasMatch(password))
-          return 'Invalid password';
-        else
+      validator: (mark){
+        if(mark.isEmpty)
+          return 'Invalid mark';
+        int intMark = int.parse(mark);
+        if (intMark >= 18 && intMark <= 30) {
+          if (_cumLaude && intMark != 30)
+            return 'Laude must be with 30';
           return null;
+        }
+        return 'Invalid mark';
       },
-      onSaved: (password)=> _password = password,
-      focusNode: _passwordFocusNode,
+      onSaved: (mark)=> _examMark = int.parse(mark),
+      focusNode: _examMarkFocusNode,
     );
   }
 
-  RaisedButton SubmitButton(){
-    return  RaisedButton(
-      color:Theme.of(context).primaryColor,
-      onPressed: (){
+  Widget examLaudeInput() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text('Laude:'),
+        Checkbox(
+          value: _cumLaude,
+          onChanged: (bool value) {
+            setState(() {
+              _cumLaude = value;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
+
+  ElevatedButton submitButton(BuildContext context){
+    return  ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: Theme.of(context).primaryColor, // background
+      ),
+      onPressed: () async {
         if(_formKey.currentState.validate()){
           _formKey.currentState.save();
-          log('$_username, $_email, $_password');
+          log('$_examName, $_examCfu, $_examMark, $_cumLaude');
+          ExamRepository.addExam(
+              PassedExam(ExamBase(_examName, _examCfu), _examMark, _cumLaude));
+          log('yaaa');
+          final List<Exam> exams = await ExamRepository.getExamsFromDb();
+          log(exams.toString());
         }
       },
       child: Text("Submit",style: TextStyle(color: Colors.white),),
@@ -145,4 +158,21 @@ class _HomePageState extends State<HomePage> {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
+
+  @override
+  void initState() {
+    super.initState();
+    _examNameFocusNode = FocusNode();
+    _examCfuFocusNode = FocusNode();
+    _examMarkFocusNode = FocusNode();
+  }
+
+  @override
+  void dispose() {
+    _examNameFocusNode.dispose();
+    _examCfuFocusNode.dispose();
+    _examMarkFocusNode.dispose();
+    super.dispose();
+  }
+
 }
