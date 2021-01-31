@@ -1,3 +1,6 @@
+//Class that make SQL request to database in order to add, modify, show or
+//delete the exams
+
 import 'package:graduation_grade/exam/exam.dart';
 import 'package:graduation_grade/exam/exam_base.dart';
 import 'package:graduation_grade/exam/passed_exam.dart';

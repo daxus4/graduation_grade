@@ -1,3 +1,4 @@
+//Form in which insert the data of exams
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -12,9 +13,10 @@ class ExamForm extends StatefulWidget {
 }
 
 class _ExamFormState extends State<ExamForm> {
-  String _examName= "";
-  int _examCfu,_examMark;
+  String _examName = "";
+  int _examCfu, _examMark;
   bool _cumLaude = false;
+
   final _formKey = GlobalKey<FormState>();
 
   FocusNode _examNameFocusNode;
@@ -30,13 +32,21 @@ class _ExamFormState extends State<ExamForm> {
         child: Column(
           children: <Widget>[
             examNameInput(),
-            SizedBox(height: 16,),
+            SizedBox(
+              height: 16,
+            ),
             examCfuInput(),
-            SizedBox(height: 16,),
+            SizedBox(
+              height: 16,
+            ),
             examMarkInput(),
-            SizedBox(height: 16,),
+            SizedBox(
+              height: 16,
+            ),
             examLaudeInput(),
-            SizedBox(height: 16,),
+            SizedBox(
+              height: 16,
+            ),
             submitButton(context)
           ],
         ),
@@ -44,78 +54,76 @@ class _ExamFormState extends State<ExamForm> {
     );
   }
 
-
+  //TextForm in which insert the exam name
   Widget examNameInput() {
     return TextFormField(
       textCapitalization: TextCapitalization.words,
-      keyboardType: TextInputType.text ,
+      keyboardType: TextInputType.text,
       decoration: InputDecoration(
         labelText: "Exam name",
         hintText: "Physic 101",
       ),
       textInputAction: TextInputAction.next,
-      validator: (name){
-        Pattern pattern =
-            r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
+      validator: (name) {
+        Pattern pattern = r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
         return !regex.hasMatch(name) ? 'Invalid exam name' : null;
-
       },
-      onSaved: (name)=> _examName = name,
+      onSaved: (name) => _examName = name,
       focusNode: _examNameFocusNode,
       autofocus: true,
-      onFieldSubmitted: (_){
+      onFieldSubmitted: (_) {
         fieldFocusChange(context, _examNameFocusNode, _examCfuFocusNode);
       },
     );
   }
 
+  //TextForm in which insert the exam cfu
   Widget examCfuInput() {
     return TextFormField(
-      keyboardType: TextInputType.number ,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: "Exam CFU",
         hintText: "10",
       ),
       textInputAction: TextInputAction.next,
-      validator: (cfu){
-        if(cfu.isEmpty)
-          return 'Invalid CFU number';
+      validator: (cfu) {
+        if (cfu.isEmpty) return 'Invalid CFU number';
         int intCfu = int.parse(cfu);
         return (intCfu > 0 && intCfu <= 100) ? null : 'Invalid CFU number';
       },
-      onSaved: (cfu)=> _examCfu = int.parse(cfu),
+      onSaved: (cfu) => _examCfu = int.parse(cfu),
       focusNode: _examCfuFocusNode,
-      onFieldSubmitted: (_){
+      onFieldSubmitted: (_) {
         fieldFocusChange(context, _examCfuFocusNode, _examMarkFocusNode);
       },
     );
   }
 
+  //TextForm in which insert the exam mark
   Widget examMarkInput() {
     return TextFormField(
-      keyboardType: TextInputType.number ,
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: "Exam Mark",
         hintText: "From 18 to 30",
       ),
       textInputAction: TextInputAction.done,
-      validator: (mark){
-        if(mark.isEmpty)
-          return 'Invalid mark';
+      validator: (mark) {
+        if (mark.isEmpty) return 'Invalid mark';
         int intMark = int.parse(mark);
         if (intMark >= 18 && intMark <= 30) {
-          if (_cumLaude && intMark != 30)
-            return 'Laude must be with 30';
+          if (_cumLaude && intMark != 30) return 'Laude must be with 30';
           return null;
         }
         return 'Invalid mark';
       },
-      onSaved: (mark)=> _examMark = int.parse(mark),
+      onSaved: (mark) => _examMark = int.parse(mark),
       focusNode: _examMarkFocusNode,
     );
   }
 
+  //Checkbox in which insert if you get laude in your exam
   Widget examLaudeInput() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
@@ -133,14 +141,14 @@ class _ExamFormState extends State<ExamForm> {
     );
   }
 
-
-  ElevatedButton submitButton(BuildContext context){
-    return  ElevatedButton(
+  //Button that insert in the database the data typed by user
+  ElevatedButton submitButton(BuildContext context) {
+    return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Theme.of(context).primaryColor, // background
       ),
       onPressed: () async {
-        if(_formKey.currentState.validate()){
+        if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
           log('$_examName, $_examCfu, $_examMark, $_cumLaude');
           ExamRepository.addExam(
@@ -149,11 +157,15 @@ class _ExamFormState extends State<ExamForm> {
           log(exams.toString());
         }
       },
-      child: Text("Submit",style: TextStyle(color: Colors.white),),
+      child: Text(
+        "Submit",
+        style: TextStyle(color: Colors.white),
+      ),
     );
   }
 
-  void fieldFocusChange(BuildContext context, FocusNode currentFocus,FocusNode nextFocus) {
+  void fieldFocusChange(
+      BuildContext context, FocusNode currentFocus, FocusNode nextFocus) {
     currentFocus.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
@@ -173,5 +185,4 @@ class _ExamFormState extends State<ExamForm> {
     _examMarkFocusNode.dispose();
     super.dispose();
   }
-
 }

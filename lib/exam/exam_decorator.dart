@@ -3,6 +3,7 @@
 import 'exam.dart';
 
 abstract class ExamDecorator extends Exam {
+  //Exam that i want to be decorated
   final Exam exam;
 
   ExamDecorator(this.exam);

@@ -1,3 +1,5 @@
+//Class that manage the database, initialization, create tables ecc...
+
 import 'dart:async';
 import 'dart:io';
 
