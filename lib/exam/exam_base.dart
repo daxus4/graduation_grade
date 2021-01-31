@@ -31,7 +31,7 @@ class ExamBase extends Exam {
       GlobalData.examNameAttribute: _name,
       GlobalData.examCfuAttribute: _cfu,
       GlobalData.examMarkAttribute: 0,
-      GlobalData.examLaudeAttribute: false,
+      GlobalData.examLaudeAttribute: 0,
     };
   }
 

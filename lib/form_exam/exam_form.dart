@@ -145,7 +145,6 @@ class _ExamFormState extends State<ExamForm> {
           log('$_examName, $_examCfu, $_examMark, $_cumLaude');
           ExamRepository.addExam(
               PassedExam(ExamBase(_examName, _examCfu), _examMark, _cumLaude));
-          log('yaaa');
           final List<Exam> exams = await ExamRepository.getExamsFromDb();
           log(exams.toString());
         }

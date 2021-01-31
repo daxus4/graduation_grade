@@ -32,7 +32,7 @@ class PassedExam extends ExamDecorator {
     var examMap = exam.toMap();
     examMap.addAll({
       GlobalData.examMarkAttribute: mark,
-      GlobalData.examLaudeAttribute: cumLaude,
+      GlobalData.examLaudeAttribute: cumLaude ? 1:0,
     });
     return examMap;
   }
