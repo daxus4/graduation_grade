@@ -16,6 +16,7 @@ class _ExamFormState extends State<ExamForm> {
   String _examName = "";
   int _examCfu, _examMark;
   bool _cumLaude = false;
+  bool _alreadyTaken = false;
 
   final _formKey = GlobalKey<FormState>();
 
@@ -36,6 +37,10 @@ class _ExamFormState extends State<ExamForm> {
               height: 16,
             ),
             examCfuInput(),
+            SizedBox(
+              height: 16,
+            ),
+            alreadyTakenInput(),
             SizedBox(
               height: 16,
             ),
@@ -100,9 +105,28 @@ class _ExamFormState extends State<ExamForm> {
     );
   }
 
+  //Checkbox in which insert if you get laude in your exam
+  Widget alreadyTakenInput() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: <Widget>[
+        Text('Already taken:'),
+        Checkbox(
+          value: _alreadyTaken,
+          onChanged: (bool value) {
+            setState(() {
+              _alreadyTaken = value;
+            });
+          },
+        ),
+      ],
+    );
+  }
+
   //TextForm in which insert the exam mark
   Widget examMarkInput() {
     return TextFormField(
+      enabled: _alreadyTaken,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: "Exam Mark",
@@ -110,6 +134,8 @@ class _ExamFormState extends State<ExamForm> {
       ),
       textInputAction: TextInputAction.done,
       validator: (mark) {
+        if(!_alreadyTaken)
+          return null;
         if (mark.isEmpty) return 'Invalid mark';
         int intMark = int.parse(mark);
         if (intMark >= 18 && intMark <= 30) {
@@ -118,7 +144,10 @@ class _ExamFormState extends State<ExamForm> {
         }
         return 'Invalid mark';
       },
-      onSaved: (mark) => _examMark = int.parse(mark),
+      onSaved: (mark) {
+        if(_alreadyTaken)
+          _examMark = int.parse(mark);
+      },
       focusNode: _examMarkFocusNode,
     );
   }
@@ -128,10 +157,17 @@ class _ExamFormState extends State<ExamForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text('Laude:'),
+        Text(
+            'Laude:',
+          style: TextStyle(
+            color: _alreadyTaken ? Colors.black : Colors.grey,
+          ),
+        ),
         Checkbox(
           value: _cumLaude,
           onChanged: (bool value) {
+            if(!_alreadyTaken)
+              return null;
             setState(() {
               _cumLaude = value;
             });
@@ -150,9 +186,15 @@ class _ExamFormState extends State<ExamForm> {
       onPressed: () async {
         if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
-          log('$_examName, $_examCfu, $_examMark, $_cumLaude');
-          ExamRepository.addExam(
-              PassedExam(ExamBase(_examName, _examCfu), _examMark, _cumLaude));
+          if(_alreadyTaken) {
+            log('$_examName, $_examCfu, $_examMark, $_cumLaude');
+            ExamRepository.addExam(
+                PassedExam(
+                    ExamBase(_examName, _examCfu), _examMark, _cumLaude));
+          } else {
+            log('$_examName, $_examCfu');
+            ExamRepository.addExam(ExamBase(_examName, _examCfu));
+          }
           final List<Exam> exams = await ExamRepository.getExamsFromDb();
           log(exams.toString());
         }
