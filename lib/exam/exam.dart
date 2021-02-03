@@ -67,6 +67,8 @@ class Exam{
 
   @override
   String toString() {
+    if(_isTaken)
+      return 'Exam{name: $_name, cfu: $_cfu, mark: $_mark, laude: $_cumLaude}';
     return 'Exam{name: $_name, cfu: $_cfu}';
   }
 }

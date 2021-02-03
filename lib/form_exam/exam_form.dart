@@ -24,34 +24,39 @@ class _ExamFormState extends State<ExamForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.all(16),
-      child: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            examNameInput(),
-            SizedBox(
-              height: 16,
-            ),
-            examCfuInput(),
-            SizedBox(
-              height: 16,
-            ),
-            alreadyTakenInput(),
-            SizedBox(
-              height: 16,
-            ),
-            examMarkInput(),
-            SizedBox(
-              height: 16,
-            ),
-            examLaudeInput(),
-            SizedBox(
-              height: 16,
-            ),
-            submitButton(context)
-          ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Insert exam"),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            children: <Widget>[
+              examNameInput(),
+              SizedBox(
+                height: 16,
+              ),
+              examCfuInput(),
+              SizedBox(
+                height: 16,
+              ),
+              alreadyTakenInput(),
+              SizedBox(
+                height: 16,
+              ),
+              examMarkInput(),
+              SizedBox(
+                height: 16,
+              ),
+              examLaudeInput(),
+              SizedBox(
+                height: 16,
+              ),
+              submitButton(context)
+            ],
+          ),
         ),
       ),
     );
@@ -191,6 +196,7 @@ class _ExamFormState extends State<ExamForm> {
           }
           final List<Exam> exams = await ExamRepository.getExamsFromDb();
           log(exams.toString());
+          Navigator.pop(context);
         }
       },
       child: Text(

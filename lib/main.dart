@@ -6,6 +6,7 @@ import 'package:graduation_grade/global_data.dart';
 import 'database_management/exam_repository.dart';
 import 'exam/exam.dart';
 import 'exam_list_view/exam_list_view.dart';
+import 'form_exam/exam_form.dart';
 
 final examDbHelper = DbHelper();
 
@@ -16,41 +17,42 @@ void main() async {
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
-    home:  Scaffold(
-      appBar: AppBar(title: Text("Input Validation"),),
-      body: ExamListView(_exams),
+    home:  MainHome(_exams),
     ),
-  ));
+  );
 }
 
-class TutorialHome extends StatelessWidget {
+class MainHome extends StatelessWidget {
+  final List<Exam> exams;
+
+  MainHome(this.exams, {Key key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     // Scaffold is a layout for the major Material Components.
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(Icons.menu),
-          tooltip: 'Navigation menu',
-          onPressed: null,
-        ),
+        //leading: IconButton(
+        //  icon: Icon(Icons.menu),
+        //  tooltip: 'Navigation menu',
+        //  onPressed: null,
+        //),
         title: Text(GlobalData.appName),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.search),
-            tooltip: 'Search',
-            onPressed: null,
+            icon: Icon(Icons.add),
+            tooltip: 'Add exam',
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => ExamForm()),
+              );
+            },
           ),
         ],
       ),
       // body is the majority of the screen.
-      body: Center(
-        child: Text('Hello, world!'),
-      ),
-      floatingActionButton: FloatingActionButton(
-        tooltip: 'Add', // used by assistive technologies
-        child: Icon(Icons.add),
-        onPressed: null,
+      body: Container(
+        child: ExamListView(exams),
       ),
     );
   }
