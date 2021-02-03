@@ -4,8 +4,6 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/exam/exam.dart';
-import 'package:graduation_grade/exam/exam_base.dart';
-import 'package:graduation_grade/exam/passed_exam.dart';
 
 class ExamForm extends StatefulWidget {
   @override
@@ -134,8 +132,7 @@ class _ExamFormState extends State<ExamForm> {
       ),
       textInputAction: TextInputAction.done,
       validator: (mark) {
-        if(!_alreadyTaken)
-          return null;
+        if (!_alreadyTaken) return null;
         if (mark.isEmpty) return 'Invalid mark';
         int intMark = int.parse(mark);
         if (intMark >= 18 && intMark <= 30) {
@@ -145,8 +142,7 @@ class _ExamFormState extends State<ExamForm> {
         return 'Invalid mark';
       },
       onSaved: (mark) {
-        if(_alreadyTaken)
-          _examMark = int.parse(mark);
+        if (_alreadyTaken) _examMark = int.parse(mark);
       },
       focusNode: _examMarkFocusNode,
     );
@@ -158,7 +154,7 @@ class _ExamFormState extends State<ExamForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
-            'Laude:',
+          'Laude:',
           style: TextStyle(
             color: _alreadyTaken ? Colors.black : Colors.grey,
           ),
@@ -166,8 +162,7 @@ class _ExamFormState extends State<ExamForm> {
         Checkbox(
           value: _cumLaude,
           onChanged: (bool value) {
-            if(!_alreadyTaken)
-              return null;
+            if (!_alreadyTaken) return null;
             setState(() {
               _cumLaude = value;
             });
@@ -186,14 +181,13 @@ class _ExamFormState extends State<ExamForm> {
       onPressed: () async {
         if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
-          if(_alreadyTaken) {
+          if (_alreadyTaken) {
             log('$_examName, $_examCfu, $_examMark, $_cumLaude');
             ExamRepository.addExam(
-                PassedExam(
-                    ExamBase(_examName, _examCfu), _examMark, _cumLaude));
+                Exam.taken(_examName, _examCfu, _examMark, _cumLaude));
           } else {
             log('$_examName, $_examCfu');
-            ExamRepository.addExam(ExamBase(_examName, _examCfu));
+            ExamRepository.addExam(Exam(_examName, _examCfu));
           }
           final List<Exam> exams = await ExamRepository.getExamsFromDb();
           log(exams.toString());

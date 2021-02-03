@@ -3,19 +3,22 @@ import 'package:graduation_grade/database_management/db_helper.dart';
 import 'package:graduation_grade/design_data.dart';
 import 'package:graduation_grade/global_data.dart';
 
-import 'form_exam/exam_form.dart';
+import 'database_management/exam_repository.dart';
+import 'exam/exam.dart';
+import 'exam_list_view/exam_list_view.dart';
 
 final examDbHelper = DbHelper();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await examDbHelper.initDatabase();
+  List<Exam> _exams = await ExamRepository.getExamsFromDb();
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
     home:  Scaffold(
       appBar: AppBar(title: Text("Input Validation"),),
-      body: ExamForm(),
+      body: ExamListView(_exams),
     ),
   ));
 }

@@ -2,8 +2,6 @@
 //delete the exams
 
 import 'package:graduation_grade/exam/exam.dart';
-import 'package:graduation_grade/exam/exam_base.dart';
-import 'package:graduation_grade/exam/passed_exam.dart';
 import 'package:graduation_grade/global_data.dart';
 import 'package:sqflite/sqflite.dart';
 
@@ -25,11 +23,14 @@ class ExamRepository {
 
     //Convert List<Map> in List<Exam>
     return List.generate(maps.length, (i) {
-      Exam exam = ExamBase.fromMapObject(maps[i]);
       if (maps[i][GlobalData.examMarkAttribute] != 0)
-        exam = PassedExam(exam, maps[i][GlobalData.examMarkAttribute],
+        return Exam.taken(
+            maps[i][GlobalData.examNameAttribute],
+            maps[i][GlobalData.examCfuAttribute],
+            maps[i][GlobalData.examMarkAttribute],
             maps[i][GlobalData.examLaudeAttribute] == 0 ? false : true);
-      return exam;
+      return Exam(maps[i][GlobalData.examNameAttribute],
+          maps[i][GlobalData.examCfuAttribute]);
     });
   }
 
