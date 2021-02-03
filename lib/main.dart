@@ -46,6 +46,7 @@ class MainHome extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => ExamForm()),
               );
+              //TODO https://stackoverflow.com/questions/49804891/force-flutter-navigator-to-reload-state-when-popping
             },
           ),
         ],
