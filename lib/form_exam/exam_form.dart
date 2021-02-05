@@ -196,7 +196,7 @@ class _ExamFormState extends State<ExamForm> {
           }
           final List<Exam> exams = await ExamRepository.getExamsFromDb();
           log(exams.toString());
-          Navigator.pop(context);
+          Navigator.pop(context, exams);
         }
       },
       child: Text(

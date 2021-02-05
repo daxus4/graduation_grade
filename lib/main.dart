@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:graduation_grade/database_management/db_helper.dart';
 import 'package:graduation_grade/design_data.dart';
 import 'package:graduation_grade/global_data.dart';
+import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
 import 'database_management/exam_repository.dart';
 import 'exam/exam.dart';
-import 'exam_list_view/exam_list_view.dart';
-import 'form_exam/exam_form.dart';
 
 final examDbHelper = DbHelper();
 
@@ -17,11 +16,11 @@ void main() async {
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
-    home:  MainHome(_exams),
+    home:  ShowExamsPage(_exams),
     ),
   );
 }
-
+/*
 class MainHome extends StatelessWidget {
   final List<Exam> exams;
 
@@ -46,7 +45,6 @@ class MainHome extends StatelessWidget {
                 context,
                 MaterialPageRoute(builder: (context) => ExamForm()),
               );
-              //TODO https://stackoverflow.com/questions/49804891/force-flutter-navigator-to-reload-state-when-popping
             },
           ),
         ],
@@ -57,4 +55,4 @@ class MainHome extends StatelessWidget {
       ),
     );
   }
-}
+}*/
