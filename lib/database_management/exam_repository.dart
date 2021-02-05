@@ -2,7 +2,7 @@
 //delete the exams
 
 import 'package:graduation_grade/exam/exam.dart';
-import 'package:graduation_grade/global_data.dart';
+import 'file:///C:/Users/Roberto/AndroidStudioProjects/graduation_grade/lib/general_data/global_data.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'db_helper.dart';

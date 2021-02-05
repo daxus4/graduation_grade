@@ -4,7 +4,7 @@ import 'package:graduation_grade/exception/exam_not_taken_exception.dart';
 import 'package:graduation_grade/exception/laude_exception.dart';
 import 'package:graduation_grade/exception/mark_exception.dart';
 
-import '../global_data.dart';
+import '../general_data/global_data.dart';
 
 class Exam{
   final String _name;

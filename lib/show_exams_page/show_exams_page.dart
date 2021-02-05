@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_grade/exam/exam.dart';
 import 'package:graduation_grade/form_exam/exam_form.dart';
 
-import '../global_data.dart';
+import '../general_data/global_data.dart';
 import 'exam_list_view.dart';
 
 class ShowExamsPage extends StatefulWidget {
