@@ -20,39 +20,3 @@ void main() async {
     ),
   );
 }
-/*
-class MainHome extends StatelessWidget {
-  final List<Exam> exams;
-
-  MainHome(this.exams, {Key key}) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    // Scaffold is a layout for the major Material Components.
-    return Scaffold(
-      appBar: AppBar(
-        //leading: IconButton(
-        //  icon: Icon(Icons.menu),
-        //  tooltip: 'Navigation menu',
-        //  onPressed: null,
-        //),
-        title: Text(GlobalData.appName),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.add),
-            tooltip: 'Add exam',
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => ExamForm()),
-              );
-            },
-          ),
-        ],
-      ),
-      // body is the majority of the screen.
-      body: Container(
-        child: ExamListView(exams),
-      ),
-    );
-  }
-}*/

@@ -39,9 +39,11 @@ class ShowExamsPageState extends State<ShowExamsPage> {
                 context,
                 MaterialPageRoute(builder: (context) => ExamForm()),
               );
-              setState(() {
+              if(examsUpdated != null) {
+                setState(() {
                 _exams = examsUpdated;
-              });
+                });
+              }
             },
           ),
         ],
