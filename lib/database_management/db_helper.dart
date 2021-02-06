@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:io';
 
-import 'file:///C:/Users/Roberto/AndroidStudioProjects/graduation_grade/lib/general_data/global_data.dart';
+import 'package:graduation_grade/general_data/global_data.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 
