@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/database_management/db_helper.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
+import 'cubit/exams_cubit.dart';
 import 'database_management/exam_repository.dart';
 import 'exam/exam.dart';
 import 'general_data/design_data.dart';
@@ -15,7 +17,9 @@ void main() async {
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
-    home:  ShowExamsPage(_exams),
+    home: BlocProvider(
+      create: (context) => ExamsCubit(),
+      child: ShowExamsPage(_exams),
     ),
-  );
+  ));
 }

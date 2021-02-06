@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/cubit/exams_cubit.dart';
+import 'package:graduation_grade/cubit/exams_state.dart';
 import 'package:graduation_grade/exam/exam.dart';
 import 'package:graduation_grade/form_exam/exam_form.dart';
 
@@ -8,7 +11,7 @@ import 'exam_list_view.dart';
 class ShowExamsPage extends StatefulWidget {
   final List<Exam> exams;
 
-  ShowExamsPage(this.exams,{Key key}) : super(key: key);
+  ShowExamsPage(this.exams, {Key key}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => new ShowExamsPageState(exams);
@@ -21,36 +24,47 @@ class ShowExamsPageState extends State<ShowExamsPage> {
 
   @override
   Widget build(BuildContext context) {
-    // Scaffold is a layout for the major Material Components.
+    final examCubit = BlocProvider.of<ExamsCubit>(context);
     return Scaffold(
       appBar: AppBar(
-        //leading: IconButton(
-        //  icon: Icon(Icons.menu),
-        //  tooltip: 'Navigation menu',
-        //  onPressed: null,
-        //),
         title: Text(GlobalData.appName),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
             tooltip: 'Add exam',
             onPressed: () async {
-              List<Exam> examsUpdated = await Navigator.push(
+              await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ExamForm()),
+                MaterialPageRoute(builder: (context) {
+                  return BlocProvider.value(
+                    value: examCubit,
+                    child: ExamForm(),
+                  );
+                }),
               );
-              if(examsUpdated != null) {
-                setState(() {
-                _exams = examsUpdated;
-                });
-              }
             },
           ),
         ],
       ),
       // body is the majority of the screen.
       body: Container(
-        child: ExamListView(_exams),
+          child: BlocConsumer<ExamsCubit, ExamsState>(
+            listener: (context, state) {
+              if (state is ExamsError)
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(state.message)));
+            },
+            builder: (context, state) {
+              if (state is ExamsInitial)
+                return ExamListView(_exams);
+              else if (state is ExamsLoaded)
+                return ExamListView(_exams);
+              else {
+                //When state is error
+                return ExamListView(<Exam>[]);
+              }
+            },
+          )
       ),
     );
   }

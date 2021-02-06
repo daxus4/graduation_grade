@@ -23,6 +23,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  bloc: ^6.1.0
+  flutter_bloc: ^6.1.1
+  collection: any
   sqflite:
   path:
 

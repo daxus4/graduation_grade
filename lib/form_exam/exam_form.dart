@@ -2,10 +2,13 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/cubit/exams_cubit.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/exam/exam.dart';
 
 class ExamForm extends StatefulWidget {
+
   @override
   _ExamFormState createState() => _ExamFormState();
 }
@@ -194,9 +197,12 @@ class _ExamFormState extends State<ExamForm> {
             log('$_examName, $_examCfu');
             ExamRepository.addExam(Exam(_examName, _examCfu));
           }
-          final List<Exam> exams = await ExamRepository.getExamsFromDb();
-          log(exams.toString());
-          Navigator.pop(context, exams);
+          final examsCubit =
+              BlocProvider.of<ExamsCubit>(context);
+          examsCubit.getExams();
+          //final List<Exam> exams = await ExamRepository.getExamsFromDb();
+          //log(exams.toString());
+          Navigator.pop(context);
         }
       },
       child: Text(
