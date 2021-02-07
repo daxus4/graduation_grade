@@ -8,7 +8,6 @@ import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/exam/exam.dart';
 
 class ExamForm extends StatefulWidget {
-
   @override
   _ExamFormState createState() => _ExamFormState();
 }
@@ -35,30 +34,32 @@ class _ExamFormState extends State<ExamForm> {
         padding: const EdgeInsets.all(16),
         child: Form(
           key: _formKey,
-          child: Column(
-            children: <Widget>[
-              examNameInput(),
-              SizedBox(
-                height: 16,
-              ),
-              examCfuInput(),
-              SizedBox(
-                height: 16,
-              ),
-              alreadyTakenInput(),
-              SizedBox(
-                height: 16,
-              ),
-              examMarkInput(),
-              SizedBox(
-                height: 16,
-              ),
-              examLaudeInput(),
-              SizedBox(
-                height: 16,
-              ),
-              submitButton(context)
-            ],
+          child: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                examNameInput(),
+                SizedBox(
+                  height: 16,
+                ),
+                examCfuInput(),
+                SizedBox(
+                  height: 16,
+                ),
+                alreadyTakenInput(),
+                SizedBox(
+                  height: 16,
+                ),
+                examMarkInput(),
+                SizedBox(
+                  height: 16,
+                ),
+                examLaudeInput(),
+                SizedBox(
+                  height: 16,
+                ),
+                submitButton(context)
+              ],
+            ),
           ),
         ),
       ),
@@ -197,11 +198,8 @@ class _ExamFormState extends State<ExamForm> {
             log('$_examName, $_examCfu');
             ExamRepository.addExam(Exam(_examName, _examCfu));
           }
-          final examsCubit =
-              BlocProvider.of<ExamsCubit>(context);
+          final examsCubit = BlocProvider.of<ExamsCubit>(context);
           examsCubit.getExams();
-          //final List<Exam> exams = await ExamRepository.getExamsFromDb();
-          //log(exams.toString());
           Navigator.pop(context);
         }
       },
