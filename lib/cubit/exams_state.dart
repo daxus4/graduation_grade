@@ -13,6 +13,10 @@ class ExamsLoaded extends ExamsState {
   final List<Exam> _exams;
   ExamsLoaded(this._exams);
 
+  List<Exam> getExams() {
+    return _exams;
+  }
+
   @override
   bool operator ==(Object other) {
     if(identical(this, other)) return true;

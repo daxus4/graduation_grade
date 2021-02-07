@@ -57,9 +57,10 @@ class ShowExamsPageState extends State<ShowExamsPage> {
             builder: (context, state) {
               if (state is ExamsInitial)
                 return ExamListView(_exams);
-              else if (state is ExamsLoaded)
+              else if (state is ExamsLoaded) {
+                _exams = state.getExams();
                 return ExamListView(_exams);
-              else {
+              } else {
                 //When state is error
                 return ExamListView(<Exam>[]);
               }
