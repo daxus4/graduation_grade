@@ -9,7 +9,9 @@ import 'general_data/design_data.dart';
 import 'general_data/global_data.dart';
 
 final examDbHelper = DbHelper();
-
+//TODO passare il cubit a examrepository in modo tale che quando devo aggiornare
+//mando l'emit direttamente da examrepository e non lo devo passare il cubit a
+//tutte le pagine
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await examDbHelper.initDatabase();
