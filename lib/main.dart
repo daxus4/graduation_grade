@@ -9,18 +9,18 @@ import 'general_data/design_data.dart';
 import 'general_data/global_data.dart';
 
 final examDbHelper = DbHelper();
-//TODO passare il cubit a examrepository in modo tale che quando devo aggiornare
-//mando l'emit direttamente da examrepository e non lo devo passare il cubit a
-//tutte le pagine
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await examDbHelper.initDatabase();
+  ExamsCubit _examsCubit= ExamsCubit();
+  ExamRepository.setExamsCubit(_examsCubit);
   List<Exam> _exams = await ExamRepository.getExamsFromDb();
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
     home: BlocProvider(
-      create: (context) => ExamsCubit(),
+      create: (context) => _examsCubit,
       child: ShowExamsPage(_exams),
     ),
   ));

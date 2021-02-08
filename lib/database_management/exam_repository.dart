@@ -1,6 +1,7 @@
 //Class that make SQL request to database in order to add, modify, show or
 //delete the exams
 
+import 'package:graduation_grade/cubit/exams_cubit.dart';
 import 'package:graduation_grade/exam/exam.dart';
 import 'package:graduation_grade/general_data/global_data.dart';
 import 'package:sqflite/sqflite.dart';
@@ -9,10 +10,18 @@ import 'db_helper.dart';
 
 //TODO command pattern per non chiamare db
 class ExamRepository {
+
+  static ExamsCubit _examsCubit;
+
+  static setExamsCubit(ExamsCubit cubit) {
+    _examsCubit = cubit;
+  }
+
   //SQL insert of a exam
   static Future<void> addExam(Exam exam) async {
     await db.insert(GlobalData.examTableName, exam.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
+    _examsCubit.getExams();
   }
 
   //Retrieve list of all exams in the database
@@ -46,6 +55,7 @@ class ExamRepository {
       //Prevent SQL injection
       whereArgs: [exam.getName()],
     );
+    _examsCubit.getExams();
   }
 
   //SQL deletion of an exam
@@ -59,5 +69,6 @@ class ExamRepository {
       //Prevent SQL injection
       whereArgs: [exam.getName()],
     );
+    _examsCubit.getExams();
   }
 }

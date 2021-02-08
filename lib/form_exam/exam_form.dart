@@ -2,8 +2,6 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_grade/cubit/exams_cubit.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/exam/exam.dart';
 
@@ -198,8 +196,6 @@ class _ExamFormState extends State<ExamForm> {
             log('$_examName, $_examCfu');
             ExamRepository.addExam(Exam(_examName, _examCfu));
           }
-          final examsCubit = BlocProvider.of<ExamsCubit>(context);
-          examsCubit.getExams();
           Navigator.pop(context);
         }
       },

@@ -24,7 +24,6 @@ class ShowExamsPageState extends State<ShowExamsPage> {
 
   @override
   Widget build(BuildContext context) {
-    final examCubit = BlocProvider.of<ExamsCubit>(context);
     return Scaffold(
       appBar: AppBar(
         title: Text(GlobalData.appName),
@@ -35,12 +34,7 @@ class ShowExamsPageState extends State<ShowExamsPage> {
             onPressed: () async {
               await Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) {
-                  return BlocProvider.value(
-                    value: examCubit,
-                    child: ExamForm(),
-                  );
-                }),
+                MaterialPageRoute(builder: (context) => ExamForm()),
               );
             },
           ),
