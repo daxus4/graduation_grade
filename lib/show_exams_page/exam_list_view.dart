@@ -22,10 +22,10 @@ class ExamListView extends StatelessWidget {
             title: Text('${exams[i].getName()}'),
             subtitle: Text(subtitle),
             onTap: () {
-              Navigator.push(
+              Navigator.pushNamed(
                 context,
-                MaterialPageRoute(
-                    builder: (context) => ShowExamDataPage(exams[i])),
+                ShowExamDataPage.routeName,
+                arguments: exams[i],
               );
             },
           );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/database_management/db_helper.dart';
+import 'package:graduation_grade/form_exam/exam_form.dart';
+import 'package:graduation_grade/show_exam_data_page/show_exam_data_page.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 import 'cubit/exams_cubit.dart';
 import 'database_management/exam_repository.dart';
@@ -23,5 +25,9 @@ void main() async {
       create: (context) => _examsCubit,
       child: ShowExamsPage(_exams),
     ),
+    routes: {
+      ExamForm.routeName : (context) => ExamForm(),
+      ShowExamDataPage.routeName : (context) => ShowExamDataPage(),
+    },
   ));
 }

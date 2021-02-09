@@ -32,9 +32,9 @@ class ShowExamsPageState extends State<ShowExamsPage> {
             icon: Icon(Icons.add),
             tooltip: 'Add exam',
             onPressed: () async {
-              await Navigator.push(
+              await Navigator.pushNamed(
                 context,
-                MaterialPageRoute(builder: (context) => ExamForm()),
+                ExamForm.routeName,
               );
             },
           ),

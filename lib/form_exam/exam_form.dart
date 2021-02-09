@@ -6,6 +6,8 @@ import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/exam/exam.dart';
 
 class ExamForm extends StatefulWidget {
+  static const routeName = '/examForm';
+
   @override
   _ExamFormState createState() => _ExamFormState();
 }
