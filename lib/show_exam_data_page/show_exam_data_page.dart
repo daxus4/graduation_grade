@@ -112,10 +112,9 @@ class ShowExamDataPageState extends State<ShowExamDataPage> {
                     return;
                   }
                   Map<String, dynamic> examChanges = await showDialog(
-                      barrierDismissible: false,
                       context: context,
                       builder: (BuildContext context) => UpdateExamDialog());
-                  if (examChanges.isNotEmpty) {
+                  if (examChanges != null && examChanges.isNotEmpty) {
                     ExamRepository.updateExam(Exam.taken(
                         exam.getName(),
                         exam.getCfu(),
