@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/exam/exam.dart';
-
-//TODO: create class dialog stateful for update exam and non farlo con esami già dati
+import 'package:graduation_grade/general_data/global_data.dart';
+import 'package:graduation_grade/show_exam_data_page/update_exam_dialog.dart';
 
 class ShowExamDataPage extends StatefulWidget {
   static const routeName = '/showExamData';
@@ -14,10 +12,6 @@ class ShowExamDataPage extends StatefulWidget {
 }
 
 class ShowExamDataPageState extends State<ShowExamDataPage> {
-  final _formKey = GlobalKey<FormState>();
-  bool _cumLaude = false;
-  int _examMark;
-
   @override
   Widget build(BuildContext context) {
     final Exam exam = ModalRoute.of(context).settings.arguments;
@@ -104,42 +98,23 @@ class ShowExamDataPageState extends State<ShowExamDataPage> {
                 style: ElevatedButton.styleFrom(
                   primary: Theme.of(context).primaryColor, // background
                 ),
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    builder: (_) => AlertDialog(
-                      title: Text("Take"),
-                      content: Container(
-                        padding: const EdgeInsets.all(16),
-                        child: Form(
-                          key: _formKey,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: <Widget>[
-                                examMarkInput(),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                                examLaudeInput(),
-                                SizedBox(
-                                  height: 16,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text("Cancel"),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
-                        ),
-                        updateButton(context, exam),
-                      ],
-                    ),
-                  );
+                onPressed: () async {
+                  if (exam.isTaken()) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(
+                            "You cannot insert a mark in a already taken exam")
+                        ));
+                    return;
+                  }
+                  Map<String, dynamic> examChanges = await showDialog(
+                      context: context,
+                      builder: (BuildContext context) => UpdateExamDialog());
+                  if (examChanges.isNotEmpty)
+                    ExamRepository.updateExam(Exam.taken(
+                        exam.getName(),
+                        exam.getCfu(),
+                        examChanges[GlobalData.examMarkAttribute],
+                        examChanges[GlobalData.examLaudeAttribute]));
                 },
                 child: Text(
                   "Take",
@@ -149,69 +124,6 @@ class ShowExamDataPageState extends State<ShowExamDataPage> {
             ]),
           ],
         ),
-      ),
-    );
-  }
-
-  //TextForm in which insert the exam mark
-  Widget examMarkInput() {
-    return TextFormField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-        labelText: "Exam Mark",
-        hintText: "From 18 to 30",
-      ),
-      textInputAction: TextInputAction.done,
-      validator: (mark) {
-        if (mark.isEmpty) return 'Invalid mark';
-        int intMark = int.parse(mark);
-        if (intMark >= 18 && intMark <= 30) {
-          if (_cumLaude && intMark != 30) return 'Laude must be with 30';
-          return null;
-        }
-        return 'Invalid mark';
-      },
-      onSaved: (mark) => _examMark = int.parse(mark),
-    );
-  }
-
-  //Checkbox in which insert if you get laude in your exam
-  Widget examLaudeInput() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: <Widget>[
-        Text(
-          'Laude:',
-          style: TextStyle(
-            color: Colors.black,
-          ),
-        ),
-        Checkbox(
-          value: _cumLaude,
-          onChanged: (bool value) {
-            setState(() {
-              _cumLaude = value;
-            });
-          },
-        ),
-      ],
-    );
-  }
-
-  //Button that insert in the database the data typed by user
-  TextButton updateButton(BuildContext context, Exam e) {
-    return TextButton(
-      onPressed: () async {
-        if (_formKey.currentState.validate()) {
-          _formKey.currentState.save();
-          log('${e.getName()}, ${e.getCfu()}, $_examMark, $_cumLaude');
-          ExamRepository.updateExam(
-              Exam.taken(e.getName(), e.getCfu(), _examMark, _cumLaude));
-          Navigator.pop(context);
-        }
-      },
-      child: Text(
-        "Update",
       ),
     );
   }
