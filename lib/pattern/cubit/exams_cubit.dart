@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
-import 'package:graduation_grade/cubit/exams_state.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
+
+import 'exams_state.dart';
 
 class ExamsCubit extends Cubit<ExamsState> {
 

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_grade/cubit/exams_cubit.dart';
-import 'package:graduation_grade/cubit/exams_state.dart';
 import 'package:graduation_grade/exam/exam.dart';
 import 'package:graduation_grade/form_exam/exam_form.dart';
+import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
+import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 
 import '../general_data/global_data.dart';
 import 'exam_list_view.dart';

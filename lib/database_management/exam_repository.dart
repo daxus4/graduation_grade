@@ -1,9 +1,9 @@
 //Class that make SQL request to database in order to add, modify, show or
 //delete the exams
 
-import 'package:graduation_grade/cubit/exams_cubit.dart';
 import 'package:graduation_grade/exam/exam.dart';
 import 'package:graduation_grade/general_data/global_data.dart';
+import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'db_helper.dart';
