@@ -4,28 +4,32 @@ import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.d
 import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
+import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 
 class ExamController implements Observer<ExamMessage>, ControllableByExamMessage{
   final List<Exam> _exams;
+  final ExamsCubit _cubit;
 
-  ExamController(this._exams);
+  ExamController(this._exams, this._cubit);
 
   @override
   void handleAddExamMessage(AddExamMessage m) {
     Exam e = m.getExam();
-    if(_exams.contains(e)) {
-      print("C'è già questo esame");
+    if(_exams.any((exam) => exam.getName() == e.getName())) {
+      _cubit.requestAnotherExam(e.getName(),
+          "Exam named ${e.getName()} is already present");
       return;
     }
     _exams.add(e);
-    print("aggiorna");
+    _cubit.updateWithNewExam(e);
+    _cubit.setBaseState(_exams);
   }
 
   @override
   void handleDeleteExamMessage(DeleteExamMessage m) {
     Exam e = m.getExam();
-    if(!_exams.contains(e))
+    if(!_exams.any((exam) => exam.getName() == e.getName()))
       print("eccezione");
     _exams.remove(e);
     print("Aggiorna");
@@ -46,5 +50,7 @@ class ExamController implements Observer<ExamMessage>, ControllableByExamMessage
 
   @override
   void update(ExamMessage message) => message.execute(this);
+
+  List<Exam> getExams() => _exams;
 }
 

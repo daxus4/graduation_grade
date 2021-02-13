@@ -49,17 +49,11 @@ class ShowExamsPageState extends State<ShowExamsPage> {
                     .showSnackBar(SnackBar(content: Text(state.message)));
             },
             builder: (context, state) {
-              if (state is ExamsInitial)
-                return ExamListView(_exams);
-              else if (state is ExamsLoaded) {
-                _exams = state.getExams();
-                return ExamListView(_exams);
-              } else {
-                //When state is error
-                return ExamListView(<Exam>[]);
-              }
+              if(state is ExamsStateBase)
+                _exams = state.exams;
+              return ExamListView(_exams);
             },
-          )
+          ),
       ),
     );
   }

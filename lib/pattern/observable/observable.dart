@@ -1,6 +1,6 @@
 import 'observer.dart';
 
-class Observable<T> {
+abstract class Observable<T> {
   final List<Observer<T>> _observers;
 
   Observable(this._observers);

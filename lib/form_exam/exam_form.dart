@@ -2,14 +2,28 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:graduation_grade/database_management/exam_repository.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
+import 'package:graduation_grade/pattern/cubit/exams_state.dart';
+import 'package:graduation_grade/pattern/observable/observable.dart';
+import 'package:graduation_grade/pattern/observable/observer.dart';
 
 class ExamForm extends StatefulWidget {
   static const routeName = '/examForm';
 
+  final Observer<ExamMessage> examController;
+
+  ExamForm(this.examController) : super();
+
   @override
-  _ExamFormState createState() => _ExamFormState();
+  _ExamFormState createState() => _ExamFormState(_ObservableExamMessage([examController]));
+}
+
+class _ObservableExamMessage extends Observable<ExamMessage> {
+  _ObservableExamMessage(List<Observer<ExamMessage>> observers) : super(observers);
 }
 
 class _ExamFormState extends State<ExamForm> {
@@ -24,6 +38,10 @@ class _ExamFormState extends State<ExamForm> {
   FocusNode _examCfuFocusNode;
   FocusNode _examMarkFocusNode;
 
+  final _ObservableExamMessage _observableFromController;
+
+  _ExamFormState(this._observableFromController) : super();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,35 +50,46 @@ class _ExamFormState extends State<ExamForm> {
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
-        child: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                examNameInput(),
-                SizedBox(
-                  height: 16,
+        child: BlocConsumer<ExamsCubit, ExamsState>(
+          listener: (context, state) {
+            if (state is ExamAlreadyPresent)
+              ScaffoldMessenger.of(context)
+                  .showSnackBar(SnackBar(content: Text(state.getMessage())));
+            else if (state is ExamAdded)
+              Navigator.pop(context);
+            else
+              log("frocio");
+          },
+          builder: (context, state) => Form(
+              key: _formKey,
+              child: SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    examNameInput(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    examCfuInput(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    alreadyTakenInput(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    examMarkInput(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    examLaudeInput(),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    submitButton(context)
+                  ],
                 ),
-                examCfuInput(),
-                SizedBox(
-                  height: 16,
-                ),
-                alreadyTakenInput(),
-                SizedBox(
-                  height: 16,
-                ),
-                examMarkInput(),
-                SizedBox(
-                  height: 16,
-                ),
-                examLaudeInput(),
-                SizedBox(
-                  height: 16,
-                ),
-                submitButton(context)
-              ],
+              ),
             ),
-          ),
         ),
       ),
     );
@@ -192,13 +221,17 @@ class _ExamFormState extends State<ExamForm> {
           _formKey.currentState.save();
           if (_alreadyTaken) {
             log('$_examName, $_examCfu, $_examMark, $_cumLaude');
-            ExamRepository.addExam(
-                Exam.taken(_examName, _examCfu, _examMark, _cumLaude));
+            _observableFromController.notify(
+                AddExamMessage(
+                    Exam.taken(_examName, _examCfu, _examMark, _cumLaude))
+            );
           } else {
             log('$_examName, $_examCfu');
-            ExamRepository.addExam(Exam(_examName, _examCfu));
+            _observableFromController.notify(
+                AddExamMessage(
+                    Exam(_examName, _examCfu))
+            );
           }
-          Navigator.pop(context);
         }
       },
       child: Text(

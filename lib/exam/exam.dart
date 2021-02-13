@@ -22,6 +22,12 @@ class Exam{
     _isTaken = true;
   }
 
+  Exam copy(){
+    if(this._isTaken)
+      return Exam.taken(this._name, this._cfu, this. _mark, this._cumLaude);
+    return Exam(this._name, this._cfu);
+  }
+
   //Constructor that create an ExamBase from a Map
   Exam.fromMapObject(Map<String, dynamic> examMap)
       : this(examMap[GlobalData.examNameAttribute],
@@ -71,4 +77,25 @@ class Exam{
       return 'Exam{name: $_name, cfu: $_cfu, mark: $_mark, laude: $_cumLaude}';
     return 'Exam{name: $_name, cfu: $_cfu}';
   }
+
+  @override
+  bool operator == (o) {
+    if(!o._isTaken)
+      return o is Exam && o._name == this._name &&
+        o._cfu == this._cfu && o._isTaken == this._isTaken;
+    return o is Exam && o._name == this._name &&
+        o._cfu == this._cfu && o._isTaken == this._isTaken
+        && o._mark == this._mark && o._cumLaude == this._cumLaude;
+  }
+
+  @override
+  int get hashCode {
+    int result = 17;
+    result = 37 * result + _name.hashCode;
+    result = 37 * result + _cfu.hashCode;
+    result = 37 * result + _mark.hashCode;
+    result = 37 * result + _cumLaude.hashCode;
+    return result;
+  }
+
 }

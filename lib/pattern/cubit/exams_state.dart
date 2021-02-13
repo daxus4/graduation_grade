@@ -9,6 +9,13 @@ class ExamsInitial extends ExamsState {
   ExamsInitial();
 }
 
+class ExamsStateBase extends ExamsState {
+  final List<Exam> exams;
+
+  ExamsStateBase(this.exams);
+
+}
+
 class ExamsLoaded extends ExamsState {
   final List<Exam> _exams;
   ExamsLoaded(this._exams);
@@ -30,6 +37,23 @@ class ExamsLoaded extends ExamsState {
   int get hashCode => super.hashCode;
 }
 
+class ExamAlreadyPresent extends ExamsState {
+  final String _examName, _message;
+
+  ExamAlreadyPresent(this._examName, this._message);
+
+  String getMessage() => _message;
+
+  @override
+  bool operator == (o) => o is ExamAlreadyPresent && _examName == o._examName
+      && _message == o._message;
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
+}
+
 class ExamsError extends ExamsState {
   final String message;
 
@@ -41,6 +65,20 @@ class ExamsError extends ExamsState {
 
     return other is ExamsError && other.message == message;
   }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
+}
+
+class ExamAdded extends ExamsState {
+  final Exam _e;
+
+  ExamAdded(this._e);
+
+  @override
+  bool operator == (o) => o is ExamAdded && _e == o._e;
 
   @override
   // TODO: implement hashCode
