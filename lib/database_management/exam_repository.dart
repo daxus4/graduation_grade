@@ -3,7 +3,6 @@
 
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
-import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'db_helper.dart';
@@ -11,17 +10,10 @@ import 'db_helper.dart';
 //TODO command pattern per non chiamare db
 class ExamRepository {
 
-  static ExamsCubit _examsCubit;
-
-  static setExamsCubit(ExamsCubit cubit) {
-    _examsCubit = cubit;
-  }
-
   //SQL insert of a exam
   static Future<void> addExam(Exam exam) async {
     await db.insert(GlobalData.examTableName, exam.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
-    _examsCubit.getExams();
   }
 
   //Retrieve list of all exams in the database
@@ -55,7 +47,6 @@ class ExamRepository {
       //Prevent SQL injection
       whereArgs: [exam.getName()],
     );
-    _examsCubit.getExams();
   }
 
   //SQL deletion of an exam
@@ -69,6 +60,5 @@ class ExamRepository {
       //Prevent SQL injection
       whereArgs: [exam.getName()],
     );
-    _examsCubit.getExams();
   }
 }

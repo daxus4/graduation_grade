@@ -1,4 +1,6 @@
 
+import 'package:graduation_grade/database_management/db_helper.dart';
+import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/exams_model.dart';
 import 'package:graduation_grade/pattern/command/controllable_by_exam_message.dart';
@@ -9,10 +11,17 @@ import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.
 import 'package:graduation_grade/pattern/observable/observer.dart';
 
 class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage{
+  final examDbHelper = DbHelper();
+  final ExamsModel _model = ExamsModel([]);
 
-  final ExamsModel _model;
 
-  ExamsManager(this._model);
+  Future<void> init() async {
+    await examDbHelper.initDatabase();
+    List<Exam> exams = await ExamRepository.getExamsFromDb();
+    exams.forEach((exam) => _model.addExam(exam));
+  }
+
+  ExamsModel getModel() => _model;
 
   @override
   void update(ExamMessage message) {
@@ -28,6 +37,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage{
       return;
     }
     _model.addExam(e);
+    ExamRepository.addExam(e);
     m.getUpdateFunction()(e);
     m.getUpdateAfterAddExamFunction()(e);
 
