@@ -28,7 +28,10 @@ void main() async {
         create: (context) => ExamsCubit(),
         child: ExamForm(examsManager),
       ),
-      ShowExamDataPage.routeName : (context) => ShowExamDataPage(),
+      ShowExamDataPage.routeName : (context) => BlocProvider(
+        create: (context) => ExamsCubit(),
+        child: ShowExamDataPage(),
+      ),
     },
   ));
 }

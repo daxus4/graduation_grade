@@ -85,3 +85,31 @@ class ExamAdded extends ExamsState {
   int get hashCode => super.hashCode;
 
 }
+
+class ExamDeleted extends ExamsState {
+  final String _examName;
+
+  ExamDeleted(this._examName);
+
+  @override
+  bool operator == (o) => o is ExamDeleted && _examName == o._examName;
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
+}
+
+class ExamUpdated extends ExamsState {
+  final Exam _e;
+
+  ExamUpdated(this._e);
+
+  @override
+  bool operator == (o) => o is ExamAdded && _e == o._e;
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
+}
