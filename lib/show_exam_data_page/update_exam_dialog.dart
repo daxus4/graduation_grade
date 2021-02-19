@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_grade/general_data/global_data.dart';
+import 'package:graduation_grade/model/general_data/global_data.dart';
 
 class UpdateExamDialog extends StatefulWidget {
   @override

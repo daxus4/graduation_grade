@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
-import 'package:graduation_grade/exam/exam.dart';
-import 'package:graduation_grade/general_data/global_data.dart';
+import 'package:graduation_grade/model/exam.dart';
+import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/show_exam_data_page/update_exam_dialog.dart';
 
 class ShowExamDataPage extends StatefulWidget {

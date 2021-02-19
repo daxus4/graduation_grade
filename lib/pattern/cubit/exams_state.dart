@@ -1,5 +1,5 @@
 import 'package:collection/collection.dart';
-import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/model/exam.dart';
 
 abstract class ExamsState {
   ExamsState();

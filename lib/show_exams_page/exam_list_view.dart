@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/show_exam_data_page/show_exam_data_page.dart';
 
 class ExamListView extends StatelessWidget {

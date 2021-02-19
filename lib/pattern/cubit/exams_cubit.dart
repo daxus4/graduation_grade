@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
-import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/model/exam.dart';
 
 import 'exams_state.dart';
 

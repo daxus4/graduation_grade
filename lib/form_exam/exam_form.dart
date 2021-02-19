@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
@@ -19,11 +19,13 @@ class ExamForm extends StatefulWidget {
   ExamForm(this.examController) : super();
 
   @override
-  _ExamFormState createState() => _ExamFormState(_ObservableExamMessage([examController]));
+  _ExamFormState createState() =>
+      _ExamFormState(_ObservableExamMessage([examController]));
 }
 
 class _ObservableExamMessage extends Observable<ExamMessage> {
-  _ObservableExamMessage(List<Observer<ExamMessage>> observers) : super(observers);
+  _ObservableExamMessage(List<Observer<ExamMessage>> observers)
+      : super(observers);
 }
 
 class _ExamFormState extends State<ExamForm> {
@@ -42,8 +44,19 @@ class _ExamFormState extends State<ExamForm> {
 
   _ExamFormState(this._observableFromController) : super();
 
+  void requestAnotherExam(String name) {
+    BlocProvider.of<ExamsCubit>(this.context).requestAnotherExam(
+        name, "Exam named " + name + " is already present, insert another");
+  }
+
+  void updateAfterAddExam(Exam e) {
+    BlocProvider.of<ExamsCubit>(this.context).updateWithNewExam(e);
+  }
+
   @override
   Widget build(BuildContext context) {
+    final Function(Exam) updateShowExamsPageFunction =
+        ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
         title: Text("Insert exam"),
@@ -55,41 +68,38 @@ class _ExamFormState extends State<ExamForm> {
             if (state is ExamAlreadyPresent)
               ScaffoldMessenger.of(context)
                   .showSnackBar(SnackBar(content: Text(state.getMessage())));
-            else if (state is ExamAdded)
-              Navigator.pop(context);
-            else
-              log("frocio");
+            else if (state is ExamAdded) Navigator.pop(context);
           },
           builder: (context, state) => Form(
-              key: _formKey,
-              child: SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    examNameInput(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    examCfuInput(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    alreadyTakenInput(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    examMarkInput(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    examLaudeInput(),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    submitButton(context)
-                  ],
-                ),
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Column(
+                children: <Widget>[
+                  examNameInput(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  examCfuInput(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  alreadyTakenInput(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  examMarkInput(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  examLaudeInput(),
+                  SizedBox(
+                    height: 16,
+                  ),
+                  submitButton(context, updateShowExamsPageFunction),
+                ],
               ),
             ),
+          ),
         ),
       ),
     );
@@ -211,7 +221,8 @@ class _ExamFormState extends State<ExamForm> {
   }
 
   //Button that insert in the database the data typed by user
-  ElevatedButton submitButton(BuildContext context) {
+  ElevatedButton submitButton(
+      BuildContext context, Function(Exam) updateShowExamsPageFunction) {
     return ElevatedButton(
       style: ElevatedButton.styleFrom(
         primary: Theme.of(context).primaryColor, // background
@@ -221,16 +232,18 @@ class _ExamFormState extends State<ExamForm> {
           _formKey.currentState.save();
           if (_alreadyTaken) {
             log('$_examName, $_examCfu, $_examMark, $_cumLaude');
-            _observableFromController.notify(
-                AddExamMessage(
-                    Exam.taken(_examName, _examCfu, _examMark, _cumLaude))
-            );
+            _observableFromController.notify(AddExamMessage(
+                Exam.taken(_examName, _examCfu, _examMark, _cumLaude),
+                updateShowExamsPageFunction,
+                requestAnotherExam,
+                updateAfterAddExam));
           } else {
             log('$_examName, $_examCfu');
-            _observableFromController.notify(
-                AddExamMessage(
-                    Exam(_examName, _examCfu))
-            );
+            _observableFromController.notify(AddExamMessage(
+                Exam(_examName, _examCfu),
+                updateShowExamsPageFunction,
+                requestAnotherExam,
+                updateAfterAddExam));
           }
         }
       },

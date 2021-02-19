@@ -3,7 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
-import 'package:graduation_grade/exam/exam.dart';
+import 'package:graduation_grade/model/exam.dart';
 
 class TakeExamDialog extends StatefulWidget {
   final String _name;
