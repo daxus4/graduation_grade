@@ -234,14 +234,12 @@ class _ExamFormState extends State<ExamForm> {
             log('$_examName, $_examCfu, $_examMark, $_cumLaude');
             _observableFromController.notify(AddExamMessage(
                 Exam.taken(_examName, _examCfu, _examMark, _cumLaude),
-                updateShowExamsPageFunction,
                 requestAnotherExam,
                 updateAfterAddExam));
           } else {
             log('$_examName, $_examCfu');
             _observableFromController.notify(AddExamMessage(
                 Exam(_examName, _examCfu),
-                updateShowExamsPageFunction,
                 requestAnotherExam,
                 updateAfterAddExam));
           }

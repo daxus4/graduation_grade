@@ -9,7 +9,6 @@ import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 import 'model/general_data/design_data.dart';
 import 'model/general_data/global_data.dart';
 
-
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -21,17 +20,19 @@ void main() async {
     theme: DesignData.lightTheme,
     home: BlocProvider(
       create: (context) => ExamsCubit(),
-      child: ShowExamsPage(examsManager.getModel().getExams()),
+      child: ShowExamsPage(examsManager.getModel().getExams(),
+          examsManager.getObserverOfUpdateFunction()),
     ),
     routes: {
-      ExamForm.routeName : (context) => BlocProvider(
-        create: (context) => ExamsCubit(),
-        child: ExamForm(examsManager),
-      ),
-      ShowExamDataPage.routeName : (context) => BlocProvider(
-        create: (context) => ExamsCubit(),
-        child: ShowExamDataPage(),
-      ),
+      ExamForm.routeName: (context) => BlocProvider(
+            create: (context) => ExamsCubit(),
+            child: ExamForm(examsManager),
+          ),
+      ShowExamDataPage.routeName: (context) => BlocProvider(
+            create: (context) => ExamsCubit(),
+            child: ShowExamDataPage(examsManager),
+          ),
     },
   ));
 }
+

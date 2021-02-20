@@ -1,4 +1,3 @@
-
 import 'package:graduation_grade/database_management/db_helper.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/model/exam.dart';
@@ -10,15 +9,23 @@ import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart'
 import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 
-class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage{
+class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
   final examDbHelper = DbHelper();
   final ExamsModel _model = ExamsModel([]);
 
+  final _ObserverOfUpdateFunction _observerOfUpdateFunction =
+      _ObserverOfUpdateFunction();
+
+  Observer<Function> getObserverOfUpdateFunction() => _observerOfUpdateFunction;
 
   Future<void> init() async {
     await examDbHelper.initDatabase();
     List<Exam> exams = await ExamRepository.getExamsFromDb();
     exams.forEach((exam) => _model.addExam(exam));
+  }
+
+  void _updateShowExamsPage(ExamMessage message) {
+    _observerOfUpdateFunction.getUpdateFunction()(message);
   }
 
   ExamsModel getModel() => _model;
@@ -32,23 +39,41 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage{
   void handleAddExamMessage(AddExamMessage m) {
     Exam e = m.getExam();
 
-    if(_model.isThereExamNamed(e.getName())) {
+    if (_model.isThereExamNamed(e.getName())) {
       m.getRequestAnotherExamFunction()(e.getName());
       return;
     }
     _model.addExam(e);
     ExamRepository.addExam(e);
-    m.getUpdateFunction()(e);
+    _updateShowExamsPage(m);
     m.getUpdateAfterAddExamFunction()(e);
-
   }
 
   @override
   void handleDeleteExamMessage(DeleteExamMessage m) {
+    Exam e = m.getExam();
+
+    _model.deleteExam(e.getName());
+    ExamRepository.deleteExam(e);
+    _updateShowExamsPage(m);
+    m.getUpdateAfterDeleteExamFunction()(e.getName());
   }
 
   @override
   void handleTakeExamMessage(TakeExamMessage m) {
+    //Exam e = m.getExam();
+
+    _updateShowExamsPage(m);
+  }
+}
+
+class _ObserverOfUpdateFunction implements Observer<Function> {
+  Function _updateFunction;
+
+  @override
+  void update(Function message) {
+    _updateFunction = message;
   }
 
+  Function getUpdateFunction() => _updateFunction;
 }

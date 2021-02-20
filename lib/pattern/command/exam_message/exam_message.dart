@@ -3,13 +3,23 @@ import 'package:graduation_grade/pattern/command/controllable_by_exam_message.da
 
 abstract class ExamMessage {
   final Exam _exam;
-  final Function _updateFunction;
 
-  ExamMessage(this._exam, this._updateFunction);
+  ExamMessage(this._exam);
 
   execute(ControllableByExamMessage controllable);
 
   Exam getExam() => _exam;
 
-  Function getUpdateFunction() => _updateFunction;
+  @override
+  bool operator ==(Object other) {
+    if(identical(this, other)) return true;
+
+    return other is ExamMessage && _exam == other._exam;
+  }
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
+
 }
