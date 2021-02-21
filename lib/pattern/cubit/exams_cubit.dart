@@ -12,12 +12,12 @@ class ExamsCubit extends Cubit<ExamsState> {
     emit(ExamsStateBase(list));
   }
 
-  void updateWithNewExam(Exam e) {
-    emit(ExamAdded(e));
-  }
-
   void getExams(ExamMessage examMessage) {
     emit(ExamsChanged(examMessage));
+  }
+
+  void updateWithNewExam(Exam e) {
+    emit(ExamAdded(e));
   }
 
   void requestAnotherExam(String examName, String message) {
@@ -26,5 +26,9 @@ class ExamsCubit extends Cubit<ExamsState> {
 
   void updateDeletingExam(String name) {
     emit(ExamDeleted(name));
+  }
+
+  void updateTakenExam(Exam e) {
+    emit(ExamTaken(e));
   }
 }

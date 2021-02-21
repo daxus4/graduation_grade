@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:graduation_grade/database_management/exam_repository.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -19,7 +19,8 @@ class ShowExamDataPage extends StatefulWidget {
   ShowExamDataPage(this.examController) : super();
 
   @override
-  _ShowExamDataPageState createState() => _ShowExamDataPageState(_ObservableExamMessage([examController]));
+  _ShowExamDataPageState createState() =>
+      _ShowExamDataPageState(_ObservableExamMessage([examController]));
 }
 
 class _ObservableExamMessage extends Observable<ExamMessage> {
@@ -28,7 +29,6 @@ class _ObservableExamMessage extends Observable<ExamMessage> {
 }
 
 class _ShowExamDataPageState extends State<ShowExamDataPage> {
-
   final _ObservableExamMessage _observableFromController;
 
   _ShowExamDataPageState(this._observableFromController) : super();
@@ -44,19 +44,18 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
         padding: const EdgeInsets.all(16),
         child: BlocConsumer<ExamsCubit, ExamsState>(
           listener: (context, state) {
-            if(state is ExamDeleted)
-              Navigator.popUntil(
-                  context, ModalRoute.withName('/'));
+            if (state is ExamDeleted)
+              Navigator.popUntil(context, ModalRoute.withName('/'));
           },
           builder: (context, state) {
-            if (state is ExamUpdated) {
+            if (state is ExamTaken) {
               //If updated exam is the same exam show in this page
               if (state.getExam().getName() == exam.getName()) {
-                return page(state.getExam());
+                return page(state.getExam(), context);
               }
             }
             //Else
-            return page(exam);
+            return page(exam, context);
           },
         ),
       ),
@@ -67,7 +66,11 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
     BlocProvider.of<ExamsCubit>(this.context).updateDeletingExam(name);
   }
 
-  Widget page(Exam exam) {
+  void updateAfterTakeExam(Exam e) {
+    BlocProvider.of<ExamsCubit>(this.context).updateTakenExam(e);
+  }
+
+  Widget page(Exam exam, BuildContext context) {
     return Column(
       children: <Widget>[
         Text(exam.getName()),
@@ -128,7 +131,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
                       child: Text("Yes"),
                       onPressed: () {
                         _observableFromController.notify(
-                          DeleteExamMessage(exam, updateAfterDeleteExam));
+                            DeleteExamMessage(exam, updateAfterDeleteExam));
                       },
                     ),
                   ],
@@ -154,20 +157,13 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
               Map<String, dynamic> examChanges = await showDialog(
                   context: context,
                   builder: (BuildContext context) => UpdateExamDialog());
-              if (examChanges != null && examChanges.isNotEmpty) {
-                ExamRepository.updateExam(Exam.taken(
-                    exam.getName(),
-                    exam.getCfu(),
-                    examChanges[GlobalData.examMarkAttribute],
-                    examChanges[GlobalData.examLaudeAttribute]));
-                setState(() {
-                  exam = Exam.taken(
+              _observableFromController.notify(TakeExamMessage(
+                  Exam.taken(
                       exam.getName(),
                       exam.getCfu(),
                       examChanges[GlobalData.examMarkAttribute],
-                      examChanges[GlobalData.examLaudeAttribute]);
-                });
-              }
+                      examChanges[GlobalData.examLaudeAttribute]),
+                  updateAfterTakeExam));
             },
             child: Text(
               "Take",

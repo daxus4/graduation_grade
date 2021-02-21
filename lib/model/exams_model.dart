@@ -25,6 +25,13 @@ class ExamsModel {
     return _exams.firstWhere((e) => e.getName() == name);
   }
 
+  void takeExam(Exam examTaken) {
+    if(isThereExamNamed(examTaken.getName())){
+      deleteExam(examTaken.getName());
+      _exams.add(examTaken);
+    }
+  }
+
   List<Exam> getExams() => _exams;
 }
 

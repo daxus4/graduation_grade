@@ -99,9 +99,6 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
       onPressed: () async {
         if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
-          /*log('${e.getName()}, ${e.getCfu()}, $_examMark, $_cumLaude');
-          ExamRepository.updateExam(
-              Exam.taken(e.getName(), e.getCfu(), _examMark, _cumLaude));*/
           Navigator.pop(context, {GlobalData.examMarkAttribute: _examMark,
             GlobalData.examLaudeAttribute: _cumLaude,});
         }

@@ -3,7 +3,12 @@ import 'package:graduation_grade/pattern/command/controllable_by_exam_message.da
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 
 class TakeExamMessage extends ExamMessage {
-  TakeExamMessage(Exam exam) : super(exam);
+  final Function(Exam) _updateAfterTakeExamFunction;
+
+  TakeExamMessage(Exam exam, this._updateAfterTakeExamFunction) : super(exam);
+
+  Function(Exam) getUpdateAfterTakeExamFunction() =>
+      _updateAfterTakeExamFunction;
 
   @override
   execute(ControllableByExamMessage controllable) {
@@ -12,12 +17,10 @@ class TakeExamMessage extends ExamMessage {
 
   @override
   bool operator ==(Object other) {
-    return super == other &&
-        other is TakeExamMessage;
+    return super == other && other is TakeExamMessage;
   }
 
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }

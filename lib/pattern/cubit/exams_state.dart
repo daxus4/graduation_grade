@@ -99,10 +99,10 @@ class ExamDeleted extends ExamsState {
 
 }
 
-class ExamUpdated extends ExamsState {
+class ExamTaken extends ExamsState {
   final Exam _e;
 
-  ExamUpdated(this._e);
+  ExamTaken(this._e);
 
   Exam getExam() => _e;
 
