@@ -66,6 +66,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
     _model.takeExam(e);
     ExamRepository.updateExam(e);
     _updateShowExamsPage(m);
+    m.getUpdateAfterTakeExamFunction()(e);
   }
 }
 

@@ -96,7 +96,7 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
   //Button that insert in the database the data typed by user
   TextButton updateButton(BuildContext context) {
     return TextButton(
-      onPressed: () async {
+      onPressed: () {
         if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
           Navigator.pop(context, {GlobalData.examMarkAttribute: _examMark,
