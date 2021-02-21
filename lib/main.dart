@@ -6,6 +6,7 @@ import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/show_exam_data_page/show_exam_data_page.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
+import 'homepage/homepage.dart';
 import 'model/general_data/design_data.dart';
 import 'model/general_data/global_data.dart';
 
@@ -18,16 +19,25 @@ void main() async {
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
+
     home: BlocProvider(
       create: (context) => ExamsCubit(),
-      child: ShowExamsPage(examsManager.getModel().getExams(),
-          examsManager.getObserverOfUpdateFunction()),
+      child: HomePage(examsManager.getObserverOfUpdateFunction(),
+          this._wAvg, this._cfuAcquired, this._expectedGrade, this._degreeName),
     ),
+
     routes: {
+      ShowExamsPage.routeName : (context) => BlocProvider(
+        create: (context) => ExamsCubit(),
+        child: ShowExamsPage(examsManager.getModel().getExams(),
+            examsManager.getObserverOfUpdateFunction()),
+      ),
+
       ExamForm.routeName: (context) => BlocProvider(
             create: (context) => ExamsCubit(),
             child: ExamForm(examsManager),
           ),
+
       ShowExamDataPage.routeName: (context) => BlocProvider(
             create: (context) => ExamsCubit(),
             child: ShowExamDataPage(examsManager),

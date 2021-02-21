@@ -12,6 +12,8 @@ import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'exam_list_view.dart';
 
 class ShowExamsPage extends StatefulWidget {
+  static const routeName = '/showExams';
+
   final List<Exam> exams;
 
   final Observer<Function> examController;
