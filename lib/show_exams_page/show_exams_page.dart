@@ -16,7 +16,7 @@ class ShowExamsPage extends StatefulWidget {
 
   final List<Exam> exams;
 
-  final Observer<Function> examController;
+  final Observer<Map<String, Function>> examController;
 
   ShowExamsPage(this.exams, this.examController, {Key key}) : super(key: key);
 
@@ -25,8 +25,8 @@ class ShowExamsPage extends StatefulWidget {
       exams, _ObservableUpdateFunction([examController]));
 }
 
-class _ObservableUpdateFunction extends Observable<Function> {
-  _ObservableUpdateFunction(List<Observer<Function>> observers)
+class _ObservableUpdateFunction extends Observable<Map<String, Function>> {
+  _ObservableUpdateFunction(List<Observer<Map<String, Function>>> observers)
       : super(observers);
 }
 
@@ -36,7 +36,8 @@ class ShowExamsPageState extends State<ShowExamsPage> {
   final _ObservableUpdateFunction _observableFromController;
 
   ShowExamsPageState(this._exams, this._observableFromController) : super() {
-    _observableFromController.notify(updateAfterChange);
+    _observableFromController
+        .notify({ShowExamsPage.routeName: updateAfterChange});
   }
 
   void updateAfterChange(ExamMessage examMessage) {

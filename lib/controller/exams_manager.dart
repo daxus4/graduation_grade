@@ -1,5 +1,6 @@
 import 'package:graduation_grade/database_management/db_helper.dart';
 import 'package:graduation_grade/database_management/exam_repository.dart';
+import 'package:graduation_grade/homepage/homepage.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/exams_model.dart';
 import 'package:graduation_grade/pattern/command/controllable_by_exam_message.dart';
@@ -8,24 +9,38 @@ import 'package:graduation_grade/pattern/command/exam_message/delete_exam_messag
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
+import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
 class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
   final examDbHelper = DbHelper();
   final ExamsModel _model = ExamsModel([]);
 
-  final _ObserverOfUpdateFunction _observerOfUpdateFunction =
-      _ObserverOfUpdateFunction();
+  final _ObserverOfUpdateFunctions _observerOfUpdateFunctions =
+      _ObserverOfUpdateFunctions();
 
-  Observer<Function> getObserverOfUpdateFunction() => _observerOfUpdateFunction;
+  Observer<Map<String, Function>> getObserverOfUpdateFunctions() =>
+      _observerOfUpdateFunctions;
 
   Future<void> init() async {
     await examDbHelper.initDatabase();
     List<Exam> exams = await ExamRepository.getExamsFromDb();
     exams.forEach((exam) => _model.addExam(exam));
+    _model.setDegreeName("gozilla");
   }
 
   void _updateShowExamsPage(ExamMessage message) {
-    _observerOfUpdateFunction.getUpdateFunction()(message);
+    _observerOfUpdateFunctions
+        .getUpdateFunctions()[ShowExamsPage.routeName](message);
+  }
+
+  void _updateHomePage(ExamMessage message) {
+    _observerOfUpdateFunctions.getUpdateFunctions()[HomePage.routeName](message,
+        _model.getWAvg(), _model.getCfuAcquired(), _model.getExpectedGrade());
+  }
+
+  void _updatePassivePage(ExamMessage m) {
+    _updateShowExamsPage(m);
+    _updateHomePage(m);
   }
 
   ExamsModel getModel() => _model;
@@ -45,7 +60,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
     }
     _model.addExam(e);
     ExamRepository.addExam(e);
-    _updateShowExamsPage(m);
+    _updatePassivePage(m);
     m.getUpdateAfterAddExamFunction()(e);
   }
 
@@ -55,7 +70,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
     _model.deleteExam(e.getName());
     ExamRepository.deleteExam(e);
-    _updateShowExamsPage(m);
+    _updatePassivePage(m);
     m.getUpdateAfterDeleteExamFunction()(e.getName());
   }
 
@@ -65,18 +80,18 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
     _model.takeExam(e);
     ExamRepository.updateExam(e);
-    _updateShowExamsPage(m);
+    _updatePassivePage(m);
     m.getUpdateAfterTakeExamFunction()(e);
   }
 }
 
-class _ObserverOfUpdateFunction implements Observer<Function> {
-  Function _updateFunction;
+class _ObserverOfUpdateFunctions implements Observer<Map<String, Function>> {
+  Map<String, Function> _updateFunctions = Map<String, Function>();
 
   @override
-  void update(Function message) {
-    _updateFunction = message;
+  void update(Map<String, Function> message) {
+    _updateFunctions.addAll(message);
   }
 
-  Function getUpdateFunction() => _updateFunction;
+  Map<String, Function> getUpdateFunctions() => _updateFunctions;
 }

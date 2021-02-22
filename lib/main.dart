@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/controller/exams_manager.dart';
 import 'package:graduation_grade/form_exam/exam_form.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
+import 'package:graduation_grade/pattern/cubit/information_cubit.dart';
 import 'package:graduation_grade/show_exam_data_page/show_exam_data_page.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
@@ -19,25 +20,25 @@ void main() async {
   runApp(MaterialApp(
     title: GlobalData.appName,
     theme: DesignData.lightTheme,
-
     home: BlocProvider(
-      create: (context) => ExamsCubit(),
-      child: HomePage(examsManager.getObserverOfUpdateFunction(),
-          this._wAvg, this._cfuAcquired, this._expectedGrade, this._degreeName),
+      create: (context) => InformationCubit(),
+      child: HomePage(
+          examsManager.getObserverOfUpdateFunctions(),
+          examsManager.getModel().getWAvg(),
+          examsManager.getModel().getCfuAcquired(),
+          examsManager.getModel().getExpectedGrade(),
+          examsManager.getModel().getDegreeName()),
     ),
-
     routes: {
-      ShowExamsPage.routeName : (context) => BlocProvider(
-        create: (context) => ExamsCubit(),
-        child: ShowExamsPage(examsManager.getModel().getExams(),
-            examsManager.getObserverOfUpdateFunction()),
-      ),
-
+      ShowExamsPage.routeName: (context) => BlocProvider(
+            create: (context) => ExamsCubit(),
+            child: ShowExamsPage(examsManager.getModel().getExams(),
+                examsManager.getObserverOfUpdateFunctions()),
+          ),
       ExamForm.routeName: (context) => BlocProvider(
             create: (context) => ExamsCubit(),
             child: ExamForm(examsManager),
           ),
-
       ShowExamDataPage.routeName: (context) => BlocProvider(
             create: (context) => ExamsCubit(),
             child: ShowExamDataPage(examsManager),
@@ -45,4 +46,3 @@ void main() async {
     },
   ));
 }
-
