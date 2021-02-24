@@ -55,10 +55,14 @@ class _HomePageState extends State<HomePage> {
       ExamMessage message, double wAvg, int cfuAcquired, int expectedGrade) {
     BlocProvider.of<InformationCubit>(this.context)
         .updateInformation(message, wAvg, cfuAcquired, expectedGrade);
+    _wAvg = wAvg;
+    _cfuAcquired = cfuAcquired;
+    _expectedGrade = expectedGrade;
   }
 
   void updateAfterChangeDegreeName(String name) {
     BlocProvider.of<InformationCubit>(this.context).updateNameDegree(name);
+    _degreeName = name;
   }
 
   @override
@@ -70,7 +74,9 @@ class _HomePageState extends State<HomePage> {
       // body is the majority of the screen.
       body: Container(
         child: BlocConsumer<InformationCubit, InformationState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+
+          },
           builder: (context, state) {
             return SingleChildScrollView(
                 child: Column(
