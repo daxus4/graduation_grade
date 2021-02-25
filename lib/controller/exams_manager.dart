@@ -7,8 +7,10 @@ import 'package:graduation_grade/pattern/command/controllable_by_exam_message.da
 import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/name_degree_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
+import 'package:graduation_grade/shared_preferences_manager/shared_preferences_manager.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
 class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
@@ -23,9 +25,17 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
   Future<void> init() async {
     await examDbHelper.initDatabase();
+
     List<Exam> exams = await ExamRepository.getExamsFromDb();
     exams.forEach((exam) => _model.addExam(exam));
-    _model.setDegreeName("gozilla");
+
+    bool isStoredDegreeName = await isThereDegreeName();
+    if(isStoredDegreeName) {
+      String name = await SharedPreferencesManager.getDegreeName();
+      _model.setDegreeName(name);
+    } else {
+      _model.setDegreeName("");
+    }
   }
 
   void _updateShowExamsPage(ExamMessage message) {
@@ -82,6 +92,18 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
     ExamRepository.updateExam(e);
     _updatePassivePage(m);
     m.getUpdateAfterTakeExamFunction()(e);
+  }
+
+  @override
+  void handleNameDegreeMessage(NameDegreeMessage m) {
+    Exam e = m.getExam();
+
+    _model.setDegreeName(e.getName());
+    SharedPreferencesManager.saveDegreeName(e.getName());
+  }
+
+  Future<bool> isThereDegreeName() async {
+    return await SharedPreferencesManager.isPresentDegreeName();
   }
 }
 

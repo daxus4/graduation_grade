@@ -23,6 +23,7 @@ void main() async {
     home: BlocProvider(
       create: (context) => InformationCubit(),
       child: HomePage(
+          examsManager,
           examsManager.getObserverOfUpdateFunctions(),
           examsManager.getModel().getWAvg(),
           examsManager.getModel().getCfuAcquired(),

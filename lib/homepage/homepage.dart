@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/name_degree_message.dart';
 import 'package:graduation_grade/pattern/cubit/information_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/information_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -11,20 +13,22 @@ import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 class HomePage extends StatefulWidget {
   static final routeName = '/';
 
-  final Observer<Map<String, Function>> _examController;
+  final Observer<Map<String, Function>> _examControllerObserverFunction;
+  final Observer<ExamMessage> _examController;
 
   final double _wAvg;
   final int _cfuAcquired;
   final int _expectedGrade;
   final String _degreeName;
 
-  HomePage(this._examController, this._wAvg, this._cfuAcquired,
-      this._expectedGrade, this._degreeName)
+  HomePage(this._examController, this._examControllerObserverFunction,
+      this._wAvg, this._cfuAcquired, this._expectedGrade, this._degreeName)
       : super();
 
   @override
   State<StatefulWidget> createState() => new _HomePageState(
-      _ObservableUpdateFunction([_examController]),
+      _ObservableExamMessage([_examController]),
+      _ObservableUpdateFunction([_examControllerObserverFunction]),
       _wAvg,
       _cfuAcquired,
       _expectedGrade,
@@ -36,16 +40,22 @@ class _ObservableUpdateFunction extends Observable<Map<String, Function>> {
       : super(observers);
 }
 
+class _ObservableExamMessage extends Observable<ExamMessage> {
+  _ObservableExamMessage(List<Observer<ExamMessage>> observers)
+      : super(observers);
+}
+
 class _HomePageState extends State<HomePage> {
   final _ObservableUpdateFunction _observableFromController;
+  final _ObservableExamMessage _examController;
 
   double _wAvg;
   int _cfuAcquired;
   int _expectedGrade;
   String _degreeName;
 
-  _HomePageState(this._observableFromController, this._wAvg, this._cfuAcquired,
-      this._expectedGrade, this._degreeName)
+  _HomePageState(this._examController, this._observableFromController,
+      this._wAvg, this._cfuAcquired, this._expectedGrade, this._degreeName)
       : super() {
     _observableFromController
         .notify({HomePage.routeName: updateAfterChangeExam});
@@ -53,16 +63,17 @@ class _HomePageState extends State<HomePage> {
 
   void updateAfterChangeExam(
       ExamMessage message, double wAvg, int cfuAcquired, int expectedGrade) {
-    BlocProvider.of<InformationCubit>(this.context)
-        .updateInformation(message, wAvg, cfuAcquired, expectedGrade);
     _wAvg = wAvg;
     _cfuAcquired = cfuAcquired;
     _expectedGrade = expectedGrade;
+    BlocProvider.of<InformationCubit>(this.context)
+        .updateInformation(message, wAvg, cfuAcquired, expectedGrade);
   }
 
   void updateAfterChangeDegreeName(String name) {
-    BlocProvider.of<InformationCubit>(this.context).updateNameDegree(name);
     _degreeName = name;
+    _examController.notify(NameDegreeMessage(Exam(name, 1)));
+    BlocProvider.of<InformationCubit>(this.context).updateNameDegree(name);
   }
 
   @override
@@ -75,49 +86,46 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         padding: const EdgeInsets.all(16),
         child: BlocConsumer<InformationCubit, InformationState>(
-          listener: (context, state) {
-
-          },
+          listener: (context, state) {},
           builder: (context, state) {
-            if(_degreeName.isEmpty)
+            if (_degreeName.isEmpty)
               return SingleChildScrollView(
                 child: Text("Insert degree name"),
               );
             return SingleChildScrollView(
                 child: Column(
-                  children: <Widget>[
-                    Text(_degreeName),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text("Weighted average : " + _wAvg.toStringAsFixed(2)),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text("Cfu acquired : " + _cfuAcquired.toString()),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(
-                        "Expected graduation grade : " + _expectedGrade.toString()),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor, // background
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, ShowExamsPage.routeName);
-                      },
-                      child: Text(
-                        "Marks",
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-                )
-            );
+              children: <Widget>[
+                Text(_degreeName),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Weighted average : " + _wAvg.toStringAsFixed(2)),
+                SizedBox(
+                  height: 16,
+                ),
+                Text("Cfu acquired : " + _cfuAcquired.toString()),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                    "Expected graduation grade : " + _expectedGrade.toString()),
+                SizedBox(
+                  height: 16,
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: Theme.of(context).primaryColor, // background
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, ShowExamsPage.routeName);
+                  },
+                  child: Text(
+                    "Marks",
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            ));
           },
         ),
       ),
