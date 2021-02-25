@@ -79,6 +79,10 @@ class _HomePageState extends State<HomePage> {
 
           },
           builder: (context, state) {
+            if(_degreeName.isEmpty)
+              return SingleChildScrollView(
+                child: Text("Insert degree name"),
+              );
             return SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
@@ -107,7 +111,7 @@ class _HomePageState extends State<HomePage> {
                         Navigator.pushNamed(context, ShowExamsPage.routeName);
                       },
                       child: Text(
-                        "Modify",
+                        "Marks",
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
