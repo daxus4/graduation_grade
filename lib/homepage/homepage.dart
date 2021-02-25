@@ -73,6 +73,7 @@ class _HomePageState extends State<HomePage> {
       ),
       // body is the majority of the screen.
       body: Container(
+        padding: const EdgeInsets.all(16),
         child: BlocConsumer<InformationCubit, InformationState>(
           listener: (context, state) {
 
@@ -80,38 +81,39 @@ class _HomePageState extends State<HomePage> {
           builder: (context, state) {
             return SingleChildScrollView(
                 child: Column(
-              children: <Widget>[
-                Text(_degreeName),
-                SizedBox(
-                  height: 16,
-                ),
-                Text("Weighted average : " + _wAvg.toStringAsFixed(2)),
-                SizedBox(
-                  height: 16,
-                ),
-                Text("Cfu acquired : " + _cfuAcquired.toString()),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(
-                    "Expected graduation grade : " + _expectedGrade.toString()),
-                SizedBox(
-                  height: 16,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor, // background
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, ShowExamsPage.routeName);
-                  },
-                  child: Text(
-                    "Modify",
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
-            ));
+                  children: <Widget>[
+                    Text(_degreeName),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text("Weighted average : " + _wAvg.toStringAsFixed(2)),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text("Cfu acquired : " + _cfuAcquired.toString()),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(
+                        "Expected graduation grade : " + _expectedGrade.toString()),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor, // background
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, ShowExamsPage.routeName);
+                      },
+                      child: Text(
+                        "Modify",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ],
+                )
+            );
           },
         ),
       ),

@@ -10,6 +10,7 @@ import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/show_exam_data_page/update_exam_dialog.dart';
+import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
 class ShowExamDataPage extends StatefulWidget {
   static const routeName = '/showExamData';
@@ -45,7 +46,8 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
         child: BlocConsumer<ExamsCubit, ExamsState>(
           listener: (context, state) {
             if (state is ExamDeleted)
-              Navigator.popUntil(context, ModalRoute.withName('/'));
+              Navigator.popUntil(
+                  context, ModalRoute.withName(ShowExamsPage.routeName));
           },
           builder: (context, state) {
             if (state is ExamTaken) {
