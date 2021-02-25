@@ -3,24 +3,23 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SharedPreferencesManager {
   static final String degreeNameKey = "degree_name";
 
-  static Future<String> getDegreeName(String key) async {
+  static Future<String> getDegreeName() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.get(key);
+    return sharedPreferences.get(degreeNameKey);
   }
 
-  static Future<bool> isPresentDegreeName(String key) async {
+  static Future<bool> isPresentDegreeName() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    return sharedPreferences.containsKey(key);
+    return sharedPreferences.containsKey(degreeNameKey);
   }
 
-  static void saveDegreeName(String key, String degreeName) async {
+  static void saveDegreeName(String degreeName) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    sharedPreferences.setString(key, degreeName);
+    sharedPreferences.setString(degreeNameKey, degreeName);
   }
 
-  static void resetSharedPreferences(List<String> keys) async{
+  static void resetSharedPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    for(String key in keys)
-      sharedPreferences.remove(key);
+    sharedPreferences.clear();
   }
 }
