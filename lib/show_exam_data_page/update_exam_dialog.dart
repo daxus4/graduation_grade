@@ -1,15 +1,38 @@
 import 'package:flutter/material.dart';
-import 'package:graduation_grade/model/general_data/global_data.dart';
+import 'package:graduation_grade/model/exam.dart';
+import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
 
 class UpdateExamDialog extends StatefulWidget {
+  final Exam _exam;
+
+  final Function(ExamMessage) _updateExamFunction;
+  final Function(Exam) _updateAfterTakeExam;
+
+  const UpdateExamDialog(
+      this._exam, this._updateExamFunction, this._updateAfterTakeExam,
+      {Key key})
+      : super(key: key);
+
   @override
-  _UpdateExamDialogState createState() => _UpdateExamDialogState();
+  _UpdateExamDialogState createState() =>
+      _UpdateExamDialogState(_exam, _updateExamFunction, _updateAfterTakeExam);
 }
 
 class _UpdateExamDialogState extends State<UpdateExamDialog> {
-  final _formKey = GlobalKey<FormState>();
+  final Exam _exam;
+
   bool _cumLaude = false;
   int _examMark;
+
+  final _formKey = GlobalKey<FormState>();
+
+  final Function(ExamMessage) _updateExamFunction;
+  final Function(Exam) _updateAfterTakeExam;
+
+  _UpdateExamDialogState(
+      this._exam, this._updateExamFunction, this._updateAfterTakeExam)
+      : super();
 
   @override
   Widget build(BuildContext context) {
@@ -39,14 +62,13 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
         TextButton(
           child: Text("Cancel"),
           onPressed: () {
-            Navigator.pop(context, Map<String, dynamic>());
+            Navigator.pop(context);
           },
         ),
         updateButton(context),
       ],
     );
   }
-
 
   //TextForm in which insert the exam mark
   Widget examMarkInput() {
@@ -99,8 +121,10 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
       onPressed: () {
         if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
-          Navigator.pop(context, {GlobalData.examMarkAttribute: _examMark,
-            GlobalData.examLaudeAttribute: _cumLaude,});
+          _updateExamFunction(TakeExamMessage(
+              Exam.taken(_exam.getName(), _exam.getCfu(), _examMark, _cumLaude),
+              _updateAfterTakeExam));
+          Navigator.pop(context);
         }
       },
       child: Text(

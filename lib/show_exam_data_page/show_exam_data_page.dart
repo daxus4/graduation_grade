@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/model/exam.dart';
-import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -156,16 +154,10 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
                         "You cannot insert a mark in a already taken exam")));
                 return;
               }
-              Map<String, dynamic> examChanges = await showDialog(
+              showDialog(
                   context: context,
-                  builder: (BuildContext context) => UpdateExamDialog());
-              _observableFromController.notify(TakeExamMessage(
-                  Exam.taken(
-                      exam.getName(),
-                      exam.getCfu(),
-                      examChanges[GlobalData.examMarkAttribute],
-                      examChanges[GlobalData.examLaudeAttribute]),
-                  updateAfterTakeExam));
+                  builder: (BuildContext context) => UpdateExamDialog(exam,
+                      _observableFromController.notify, updateAfterTakeExam));
             },
             child: Text(
               "Take",
