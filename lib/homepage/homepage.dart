@@ -10,6 +10,7 @@ import 'package:graduation_grade/pattern/observable/observable.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
+import 'change_name_dialog.dart';
 import 'degree_name_form.dart';
 
 class HomePage extends StatefulWidget {
@@ -114,7 +115,12 @@ class _HomePageState extends State<HomePage> {
             return SingleChildScrollView(
                 child: Column(
               children: <Widget>[
-                Text(_degreeName),
+                Row(
+                  children: <Widget>[
+                    Text(_degreeName),
+                    modifyNameButton(),
+                  ],
+                ),
                 SizedBox(
                   height: 16,
                 ),
@@ -148,6 +154,19 @@ class _HomePageState extends State<HomePage> {
           },
         ),
       ),
+    );
+  }
+
+  Widget modifyNameButton() {
+    return IconButton(
+      icon: Icon(Icons.mode_edit),
+      tooltip: 'Change name',
+      onPressed: () {
+        showDialog(
+          context: context,
+          builder: (_) => ChangeNameDialog(updateAfterChangeDegreeName),
+        );
+      },
     );
   }
 }
