@@ -10,6 +10,8 @@ import 'package:graduation_grade/pattern/observable/observable.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
+import 'degree_name_form.dart';
+
 class HomePage extends StatefulWidget {
   static final routeName = '/';
 
@@ -86,11 +88,28 @@ class _HomePageState extends State<HomePage> {
       body: Container(
         padding: const EdgeInsets.all(16),
         child: BlocConsumer<InformationCubit, InformationState>(
-          listener: (context, state) {},
+          listener: (context, state) {
+            if(state is InformationNameDegreeUpdated)
+              showDialog(
+                context: context,
+                builder: (_) => AlertDialog(
+                  title: Text(GlobalData.appName),
+                  content: Text("Degree name updated"),
+                  actions: <Widget>[
+                    TextButton(
+                      child: Text("Ok"),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                ),
+              );
+          },
           builder: (context, state) {
             if (_degreeName.isEmpty)
               return SingleChildScrollView(
-                child: Text("Insert degree name"),
+                child: DegreeNameForm(updateAfterChangeDegreeName),
               );
             return SingleChildScrollView(
                 child: Column(
