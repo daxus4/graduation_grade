@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
@@ -90,7 +91,7 @@ class _HomePageState extends State<HomePage> {
         padding: const EdgeInsets.all(16),
         child: BlocConsumer<InformationCubit, InformationState>(
           listener: (context, state) {
-            if(state is InformationNameDegreeUpdated)
+            if (state is InformationNameDegreeUpdated)
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
@@ -124,16 +125,21 @@ class _HomePageState extends State<HomePage> {
                 SizedBox(
                   height: 16,
                 ),
-                Text("Weighted average : " + _wAvg.toStringAsFixed(2)),
+                Text(AppLocalizations.of(context).translate("w_avg") +
+                    ": " +
+                    _wAvg.toStringAsFixed(2)),
                 SizedBox(
                   height: 16,
                 ),
-                Text("Cfu acquired : " + _cfuAcquired.toString()),
+                Text(AppLocalizations.of(context).translate("acquired_cfu") +
+                    ": " +
+                    _cfuAcquired.toString()),
                 SizedBox(
                   height: 16,
                 ),
-                Text(
-                    "Expected graduation grade : " + _expectedGrade.toString()),
+                Text(AppLocalizations.of(context).translate("expected_grade") +
+                    ": " +
+                    _expectedGrade.toString()),
                 SizedBox(
                   height: 16,
                 ),
