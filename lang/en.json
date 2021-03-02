@@ -12,5 +12,14 @@
   "cfu" : "CFU",
   "mark" : "Mark",
   "cum_laude" : "with laude",
-  "add_exam" : "Add exam"
+  "add_exam" : "Add exam",
+  "dgr_nm_upd" : "Degree name updated",
+  "marks" : "Marks",
+  "take": "Take",
+  "exam_mark" : "Exam mark",
+  "range_marks" : "From 18 to 30",
+  "inv_mark" : "Invalid mark",
+  "err_laude" : "Laude must be with 30",
+  "laude" : "Laude",
+  "update" : "Update"
 }

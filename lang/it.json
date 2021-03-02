@@ -12,6 +12,14 @@
   "cfu" : "CFU",
   "mark" : "Voto",
   "cum_laude" : "e lode",
-  "add_exam" : "Aggiungi esame"
-
+  "add_exam" : "Aggiungi esame",
+  "dgr_nm_upd" : "Nome laurea aggiornato",
+  "marks" : "Voti",
+  "take" : "Svolgi",
+  "exam_mark" : "Voto esame",
+  "range_marks" : "Da 18 a 30",
+  "inv_mark" : "Voto non valido",
+  "err_laude" : "Lode deve essere associata con 30",
+  "laude" : "Lode",
+  "update" : "Aggiorna"
 }

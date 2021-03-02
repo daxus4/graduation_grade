@@ -96,7 +96,7 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 builder: (_) => AlertDialog(
                   title: Text(GlobalData.appName),
-                  content: Text("Degree name updated"),
+                  content: Text(AppLocalizations.of(context).translate("dgr_nm_upd")),
                   actions: <Widget>[
                     TextButton(
                       child: Text("Ok"),
@@ -151,7 +151,7 @@ class _HomePageState extends State<HomePage> {
                     Navigator.pushNamed(context, ShowExamsPage.routeName);
                   },
                   child: Text(
-                    "Marks",
+                    AppLocalizations.of(context).translate("marks"),
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
@@ -166,7 +166,7 @@ class _HomePageState extends State<HomePage> {
   Widget modifyNameButton() {
     return IconButton(
       icon: Icon(Icons.mode_edit),
-      tooltip: 'Change name',
+      tooltip: AppLocalizations.of(context).translate('change_name'),
       onPressed: () {
         showDialog(
           context: context,

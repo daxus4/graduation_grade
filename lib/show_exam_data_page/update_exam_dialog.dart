@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
@@ -37,7 +38,7 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Take"),
+      title: Text(AppLocalizations.of(context).translate("take")),
       content: Container(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -60,7 +61,7 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text("Cancel"),
+          child: Text(AppLocalizations.of(context).translate("cancel")),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -75,18 +76,20 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: "Exam Mark",
-        hintText: "From 18 to 30",
+        labelText: AppLocalizations.of(context).translate("exam_mark"),
+        hintText: AppLocalizations.of(context).translate("range_marks"),
       ),
       textInputAction: TextInputAction.done,
       validator: (mark) {
-        if (mark.isEmpty) return 'Invalid mark';
+        if (mark.isEmpty)
+          return AppLocalizations.of(context).translate('inv_mark');
         int intMark = int.parse(mark);
         if (intMark >= 18 && intMark <= 30) {
-          if (_cumLaude && intMark != 30) return 'Laude must be with 30';
+          if (_cumLaude && intMark != 30)
+            return AppLocalizations.of(context).translate("err_laude");
           return null;
         }
-        return 'Invalid mark';
+        return AppLocalizations.of(context).translate('inv_mark');
       },
       onSaved: (mark) => _examMark = int.parse(mark),
     );
@@ -98,7 +101,7 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Laude:',
+          AppLocalizations.of(context).translate('laude') + ":",
           style: TextStyle(
             color: Colors.black,
           ),
@@ -128,7 +131,7 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
         }
       },
       child: Text(
-        "Update",
+        AppLocalizations.of(context).translate("update"),
       ),
     );
   }
