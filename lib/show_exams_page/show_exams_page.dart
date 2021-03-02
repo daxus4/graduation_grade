@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/form_exam/exam_form.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
@@ -56,7 +57,7 @@ class ShowExamsPageState extends State<ShowExamsPage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.add),
-            tooltip: 'Add exam',
+            tooltip: AppLocalizations.of(context).translate('add_exam'),
             onPressed: () {
               Navigator.pushNamed(
                 context,

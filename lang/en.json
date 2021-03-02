@@ -8,5 +8,9 @@
   "degree_name" : "Degree name",
   "inv_degree_name" : "Invalid degree name",
   "computer_engineering" : "Computer Engineering",
-  "submit" : "submit"
+  "submit" : "Submit",
+  "cfu" : "CFU",
+  "mark" : "Mark",
+  "cum_laude" : "with laude",
+  "add_exam" : "Add exam"
 }

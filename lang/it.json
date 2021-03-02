@@ -8,6 +8,10 @@
   "degree_name" : "Nome laurea",
   "inv_degree_name" : "Nome laurea non valido",
   "computer_engineering" : "Ingegneria informatica",
-  "submit" : "Invio"
+  "submit" : "Invio",
+  "cfu" : "CFU",
+  "mark" : "Voto",
+  "cum_laude" : "e lode",
+  "add_exam" : "Aggiungi esame"
 
 }
