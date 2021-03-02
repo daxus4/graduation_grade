@@ -2,5 +2,10 @@
   "title" : "Graduation grade",
   "w_avg" : "Weighted average",
   "acquired_cfu" : "CFU acquired",
-  "expected_grade" : "Expected graduation grade"
+  "expected_grade" : "Expected graduation grade",
+  "cancel" : "Cancel",
+  "change_name" : "Change name",
+  "degree_name" : "Degree name",
+  "inv_degree_name" : "Invalid degree name",
+  "computer_engineering" : "Computer Engineering"
 }

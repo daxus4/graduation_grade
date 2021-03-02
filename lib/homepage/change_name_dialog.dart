@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 
 class ChangeNameDialog extends StatefulWidget {
   final Function(String) _updateName;
@@ -21,7 +22,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
-      title: Text("Change name"),
+      title: Text(AppLocalizations.of(context).translate("change_name")),
       content: Container(
         padding: const EdgeInsets.all(16),
         child: Form(
@@ -37,7 +38,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
       ),
       actions: <Widget>[
         TextButton(
-          child: Text("Cancel"),
+          child: Text(AppLocalizations.of(context).translate("cancel")),
           onPressed: () {
             Navigator.pop(context);
           },
@@ -47,21 +48,23 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
     );
   }
 
-
   //TextForm in which insert the exam mark
   Widget degreeNameInput() {
     return TextFormField(
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        labelText: "Degree name",
-        hintText: "computer engineering",
+        labelText: AppLocalizations.of(context).translate("degree_name"),
+        hintText:
+            AppLocalizations.of(context).translate("computer engineering"),
       ),
       textInputAction: TextInputAction.done,
       validator: (name) {
         Pattern pattern = r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
-        return !regex.hasMatch(name) ? 'Invalid degree name' : null;
+        return !regex.hasMatch(name)
+            ? AppLocalizations.of(context).translate("inv_degree_name")
+            : null;
       },
       onSaved: (name) => _degreeName = name,
       autofocus: true,
@@ -79,7 +82,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
         }
       },
       child: Text(
-        "Change name",
+        AppLocalizations.of(context).translate("change_name"),
       ),
     );
   }

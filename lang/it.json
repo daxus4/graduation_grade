@@ -2,5 +2,11 @@
   "title" : "Graduation grade",
   "w_avg" : "Media ponderata",
   "acquired_cfu" : "CFU acquisiti",
-  "expected_grade" : "Voto di laurea previsto"
+  "expected_grade" : "Voto di laurea previsto",
+  "cancel" : "Annulla",
+  "change_name" : "Cambia nome",
+  "degree_name" : "Nome laurea",
+  "computer_engineering" : "Ingegneria informatica"
+
+
 }
