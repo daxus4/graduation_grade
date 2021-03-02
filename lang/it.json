@@ -6,7 +6,8 @@
   "cancel" : "Annulla",
   "change_name" : "Cambia nome",
   "degree_name" : "Nome laurea",
-  "computer_engineering" : "Ingegneria informatica"
-
+  "inv_degree_name" : "Nome laurea non valido",
+  "computer_engineering" : "Ingegneria informatica",
+  "submit" : "Invio"
 
 }

@@ -56,7 +56,7 @@ class _ChangeNameDialogState extends State<ChangeNameDialog> {
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context).translate("degree_name"),
         hintText:
-            AppLocalizations.of(context).translate("computer engineering"),
+            AppLocalizations.of(context).translate("computer_engineering"),
       ),
       textInputAction: TextInputAction.done,
       validator: (name) {

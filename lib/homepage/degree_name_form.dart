@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 
 class DegreeNameForm extends StatefulWidget {
-
   final Function(String) _updateName;
 
   const DegreeNameForm(this._updateName, {Key key}) : super(key: key);
@@ -18,7 +18,6 @@ class _DegreeNameFormState extends State<DegreeNameForm> {
   final Function(String) _updateName;
 
   _DegreeNameFormState(this._updateName) : super();
-
 
   @override
   Widget build(BuildContext context) {
@@ -46,14 +45,17 @@ class _DegreeNameFormState extends State<DegreeNameForm> {
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        labelText: "Degree name",
-        hintText: "computer engineering",
+        labelText: AppLocalizations.of(context).translate("degree_name"),
+        hintText:
+            AppLocalizations.of(context).translate("computer_engineering"),
       ),
       textInputAction: TextInputAction.done,
       validator: (name) {
         Pattern pattern = r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
-        return !regex.hasMatch(name) ? 'Invalid degree name' : null;
+        return !regex.hasMatch(name)
+            ? AppLocalizations.of(context).translate('inv_degree_name')
+            : null;
       },
       onSaved: (name) => _degreeName = name,
       autofocus: true,
@@ -72,7 +74,7 @@ class _DegreeNameFormState extends State<DegreeNameForm> {
         }
       },
       child: Text(
-        "Submit",
+        AppLocalizations.of(context).translate("submit"),
         style: TextStyle(color: Colors.white),
       ),
     );
