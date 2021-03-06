@@ -32,11 +32,11 @@ class ExamsModel {
   }
 
   double getWAvg() {
-    return _exams
+    return _exams.length != 0 ?_exams
             .where((e) => e.isTaken())
             .fold(0, (t, exam) => t + exam.getCfu() * exam.getMark())
         /
-        getCfuAcquired();
+        getCfuAcquired() : 0;
   }
 
   List<Exam> getExams() => _exams;
@@ -46,9 +46,9 @@ class ExamsModel {
   }
 
   int getCfuAcquired() {
-    return _exams
+    return _exams.length != 0 ? _exams
         .where((e) => e.isTaken())
-        .fold(0, (t, exam) => t + exam.getCfu());
+        .fold(0, (t, exam) => t + exam.getCfu()) : 0;
   }
 
   int getExpectedGrade() {
