@@ -23,7 +23,7 @@ class ExamListView extends StatelessWidget {
                 ": " +
                 exams[i].getMark().toString();
             if (exams[i].getLaude())
-              subtitle = subtitle +
+              subtitle = subtitle + " " +
                   AppLocalizations.of(context).translate("cum_laude");
           } else
             subtitle = AppLocalizations.of(context).translate("cfu") +

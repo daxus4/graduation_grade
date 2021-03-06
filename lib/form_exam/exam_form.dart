@@ -136,7 +136,7 @@ class _ExamFormState extends State<ExamForm> {
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
         labelText: AppLocalizations.of(context).translate("cfu"),
-        hintText: AppLocalizations.of(context).translate("10"),
+        hintText: "10",
       ),
       textInputAction: TextInputAction.next,
       validator: (cfu) {

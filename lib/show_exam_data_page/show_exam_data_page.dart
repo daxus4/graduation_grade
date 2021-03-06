@@ -78,7 +78,9 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
         SizedBox(
           height: 16,
         ),
-        Text(exam.getCfu().toString()),
+        Text(AppLocalizations.of(context).translate("cfu") +
+            ": " +
+            exam.getCfu().toString()),
         SizedBox(
           height: 16,
         ),
@@ -89,6 +91,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
         Text(
           exam.isTaken()
               ? AppLocalizations.of(context).translate("mark") +
+                  ": " +
                   exam.getMark().toString()
               : AppLocalizations.of(context).translate('no_mark'),
           style: TextStyle(
