@@ -21,5 +21,10 @@
   "inv_mark" : "Invalid mark",
   "err_laude" : "Laude must be with 30",
   "laude" : "Laude",
-  "update" : "Update"
+  "update" : "Update",
+  "no_mark" : "Mark: none",
+  "delete" : "Delete",
+  "no" : "No",
+  "yes" : "Yes",
+  "no_insert_exam" : "You cannot insert a mark in a already taken exam"
 }

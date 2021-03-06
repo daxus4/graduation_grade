@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
@@ -86,7 +87,10 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
           height: 16,
         ),
         Text(
-          exam.isTaken() ? 'Mark: ${exam.getMark()}' : 'Mark: none',
+          exam.isTaken()
+              ? AppLocalizations.of(context).translate("mark") +
+                  exam.getMark().toString()
+              : AppLocalizations.of(context).translate('no_mark'),
           style: TextStyle(
             color: exam.isTaken() ? Colors.black : Colors.grey,
           ),
@@ -98,7 +102,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: <Widget>[
             Text(
-              'Laude:',
+              AppLocalizations.of(context).translate('laude') + ":",
               style: TextStyle(
                 color: exam.isTaken() ? Colors.black : Colors.grey,
               ),
@@ -118,17 +122,19 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
               showDialog(
                 context: context,
                 builder: (_) => AlertDialog(
-                  title: Text("Delete"),
-                  content: Text("Are you sure to delete this exam?"),
+                  title: Text(AppLocalizations.of(context).translate("delete")),
+                  content: Text(
+                      AppLocalizations.of(context).translate("delete_quest")),
                   actions: <Widget>[
                     TextButton(
-                      child: Text("No"),
+                      child: Text(AppLocalizations.of(context).translate("no")),
                       onPressed: () {
                         Navigator.of(context).pop();
                       },
                     ),
                     TextButton(
-                      child: Text("Yes"),
+                      child:
+                          Text(AppLocalizations.of(context).translate("yes")),
                       onPressed: () {
                         _observableFromController.notify(
                             DeleteExamMessage(exam, updateAfterDeleteExam));
@@ -139,7 +145,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
               );
             },
             child: Text(
-              "Delete",
+              AppLocalizations.of(context).translate("delete"),
               style: TextStyle(color: Colors.white),
             ),
           ),
@@ -150,8 +156,8 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
             onPressed: () async {
               if (exam.isTaken()) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                        "You cannot insert a mark in a already taken exam")));
+                    content: Text(AppLocalizations.of(context)
+                        .translate("no_insert_exam"))));
                 return;
               }
               showDialog(
@@ -160,7 +166,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
                       _observableFromController.notify, updateAfterTakeExam));
             },
             child: Text(
-              "Take",
+              AppLocalizations.of(context).translate("take"),
               style: TextStyle(color: Colors.white),
             ),
           ),

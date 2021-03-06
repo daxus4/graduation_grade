@@ -21,5 +21,11 @@
   "inv_mark" : "Voto non valido",
   "err_laude" : "Lode deve essere associata con 30",
   "laude" : "Lode",
-  "update" : "Aggiorna"
+  "update" : "Aggiorna",
+  "no_mark" : "Voto: nessuno",
+  "delete" : "Cancella",
+  "delete_quest" : "Sei sicuro di voler cancellare questo esame?",
+  "no" : "No",
+  "yes" : "Sì",
+  "no_insert_exam" : "Non puoi inserire un voto in un esame che lo ha già"
 }
