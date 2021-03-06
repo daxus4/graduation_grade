@@ -27,5 +27,13 @@
   "delete_quest" : "Sei sicuro di voler cancellare questo esame?",
   "no" : "No",
   "yes" : "Sì",
-  "no_insert_exam" : "Non puoi inserire un voto in un esame che lo ha già"
+  "no_insert_exam" : "Non puoi inserire un voto in un esame che lo ha già",
+  "exam_named" : "Esame chiamato ",
+  "already_present" : " è gia presente, inserirne un altro",
+  "ins_exam" : "Inserire esame",
+  "exam_name" : "Nome esame",
+  "exam_ex" : "Analisi 1",
+  "inv_e_name" : "Nome esame non valido",
+  "inv_e_cfu" : "Numero di CFU non valido",
+  "alr_taken" : "Già dato:"
 }

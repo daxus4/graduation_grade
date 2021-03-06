@@ -26,5 +26,13 @@
   "delete" : "Delete",
   "no" : "No",
   "yes" : "Yes",
-  "no_insert_exam" : "You cannot insert a mark in a already taken exam"
+  "no_insert_exam" : "You cannot insert a mark in a already taken exam",
+  "exam_named" : "Exam named ",
+  "already_present" : " is already present, insert another",
+  "ins_exam" : "Insert exam",
+  "exam_name" : "Exam name",
+  "exam_ex" : "Physic 101",
+  "inv_e_name" : "Invalid exam name",
+  "inv_e_cfu" : "Invalid CFU number",
+  "alr_taken" : "Already taken:"
 }

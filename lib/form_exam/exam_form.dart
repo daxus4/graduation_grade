@@ -3,6 +3,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
@@ -46,7 +47,7 @@ class _ExamFormState extends State<ExamForm> {
 
   void requestAnotherExam(String name) {
     BlocProvider.of<ExamsCubit>(this.context).requestAnotherExam(
-        name, "Exam named " + name + " is already present, insert another");
+        name, AppLocalizations.of(context).translate("exam_named") + name + AppLocalizations.of(context).translate(" is already present, insert another"));
   }
 
   void updateAfterAddExam(Exam e) {
@@ -59,7 +60,7 @@ class _ExamFormState extends State<ExamForm> {
         ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text("Insert exam"),
+        title: Text(AppLocalizations.of(context).translate("ins_exam")),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -111,14 +112,14 @@ class _ExamFormState extends State<ExamForm> {
       textCapitalization: TextCapitalization.words,
       keyboardType: TextInputType.text,
       decoration: InputDecoration(
-        labelText: "Exam name",
-        hintText: "Physic 101",
+        labelText: AppLocalizations.of(context).translate("exam_name"),
+        hintText: AppLocalizations.of(context).translate("exam_ex"),
       ),
       textInputAction: TextInputAction.next,
       validator: (name) {
         Pattern pattern = r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
-        return !regex.hasMatch(name) ? 'Invalid exam name' : null;
+        return !regex.hasMatch(name) ? AppLocalizations.of(context).translate('inv_e_name') : null;
       },
       onSaved: (name) => _examName = name,
       focusNode: _examNameFocusNode,
@@ -134,14 +135,14 @@ class _ExamFormState extends State<ExamForm> {
     return TextFormField(
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: "Exam CFU",
-        hintText: "10",
+        labelText: AppLocalizations.of(context).translate("cfu"),
+        hintText: AppLocalizations.of(context).translate("10"),
       ),
       textInputAction: TextInputAction.next,
       validator: (cfu) {
-        if (cfu.isEmpty) return 'Invalid CFU number';
+        if (cfu.isEmpty) return AppLocalizations.of(context).translate('inv_e_cfu');
         int intCfu = int.parse(cfu);
-        return (intCfu > 0 && intCfu <= 100) ? null : 'Invalid CFU number';
+        return (intCfu > 0 && intCfu <= 100) ? null : AppLocalizations.of(context).translate('inv_e_cfu');
       },
       onSaved: (cfu) => _examCfu = int.parse(cfu),
       focusNode: _examCfuFocusNode,
@@ -156,7 +157,7 @@ class _ExamFormState extends State<ExamForm> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
-        Text('Already taken:'),
+        Text(AppLocalizations.of(context).translate('alr_taken')),
         Checkbox(
           value: _alreadyTaken,
           onChanged: (bool value) {
@@ -175,19 +176,19 @@ class _ExamFormState extends State<ExamForm> {
       enabled: _alreadyTaken,
       keyboardType: TextInputType.number,
       decoration: InputDecoration(
-        labelText: "Exam Mark",
-        hintText: "From 18 to 30",
+        labelText: AppLocalizations.of(context).translate("exam_mark"),
+        hintText: AppLocalizations.of(context).translate("range_marks"),
       ),
       textInputAction: TextInputAction.done,
       validator: (mark) {
         if (!_alreadyTaken) return null;
-        if (mark.isEmpty) return 'Invalid mark';
+        if (mark.isEmpty) return AppLocalizations.of(context).translate('inv_mark');
         int intMark = int.parse(mark);
         if (intMark >= 18 && intMark <= 30) {
-          if (_cumLaude && intMark != 30) return 'Laude must be with 30';
+          if (_cumLaude && intMark != 30) return AppLocalizations.of(context).translate('err_laude');
           return null;
         }
-        return 'Invalid mark';
+        return AppLocalizations.of(context).translate('inv_mark');
       },
       onSaved: (mark) {
         if (_alreadyTaken) _examMark = int.parse(mark);
@@ -202,7 +203,7 @@ class _ExamFormState extends State<ExamForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
-          'Laude:',
+    AppLocalizations.of(context).translate('laude') + ":",
           style: TextStyle(
             color: _alreadyTaken ? Colors.black : Colors.grey,
           ),
@@ -246,7 +247,7 @@ class _ExamFormState extends State<ExamForm> {
         }
       },
       child: Text(
-        "Submit",
+    AppLocalizations.of(context).translate("submit"),
         style: TextStyle(color: Colors.white),
       ),
     );
