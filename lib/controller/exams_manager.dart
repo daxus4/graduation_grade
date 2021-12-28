@@ -20,7 +20,7 @@ import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 /// content of the message and the current state of the application.
 /// It implements also [ControllableByExamMessage] in order to implement a
 /// **command pattern**. This is useful to get a cleaner code used for
-/// managing the differents type of [ExamMessage].
+/// managing the different types of [ExamMessage].
 class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
   /// The helper class which allows to create and manage an SQL database that
