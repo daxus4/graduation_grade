@@ -3,19 +3,28 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+/// Class that manage the language switching for this application.
 class AppLocalizations {
+
+  /// Current system [Locale], used to retrieve current system language.
   final Locale locale;
+
+  /// Map that contain the strings in current system language.
   Map<String, String> _localizedStrings;
 
+  /// [LocalizationsDelegate] for this class.
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationDelegate();
 
+  /// Constructor that require current system [Locale].
   AppLocalizations(this.locale);
 
   static AppLocalizations of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
+  /// Load the localized strings that have to be used in the language indicated
+  /// in [locale].
   Future<bool> load() async {
     String jsonString =
         await rootBundle.loadString('lang/${locale.languageCode}.json');
@@ -29,6 +38,8 @@ class AppLocalizations {
     return true;
   }
 
+  /// Return the [String] that contain the desired translation for the passed
+  /// argument.
   String translate(String key) {
     return _localizedStrings[key];
   }

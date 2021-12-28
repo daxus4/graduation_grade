@@ -1,6 +1,6 @@
 # graduation_grade
 
-Application that help you to calculate your graduation grade
+Application that help you to calculate your graduation grade.
 
 ## Getting Started
 
