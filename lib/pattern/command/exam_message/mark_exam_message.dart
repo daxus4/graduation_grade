@@ -2,22 +2,22 @@ import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/controllable_by_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 
-class TakeExamMessage extends ExamMessage {
-  final Function(Exam) _updateAfterTakeExamFunction;
+class MarkExamMessage extends ExamMessage {
+  final Function(Exam) _updateAfterMarkExamFunction;
 
-  TakeExamMessage(Exam exam, this._updateAfterTakeExamFunction) : super(exam);
+  MarkExamMessage(Exam exam, this._updateAfterMarkExamFunction) : super(exam);
 
-  Function(Exam) getUpdateAfterTakeExamFunction() =>
-      _updateAfterTakeExamFunction;
+  Function(Exam) getUpdateAfterMarkExamFunction() =>
+      _updateAfterMarkExamFunction;
 
   @override
   execute(ControllableByExamMessage controllable) {
-    controllable.handleTakeExamMessage(this);
+    controllable.handleMarkExamMessage(this);
   }
 
   @override
   bool operator ==(Object other) {
-    return super == other && other is TakeExamMessage;
+    return super == other && other is MarkExamMessage;
   }
 
   @override

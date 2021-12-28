@@ -157,12 +157,12 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
               primary: Theme.of(context).primaryColor, // background
             ),
             onPressed: () async {
-              if (exam.isTaken()) {
+              /*if (exam.isTaken()) {
                 ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                     content: Text(AppLocalizations.of(context)
                         .translate("no_insert_exam"))));
                 return;
-              }
+              }*/
               showDialog(
                   context: context,
                   builder: (BuildContext context) => UpdateExamDialog(exam,

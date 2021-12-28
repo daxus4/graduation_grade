@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/mark_exam_message.dart';
 
 class UpdateExamDialog extends StatefulWidget {
   final Exam _exam;
@@ -124,7 +124,7 @@ class _UpdateExamDialogState extends State<UpdateExamDialog> {
       onPressed: () {
         if (_formKey.currentState.validate()) {
           _formKey.currentState.save();
-          _updateExamFunction(TakeExamMessage(
+          _updateExamFunction(MarkExamMessage(
               Exam.taken(_exam.getName(), _exam.getCfu(), _examMark, _cumLaude),
               _updateAfterTakeExam));
           Navigator.pop(context);

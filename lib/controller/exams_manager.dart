@@ -8,7 +8,7 @@ import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.d
 import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
 import 'package:graduation_grade/pattern/command/exam_message/name_degree_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/take_exam_message.dart';
+import 'package:graduation_grade/pattern/command/exam_message/mark_exam_message.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/shared_preferences_manager/shared_preferences_manager.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
@@ -85,13 +85,13 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
   }
 
   @override
-  void handleTakeExamMessage(TakeExamMessage m) {
+  void handleMarkExamMessage(MarkExamMessage m) {
     Exam e = m.getExam();
 
     _model.takeExam(e);
     ExamRepository.updateExam(e);
     _updatePassivePage(m);
-    m.getUpdateAfterTakeExamFunction()(e);
+    m.getUpdateAfterMarkExamFunction()(e);
   }
 
   @override
