@@ -26,11 +26,13 @@ class AppLocalizations {
   /// Load the localized strings that have to be used in the language indicated
   /// in [locale].
   Future<bool> load() async {
+
+    // Load file with translation
     String jsonString =
         await rootBundle.loadString('lang/${locale.languageCode}.json');
-
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
+    // Create map with strings that are the translations
     _localizedStrings = jsonMap.map((key, value) {
       return MapEntry(key, value.toString());
     });
@@ -40,9 +42,7 @@ class AppLocalizations {
 
   /// Return the [String] that contain the desired translation for the passed
   /// argument.
-  String translate(String key) {
-    return _localizedStrings[key];
-  }
+  String translate(String key) => _localizedStrings[key];
 }
 
 class _AppLocalizationDelegate extends LocalizationsDelegate<AppLocalizations> {

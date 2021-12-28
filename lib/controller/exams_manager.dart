@@ -13,8 +13,22 @@ import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/shared_preferences_manager/shared_preferences_manager.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
+/// Class that is the **controller** for a **MVC pattern** for this application.
+///
+/// It implements [Observer] in order to get notified when an [ExamMessage] is
+/// sent and to correctly update the state of the application by checking the
+/// content of the message and the current state of the application.
+/// It implements also [ControllableByExamMessage] in order to implement a
+/// **command pattern**. This is useful to get a cleaner code used for
+/// managing the differents type of [ExamMessage].
 class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
+
+  /// The helper class which allows to create and manage an SQL database that
+  /// will contain the information about the [Exam] instances.
   final examDbHelper = DbHelper();
+
+  /// Model of MVC pattern. It contains the information about the [Exam]
+  /// instances.
   final ExamsModel _model = ExamsModel([]);
 
   final _ObserverOfUpdateFunctions _observerOfUpdateFunctions =
