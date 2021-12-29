@@ -14,7 +14,11 @@ import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 import 'change_name_dialog.dart';
 import 'degree_name_form.dart';
 
+/// Homepage of the application. In this we shown the name of the degree and the
+/// information about averages and CFU.
 class HomePage extends StatefulWidget {
+
+  /// Homepage route.
   static final routeName = '/';
 
   final Observer<Map<String, Function>> _examControllerObserverFunction;
@@ -25,6 +29,10 @@ class HomePage extends StatefulWidget {
   final int _expectedGrade;
   final String _degreeName;
 
+  /// Constructor that requires an [Observer] of [ExamMessage] in order to
+  /// notify it when the degree name is changed and an [Observer] to whom we
+  /// will pass the function that it can use to update the state of this
+  /// homepage.
   HomePage(this._examController, this._examControllerObserverFunction,
       this._wAvg, this._cfuAcquired, this._expectedGrade, this._degreeName)
       : super();

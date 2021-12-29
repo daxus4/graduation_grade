@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
+import 'package:graduation_grade/controller/exams_manager.dart';
 
+/// The dialog that appear when a user want to change the degree name.
 class ChangeNameDialog extends StatefulWidget {
+
   final Function(String) _updateName;
 
+  /// Constructor that requires the function that updates the name of the degree
+  /// and notify it to [ExamsManager].
   const ChangeNameDialog(this._updateName, {Key key}) : super(key: key);
 
   @override

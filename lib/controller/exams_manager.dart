@@ -106,7 +106,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
   void handleMarkExamMessage(MarkExamMessage m) {
     Exam e = m.getExam();
 
-    _model.takeExam(e);
+    _model.changeExamEvaluation(e);
     ExamRepository.updateExam(e);
     _updatePassivePage(m);
     m.getUpdateAfterMarkExamFunction()(e);

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
 
+/// Form that appears when you start the app and the there is not a degree name
+/// saved in [SharedPreferences].
 class DegreeNameForm extends StatefulWidget {
   final Function(String) _updateName;
 
+  /// Constructor that requires the function that updates the name of the degree
+  /// and notify it to [ExamsManager].
   const DegreeNameForm(this._updateName, {Key key}) : super(key: key);
 
   @override
