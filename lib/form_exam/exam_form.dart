@@ -1,4 +1,3 @@
-//Form in which insert the data of exams
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -12,11 +11,17 @@ import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 
+/// Form in which insert the data of a [Exam].
 class ExamForm extends StatefulWidget {
+
+  /// Route of this form.
   static const routeName = '/examForm';
 
+  /// This is the controller, passed as an [Observer] of [ExamMessage] because
+  /// it have to be notified when an [AddExamMessage] is thrown.
   final Observer<ExamMessage> examController;
 
+  /// Constructor that require the [Observer] of [ExamMessage].
   ExamForm(this.examController) : super();
 
   @override

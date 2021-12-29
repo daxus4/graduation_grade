@@ -12,6 +12,7 @@ import 'package:graduation_grade/pattern/command/exam_message/mark_exam_message.
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/shared_preferences_manager/shared_preferences_manager.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 /// Class that is the **controller** for a **MVC pattern** for this application.
 ///
@@ -37,6 +38,8 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
   Observer<Map<String, Function>> getObserverOfUpdateFunctions() =>
       _observerOfUpdateFunctions;
 
+  /// Initialize the application state, by retrieve data from SQL database and
+  /// [SharedPreferences].
   Future<void> init() async {
     await examDbHelper.initDatabase();
 
@@ -67,6 +70,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
     _updateHomePage(m);
   }
 
+  /// Return current [ExamsModel] state.
   ExamsModel getModel() => _model;
 
   @override
@@ -116,6 +120,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
     SharedPreferencesManager.saveDegreeName(e.getName());
   }
 
+  /// Return if the degree name is stored in [SharedPreferences].
   Future<bool> isThereDegreeName() async {
     return await SharedPreferencesManager.isPresentDegreeName();
   }

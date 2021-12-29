@@ -1,5 +1,4 @@
-//Class that make SQL request to database in order to add, modify, show or
-//delete the exams
+
 
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
@@ -8,15 +7,18 @@ import 'package:sqflite/sqflite.dart';
 import 'db_helper.dart';
 
 //TODO command pattern per non chiamare db
+
+/// Class that make SQL requests to [Database] of [Exam] instances in order to
+/// add, modify, show or delete the exams.
 class ExamRepository {
 
-  //SQL insert of a exam
+  /// SQL insert of a [Exam].
   static Future<void> addExam(Exam exam) async {
     await db.insert(GlobalData.examTableName, exam.toMap(),
         conflictAlgorithm: ConflictAlgorithm.replace);
   }
 
-  //Retrieve list of all exams in the database
+  /// Retrieve list of all [Exam] instances in the database.
   static Future<List<Exam>> getExamsFromDb() async {
     //Query the table
     final List<Map<String, dynamic>> maps =
@@ -35,7 +37,7 @@ class ExamRepository {
     });
   }
 
-  //SQL update of an exam
+  /// SQL update of an [Exam].
   static Future<void> updateExam(Exam exam) async {
     await db.update(
       GlobalData.examTableName,
@@ -49,7 +51,7 @@ class ExamRepository {
     );
   }
 
-  //SQL deletion of an exam
+  /// SQL deletion of an [Exam].
   static Future<void> deleteExam(Exam exam) async {
     await db.delete(
       GlobalData.examTableName,
