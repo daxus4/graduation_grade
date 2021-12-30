@@ -20,10 +20,10 @@ import '../pattern/command/message/exam_message/mark_exam_message.dart';
 /// It implements [Observer] in order to get notified when an [ExamMessage] is
 /// sent and to correctly update the state of the application by checking the
 /// content of the message and the current state of the application.
-/// It implements also [ControllableByExamMessage] in order to implement a
+/// It implements also [ControllableByMessage] in order to implement a
 /// **command pattern**. This is useful to get a cleaner code used for
 /// managing the different types of [ExamMessage].
-class ExamsManager implements Observer<Message>, ControllableByExamMessage {
+class ExamsManager implements Observer<Message>, ControllableByMessage {
 
   /// The helper class which allows to create and manage an SQL database that
   /// will contain the information about the [Exam] instances.

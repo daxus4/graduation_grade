@@ -41,14 +41,10 @@ class Exam{
       examMap[GlobalData.examCfuAttribute]);
 
   /// Return the name of this [Exam].
-  String getName() {
-    return _name.toString();
-  }
+  String getName() => _name.toString();
 
   /// Return the CFU of this [Exam].
-  int getCfu() {
-    return _cfu;
-  }
+  int getCfu() => _cfu;
 
   /// Return if this [Exam] is evaluated.
   bool isTaken() => _isTaken;

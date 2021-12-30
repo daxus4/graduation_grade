@@ -5,8 +5,8 @@ import '../controllable_by_exam_message.dart';
 /// the type of notification that have to be sent.
 abstract class Message {
 
-  /// This function tell to a [ControllableByExamMessage] which code execute,
+  /// This function tell to a [ControllableByMessage] which code execute,
   /// in order to get a clean code. This is the main part of the implemented
   /// **command pattern**.
-  execute(ControllableByExamMessage controllable);
+  execute(ControllableByMessage controllable);
 }

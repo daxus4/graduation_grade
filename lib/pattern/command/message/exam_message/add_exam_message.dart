@@ -26,17 +26,15 @@ class AddExamMessage extends ExamMessage {
   Function(Exam) getUpdateAfterAddExamFunction() => _updateAfterAddExamFunction;
 
   @override
-  execute(ControllableByExamMessage controllable) {
-    controllable.handleAddExamMessage(this);
-  }
+  execute(ControllableByMessage controllable) =>
+      controllable.handleAddExamMessage(this);
 
   @override
-  bool operator ==(Object other) {
-    return super == other &&
+  bool operator ==(Object other) =>
+      super == other &&
         other is AddExamMessage &&
         _requestAnotherExamFunction == other._requestAnotherExamFunction &&
         _updateAfterAddExamFunction == other._updateAfterAddExamFunction;
-  }
 
   @override
   // TODO: implement hashCode

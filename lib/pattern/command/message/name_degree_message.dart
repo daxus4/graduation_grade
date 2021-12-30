@@ -6,12 +6,14 @@ import 'message.dart';
 /// when there is a request to set/change the degree name.
 class NameDegreeMessage extends Message {
 
+  /// New of the degree.
   final String name;
+
+  /// Constructor that require the new name of the degree.
   NameDegreeMessage(this.name);
 
   @override
-  execute(ControllableByExamMessage controllable) {
-    controllable.handleNameDegreeMessage(this);
-  }
+  execute(ControllableByMessage controllable) =>
+      controllable.handleNameDegreeMessage(this);
 
 }

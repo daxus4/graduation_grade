@@ -18,14 +18,12 @@ class MarkExamMessage extends ExamMessage {
       _updateAfterMarkExamFunction;
 
   @override
-  execute(ControllableByExamMessage controllable) {
-    controllable.handleMarkExamMessage(this);
-  }
+  execute(ControllableByMessage controllable) =>
+      controllable.handleMarkExamMessage(this);
 
   @override
-  bool operator ==(Object other) {
-    return super == other && other is MarkExamMessage;
-  }
+  bool operator ==(Object other) =>
+      super == other && other is MarkExamMessage;
 
   @override
   // TODO: implement hashCode

@@ -19,16 +19,14 @@ class DeleteExamMessage extends ExamMessage {
       _updateAfterDeleteExamFunction;
 
   @override
-  execute(ControllableByExamMessage controllable) {
-    controllable.handleDeleteExamMessage(this);
-  }
+  execute(ControllableByMessage controllable) =>
+      controllable.handleDeleteExamMessage(this);
 
   @override
-  bool operator ==(Object other) {
-    return super == other &&
+  bool operator ==(Object other) =>
+      super == other &&
         other is DeleteExamMessage &&
         _updateAfterDeleteExamFunction == other._updateAfterDeleteExamFunction;
-  }
 
   @override
   // TODO: implement hashCode

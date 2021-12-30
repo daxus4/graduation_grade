@@ -32,9 +32,7 @@ class ExamsModel {
   }
 
   /// Return the [Exam] with the passed name.
-  Exam getExam(String name) {
-    return _exams.firstWhere((e) => e.getName() == name);
-  }
+  Exam getExam(String name) => _exams.firstWhere((e) => e.getName() == name);
 
   /// Change the [Exam] mark and laude.
   void changeExamEvaluation(Exam examTaken) {
@@ -46,35 +44,29 @@ class ExamsModel {
 
   /// Return the  average of [Exam] marks weighted by CFU for the exams in the
   /// current state.
-  double getWAvg() {
-    return _exams.length != 0 ?_exams
+  double getWAvg() =>
+      _exams.length != 0 ?_exams
             .where((e) => e.isTaken())
             .fold(0, (t, exam) => t + exam.getCfu() * exam.getMark())
         /
         getCfuAcquired() : 0;
-  }
 
   /// Return the [List] of [Exam] in the current state.
   List<Exam> getExams() => _exams;
 
   /// Set the degree name
-  void setDegreeName(String name) {
-    _degreeName = name;
-  }
+  void setDegreeName(String name) => _degreeName = name;
 
   /// Return the number of CFU for the [Exam] in current state with an
   /// evaluation.
-  int getCfuAcquired() {
-    return _exams.length != 0 ? _exams
-        .where((e) => e.isTaken())
+  int getCfuAcquired() =>
+      _exams.length != 0 ?
+      _exams.where((e) => e.isTaken())
         .fold(0, (t, exam) => t + exam.getCfu()) : 0;
-  }
 
   /// Return the expected graduation grade by multiply the result of
   /// [getWAvg()].
-  int getExpectedGrade() {
-    return (getWAvg() * 11 / 3).round();
-  }
+  int getExpectedGrade() => (getWAvg() * 11 / 3).round();
 
   /// Return the degree name in current state.
   String getDegreeName() => _degreeName;
