@@ -3,9 +3,13 @@ import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/show_exam_data_page/show_exam_data_page.dart';
 
+/// [ListView] that shows the [Exam] instances in the current model state.
 class ExamListView extends StatelessWidget {
+
+  /// [Exam] instances in the current model state.
   final List<Exam> exams;
 
+  /// Constructor that requires the [Exam] instances in the current model state.
   ExamListView(this.exams, {Key key}) : super(key: key);
 
   @override

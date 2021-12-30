@@ -20,9 +20,7 @@ class ExamsChanged extends ExamsState {
   final Message _message;
   ExamsChanged(this._message);
 
-  Message getExamMessage() {
-    return _message;
-  }
+  Message getExamMessage() => _message;
 
   @override
   bool operator ==(Object other) {

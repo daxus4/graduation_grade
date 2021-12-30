@@ -11,11 +11,18 @@ import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/show_exam_data_page/update_exam_dialog.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
+/// Page where there are shown the information about an [Exam].
 class ShowExamDataPage extends StatefulWidget {
+
+  /// Route of this page.
   static const routeName = '/showExamData';
 
+  /// This is the controller, passed as an [Observer] of [ExamMessage] because
+  /// it have to be notified when a [DeleteExamMessage] or a
+  /// [MarkExamMessage] are thrown.
   final Observer<Message> examController;
 
+  /// Constructor that require the [Observer] of [Message].
   ShowExamDataPage(this.examController) : super();
 
   @override

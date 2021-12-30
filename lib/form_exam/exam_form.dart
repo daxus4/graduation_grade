@@ -17,11 +17,11 @@ class ExamForm extends StatefulWidget {
   /// Route of this form.
   static const routeName = '/examForm';
 
-  /// This is the controller, passed as an [Observer] of [ExamMessage] because
+  /// This is the controller, passed as an [Observer] of [Message] because
   /// it have to be notified when an [AddExamMessage] is thrown.
   final Observer<Message> examController;
 
-  /// Constructor that require the [Observer] of [ExamMessage].
+  /// Constructor that require the [Observer] of [Message].
   ExamForm(this.examController) : super();
 
   @override

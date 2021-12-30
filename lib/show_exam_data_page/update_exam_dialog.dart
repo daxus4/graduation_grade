@@ -4,12 +4,16 @@ import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/message/exam_message/mark_exam_message.dart';
 import 'package:graduation_grade/pattern/command/message/message.dart';
 
+/// [Dialog] that appear when the user want to change the mark of an [Exam].
 class UpdateExamDialog extends StatefulWidget {
   final Exam _exam;
 
   final Function(Message) _updateExamFunction;
   final Function(Exam) _updateAfterTakeExam;
 
+  /// Constructor that requires the exam and two [Function], one for notify that
+  /// the model has to be updated and the other to notify the changes for the
+  /// **cubit pattern**.
   const UpdateExamDialog(
       this._exam, this._updateExamFunction, this._updateAfterTakeExam,
       {Key key})
