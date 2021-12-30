@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
-import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/exam_message/add_exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -19,7 +19,7 @@ class ExamForm extends StatefulWidget {
 
   /// This is the controller, passed as an [Observer] of [ExamMessage] because
   /// it have to be notified when an [AddExamMessage] is thrown.
-  final Observer<ExamMessage> examController;
+  final Observer<Message> examController;
 
   /// Constructor that require the [Observer] of [ExamMessage].
   ExamForm(this.examController) : super();
@@ -29,8 +29,8 @@ class ExamForm extends StatefulWidget {
       _ExamFormState(_ObservableExamMessage([examController]));
 }
 
-class _ObservableExamMessage extends Observable<ExamMessage> {
-  _ObservableExamMessage(List<Observer<ExamMessage>> observers)
+class _ObservableExamMessage extends Observable<Message> {
+  _ObservableExamMessage(List<Observer<Message>> observers)
       : super(observers);
 }
 

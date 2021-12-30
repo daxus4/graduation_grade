@@ -4,7 +4,7 @@ import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/form_exam/exam_form.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -41,8 +41,8 @@ class ShowExamsPageState extends State<ShowExamsPage> {
         .notify({ShowExamsPage.routeName: updateAfterChange});
   }
 
-  void updateAfterChange(ExamMessage examMessage) {
-    BlocProvider.of<ExamsCubit>(this.context).getExams(examMessage);
+  void updateAfterChange(Message message) {
+    BlocProvider.of<ExamsCubit>(this.context).getExams(message);
   }
 
   void updateAfterAddedExam(Exam exam) {

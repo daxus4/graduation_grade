@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
-import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/exam_message/delete_exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/exams_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -14,7 +14,7 @@ import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 class ShowExamDataPage extends StatefulWidget {
   static const routeName = '/showExamData';
 
-  final Observer<ExamMessage> examController;
+  final Observer<Message> examController;
 
   ShowExamDataPage(this.examController) : super();
 
@@ -23,8 +23,8 @@ class ShowExamDataPage extends StatefulWidget {
       _ShowExamDataPageState(_ObservableExamMessage([examController]));
 }
 
-class _ObservableExamMessage extends Observable<ExamMessage> {
-  _ObservableExamMessage(List<Observer<ExamMessage>> observers)
+class _ObservableExamMessage extends Observable<Message> {
+  _ObservableExamMessage(List<Observer<Message>> observers)
       : super(observers);
 }
 

@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:graduation_grade/model/exam.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
 
 import 'exams_state.dart';
 
@@ -12,8 +12,8 @@ class ExamsCubit extends Cubit<ExamsState> {
     emit(ExamsStateBase(list));
   }
 
-  void getExams(ExamMessage examMessage) {
-    emit(ExamsChanged(examMessage));
+  void getExams(Message message) {
+    emit(ExamsChanged(message));
   }
 
   void updateWithNewExam(Exam e) {

@@ -4,15 +4,16 @@ import 'package:graduation_grade/homepage/homepage.dart';
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/exams_model.dart';
 import 'package:graduation_grade/pattern/command/controllable_by_exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/add_exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/delete_exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/name_degree_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/mark_exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/exam_message/add_exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
+import 'package:graduation_grade/pattern/command/message/name_degree_message.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/shared_preferences_manager/shared_preferences_manager.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../pattern/command/message/exam_message/delete_exam_message.dart';
+import '../pattern/command/message/exam_message/mark_exam_message.dart';
 
 /// Class that is the **controller** for a **MVC pattern** for this application.
 ///
@@ -22,7 +23,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 /// It implements also [ControllableByExamMessage] in order to implement a
 /// **command pattern**. This is useful to get a cleaner code used for
 /// managing the different types of [ExamMessage].
-class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
+class ExamsManager implements Observer<Message>, ControllableByExamMessage {
 
   /// The helper class which allows to create and manage an SQL database that
   /// will contain the information about the [Exam] instances.
@@ -55,17 +56,17 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
     }
   }
 
-  void _updateShowExamsPage(ExamMessage message) {
+  void _updateShowExamsPage(Message message) {
     _observerOfUpdateFunctions
         .getUpdateFunctions()[ShowExamsPage.routeName](message);
   }
 
-  void _updateHomePage(ExamMessage message) {
+  void _updateHomePage(Message message) {
     _observerOfUpdateFunctions.getUpdateFunctions()[HomePage.routeName](message,
         _model.getWAvg(), _model.getCfuAcquired(), _model.getExpectedGrade());
   }
 
-  void _updatePassivePage(ExamMessage m) {
+  void _updatePassivePage(Message m) {
     _updateShowExamsPage(m);
     _updateHomePage(m);
   }
@@ -74,13 +75,13 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
   ExamsModel getModel() => _model;
 
   @override
-  void update(ExamMessage message) {
+  void update(Message message) {
     message.execute(this);
   }
 
   @override
   void handleAddExamMessage(AddExamMessage m) {
-    Exam e = m.getExam();
+    Exam e = m.exam;
 
     if (_model.isThereExamNamed(e.getName())) {
       m.getRequestAnotherExamFunction()(e.getName());
@@ -94,7 +95,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
   @override
   void handleDeleteExamMessage(DeleteExamMessage m) {
-    Exam e = m.getExam();
+    Exam e = m.exam;
 
     _model.deleteExam(e.getName());
     ExamRepository.deleteExam(e);
@@ -104,7 +105,7 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
   @override
   void handleMarkExamMessage(MarkExamMessage m) {
-    Exam e = m.getExam();
+    Exam e = m.exam;
 
     _model.changeExamEvaluation(e);
     ExamRepository.updateExam(e);
@@ -114,10 +115,8 @@ class ExamsManager implements Observer<ExamMessage>, ControllableByExamMessage {
 
   @override
   void handleNameDegreeMessage(NameDegreeMessage m) {
-    Exam e = m.getExam();
-
-    _model.setDegreeName(e.getName());
-    SharedPreferencesManager.saveDegreeName(e.getName());
+    _model.setDegreeName(m.name);
+    SharedPreferencesManager.saveDegreeName(m.name);
   }
 
   /// Return if the degree name is stored in [SharedPreferences].

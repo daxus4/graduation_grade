@@ -1,5 +1,5 @@
 import 'package:graduation_grade/model/exam.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
 
 abstract class ExamsState {
   ExamsState();
@@ -17,18 +17,18 @@ class ExamsStateBase extends ExamsState {
 }
 
 class ExamsChanged extends ExamsState {
-  final ExamMessage _examMessage;
-  ExamsChanged(this._examMessage);
+  final Message _message;
+  ExamsChanged(this._message);
 
-  ExamMessage getExamMessage() {
-    return _examMessage;
+  Message getExamMessage() {
+    return _message;
   }
 
   @override
   bool operator ==(Object other) {
     if(identical(this, other)) return true;
 
-    return other is ExamsChanged && _examMessage == other._examMessage;
+    return other is ExamsChanged && _message == other._message;
   }
 
   @override

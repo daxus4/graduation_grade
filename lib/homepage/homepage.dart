@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
-import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
-import 'package:graduation_grade/pattern/command/exam_message/exam_message.dart';
-import 'package:graduation_grade/pattern/command/exam_message/name_degree_message.dart';
+import 'package:graduation_grade/pattern/command/message/exam_message/exam_message.dart';
+import 'package:graduation_grade/pattern/command/message/message.dart';
+import 'package:graduation_grade/pattern/command/message/name_degree_message.dart';
 import 'package:graduation_grade/pattern/cubit/information_cubit.dart';
 import 'package:graduation_grade/pattern/cubit/information_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
@@ -22,7 +22,7 @@ class HomePage extends StatefulWidget {
   static final routeName = '/';
 
   final Observer<Map<String, Function>> _examControllerObserverFunction;
-  final Observer<ExamMessage> _examController;
+  final Observer<Message> _examController;
 
   final double _wAvg;
   final int _cfuAcquired;
@@ -52,8 +52,8 @@ class _ObservableUpdateFunction extends Observable<Map<String, Function>> {
       : super(observers);
 }
 
-class _ObservableExamMessage extends Observable<ExamMessage> {
-  _ObservableExamMessage(List<Observer<ExamMessage>> observers)
+class _ObservableExamMessage extends Observable<Message> {
+  _ObservableExamMessage(List<Observer<Message>> observers)
       : super(observers);
 }
 
@@ -84,7 +84,7 @@ class _HomePageState extends State<HomePage> {
 
   void updateAfterChangeDegreeName(String name) {
     _degreeName = name;
-    _examController.notify(NameDegreeMessage(Exam(name, 1)));
+    _examController.notify(NameDegreeMessage(name));
     BlocProvider.of<InformationCubit>(this.context).updateNameDegree(name);
   }
 
