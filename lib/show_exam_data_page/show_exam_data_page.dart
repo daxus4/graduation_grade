@@ -17,7 +17,7 @@ class ShowExamDataPage extends StatefulWidget {
   /// Route of this page.
   static const routeName = '/showExamData';
 
-  /// This is the controller, passed as an [Observer] of [ExamMessage] because
+  /// This is the controller, passed as an [Observer] of [Message] because
   /// it have to be notified when a [DeleteExamMessage] or a
   /// [MarkExamMessage] are thrown.
   final Observer<Message> examController;

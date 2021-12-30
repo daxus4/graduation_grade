@@ -13,6 +13,8 @@ import 'homepage/homepage.dart';
 import 'model/general_data/design_data.dart';
 import 'model/general_data/global_data.dart';
 
+/// Main function of the application. Initialize the controller and the model
+/// and execute [runApp()].
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 

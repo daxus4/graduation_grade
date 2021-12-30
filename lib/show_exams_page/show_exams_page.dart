@@ -12,13 +12,21 @@ import 'package:graduation_grade/pattern/observable/observer.dart';
 
 import 'exam_list_view.dart';
 
+/// Page that contains a [ExamListView] that shows every [Exam].
 class ShowExamsPage extends StatefulWidget {
+
+  /// Route of this page.
   static const routeName = '/showExams';
 
+  /// List of [Exam] present in the current state.
   final List<Exam> exams;
 
+  /// This is the controller, passed as an [Observer] of [Message] because
+  /// it have to be notified when a [DeleteExamMessage] or a
+  /// [MarkExamMessage] are thrown.
   final Observer<Map<String, Function>> examController;
 
+  /// Constructor that require the list of [Exam] and a [Observer] of [Message].
   ShowExamsPage(this.exams, this.examController, {Key key}) : super(key: key);
 
   @override
