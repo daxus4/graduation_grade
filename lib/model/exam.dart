@@ -17,6 +17,7 @@ class Exam{
   Exam(this._name, this._cfu) {
     _isTaken = false;
   }
+
   /// Constructor for an [Exam] taken.
   ///
   /// Throws a [MarkException] if the mark passed is not between 18 and 30.
