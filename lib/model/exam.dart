@@ -35,12 +35,6 @@ class Exam{
     return Exam(this._name, this._cfu);
   }
 
-  /// Constructor that create an [Exam] from a [Map], using keys in
-  /// [GlobalData].
-  Exam.fromMapObject(Map<String, dynamic> examMap)
-      : this(examMap[GlobalData.examNameAttribute],
-      examMap[GlobalData.examCfuAttribute]);
-
   /// Return the name of this [Exam].
   String getName() => _name.toString();
 
