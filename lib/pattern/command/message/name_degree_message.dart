@@ -16,4 +16,14 @@ class NameDegreeMessage extends Message {
   execute(ControllableByMessage controllable) =>
       controllable.handleNameDegreeMessage(this);
 
+  @override
+  bool operator ==(Object other) =>
+      super == other &&
+        other is NameDegreeMessage &&
+        other.name == this.name;
+
+  @override
+  // TODO: implement hashCode
+  int get hashCode => super.hashCode;
+
 }

@@ -31,7 +31,7 @@ void main() {
       String toStr = 'Exam{name: $_name, cfu: $_cfu}';
       expect(e.toString(), toStr);
 
-      Exam e2 = Exam(_name, _cfu);
+      Exam e2 = Exam("ml", 6);
       expect(e2 == e, true);
     });
 
@@ -64,7 +64,7 @@ void main() {
       expect(() => Exam.taken(_name, _cfu, 19, true),
           throwsA(isA<LaudeException>()));
 
-      Exam e2 = Exam.taken(_name, _cfu, _mark, _laude);
+      Exam e2 = Exam.taken("ml", 6, 28, false);
       expect(e2 == e, true);
     });
 
