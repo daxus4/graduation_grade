@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/controllable_by_exam_message.dart';
 
@@ -29,7 +31,5 @@ class DeleteExamMessage extends ExamMessage {
         _updateAfterDeleteExamFunction == other._updateAfterDeleteExamFunction;
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
-
+  int get hashCode => hashValues(exam, _updateAfterDeleteExamFunction);
 }

@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/controllable_by_exam_message.dart';
 
@@ -37,6 +39,6 @@ class AddExamMessage extends ExamMessage {
         _updateAfterAddExamFunction == other._updateAfterAddExamFunction;
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => hashValues(exam, _requestAnotherExamFunction,
+      _updateAfterAddExamFunction);
 }

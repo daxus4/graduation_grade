@@ -17,8 +17,5 @@ abstract class ExamMessage extends Message {
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
-
-
+  int get hashCode => exam.hashCode;
 }

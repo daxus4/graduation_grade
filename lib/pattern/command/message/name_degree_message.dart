@@ -6,7 +6,7 @@ import 'message.dart';
 /// when there is a request to set/change the degree name.
 class NameDegreeMessage extends Message {
 
-  /// New of the degree.
+  /// New name of the degree.
   final String name;
 
   /// Constructor that require the new name of the degree.
@@ -17,10 +17,11 @@ class NameDegreeMessage extends Message {
       controllable.handleNameDegreeMessage(this);
 
   @override
-  bool operator ==(Object other) =>
-      super == other &&
-        other is NameDegreeMessage &&
+  bool operator ==(Object other) {
+    if(identical(this, other)) return true;
+    return other is NameDegreeMessage &&
         other.name == this.name;
+  }
 
   @override
   // TODO: implement hashCode
