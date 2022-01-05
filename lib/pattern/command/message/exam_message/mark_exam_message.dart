@@ -28,6 +28,5 @@ class MarkExamMessage extends ExamMessage {
       super == other && other is MarkExamMessage;
 
   @override
-  // TODO: implement hashCode
   int get hashCode => hashValues(exam, _updateAfterMarkExamFunction);
 }
