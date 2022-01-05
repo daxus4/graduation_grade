@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:graduation_grade/exception/exam_not_taken_exception.dart';
 import 'package:graduation_grade/exception/laude_exception.dart';
 import 'package:graduation_grade/exception/mark_exception.dart';
@@ -98,13 +100,8 @@ class Exam{
   }
 
   @override
-  int get hashCode {
-    int result = 17;
-    result = 37 * result + _name.hashCode;
-    result = 37 * result + _cfu.hashCode;
-    result = 37 * result + _mark.hashCode;
-    result = 37 * result + _cumLaude.hashCode;
-    return result;
-  }
+  int get hashCode =>
+      this._isTaken ? hashValues(_name, _cfu, _isTaken, _mark, _cumLaude)
+        : hashValues(_name, _cfu, _isTaken);
 
 }

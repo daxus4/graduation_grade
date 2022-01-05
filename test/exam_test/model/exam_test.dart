@@ -10,7 +10,8 @@ void main() {
     String _name = "ml";
     int _cfu = 6;
 
-    test('Constructor for an Exam not taken', () {
+    test('Exam not taken', () {
+      // Standard checks
       Exam e = Exam(_name, _cfu);
 
       expect(e.getName(), _name);
@@ -31,14 +32,22 @@ void main() {
       String toStr = 'Exam{name: $_name, cfu: $_cfu}';
       expect(e.toString(), toStr);
 
+      // == and hashcode
       Exam e2 = Exam("ml", 6);
-      expect(e2 == e, true);
+      Exam e3 = Exam("get", 6);
+
+      expect(e2, e);
+      expect(e3 != e, true);
+      expect(e.hashCode, e2.hashCode);
+      expect(e.hashCode != e3.hashCode, true);
+
     });
 
-    test('Constructor for an Exam with evaluation', () {
+    test('Exam with evaluation', () {
       int _mark = 28;
       bool _laude = false;
 
+      // Standard checks
       Exam e = Exam.taken(_name, _cfu, _mark, _laude);
 
       expect(e.getName(), _name);
@@ -64,8 +73,15 @@ void main() {
       expect(() => Exam.taken(_name, _cfu, 19, true),
           throwsA(isA<LaudeException>()));
 
+      // == and hashcode
       Exam e2 = Exam.taken("ml", 6, 28, false);
-      expect(e2 == e, true);
+      Exam e3 = Exam("get", 6);
+
+      expect(e2, e);
+      expect(e3 != e, true);
+      expect(e.hashCode, e2.hashCode);
+      expect(e.hashCode != e3.hashCode, true);
+
     });
 
     test('Copy method', () {
@@ -77,6 +93,9 @@ void main() {
 
       expect(e.copy() == e, true);
       expect(et.copy() == et, true);
+
+      expect(e.hashCode, e.copy().hashCode);
+
     });
   });
 }

@@ -26,19 +26,28 @@ void main() {
         return "update";
       };
 
+      // Standard checks
       AddExamMessage m = AddExamMessage(_e, _requestFunction, _updateFunction);
-      AddExamMessage m2 = AddExamMessage(Exam.taken("ml", 6, 28, false),
-          _requestFunction, _updateFunction);
 
 
-      expect(m.exam == _e, true);
+      expect(m.exam, _e);
       expect(m.getRequestAnotherExamFunction()(""), "request");
       expect(m.getUpdateAfterAddExamFunction()(_e), "update");
 
-      expect(m == m2, true);
-
+      // Command pattern
       m.execute(_fakeControllable);
       expect(_fakeControllable.getNameAndType(), m.exam.getName() + "_add");
+
+      // == and hashcode
+      AddExamMessage m2 = AddExamMessage(Exam.taken("ml", 6, 28, false),
+          _requestFunction, _updateFunction);
+      AddExamMessage m3 = AddExamMessage(Exam.taken("get", 6, 28, false),
+          _requestFunction, _updateFunction);
+
+      expect(m, m2);
+      expect(m != m3, true);
+      expect(m.hashCode, m2.hashCode);
+      expect(m.hashCode != m3.hashCode, true);
     });
 
     test('DeleteExamMessage', () {
@@ -46,18 +55,26 @@ void main() {
         return "update";
       };
 
+      // Standard checks
       DeleteExamMessage m = DeleteExamMessage(_e, _updateFunction);
-      DeleteExamMessage m2 = DeleteExamMessage(
-          Exam.taken("ml", 6, 28, false), _updateFunction);
-
 
       expect(m.exam == _e, true);
       expect(m.getUpdateAfterDeleteExamFunction()(""), "update");
 
-      expect(m == m2, true);
-
+      // Command pattern
       m.execute(_fakeControllable);
       expect(_fakeControllable.getNameAndType(), m.exam.getName() + "_del");
+
+      // == and hashcode
+      DeleteExamMessage m2 = DeleteExamMessage(
+          Exam.taken("ml", 6, 28, false), _updateFunction);
+      DeleteExamMessage m3 = DeleteExamMessage(
+          Exam.taken("get", 6, 28, false), _updateFunction);
+
+      expect(m, m2);
+      expect(m != m3, true);
+      expect(m.hashCode, m2.hashCode);
+      expect(m.hashCode != m3.hashCode, true);
     });
 
     test('MarkExamMessage', () {
@@ -65,31 +82,47 @@ void main() {
         return "update";
       };
 
+      // Standard checks
       MarkExamMessage m = MarkExamMessage(_e, _updateFunction);
-      MarkExamMessage m2 = MarkExamMessage(
-          Exam.taken("ml", 6, 28, false), _updateFunction);
-
 
       expect(m.exam == _e, true);
       expect(m.getUpdateAfterMarkExamFunction()(_e), "update");
 
-      expect(m == m2, true);
-
+      // Command Pattern
       m.execute(_fakeControllable);
       expect(_fakeControllable.getNameAndType(), m.exam.getName() + "_mark");
+
+      // == and hashcode
+      MarkExamMessage m2 = MarkExamMessage(
+          Exam.taken("ml", 6, 28, false), _updateFunction);
+      MarkExamMessage m3 = MarkExamMessage(
+          Exam.taken("get", 6, 28, false), _updateFunction);
+
+      expect(m, m2);
+      expect(m != m3, true);
+      expect(m.hashCode, m2.hashCode);
+      expect(m.hashCode != m3.hashCode, true);
     });
 
     test('NameDegreeMessage', () {
 
+      // Standard checks
       NameDegreeMessage m = NameDegreeMessage(_name);
-      NameDegreeMessage m2 = NameDegreeMessage("ml");
 
       expect(m.name, "ml");
 
-      expect(m == m2, true);
-
+      // Command pattern
       m.execute(_fakeControllable);
       expect(_fakeControllable.getNameAndType(), m.name + "_name");
+
+      // == and hashcode
+      NameDegreeMessage m2 = NameDegreeMessage("ml");
+      NameDegreeMessage m3 = NameDegreeMessage("get");
+
+      expect(m, m2);
+      expect(m != m3, true);
+      expect(m.hashCode, m2.hashCode);
+      expect(m.hashCode != m3.hashCode, true);
     });
 
   });

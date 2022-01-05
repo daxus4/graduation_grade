@@ -24,7 +24,6 @@ class NameDegreeMessage extends Message {
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => name.hashCode;
 
 }
