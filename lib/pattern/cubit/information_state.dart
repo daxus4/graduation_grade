@@ -1,4 +1,3 @@
-
 import 'package:graduation_grade/pattern/command/message/message.dart';
 
 abstract class InformationState {
@@ -50,5 +49,4 @@ class InformationNameDegreeUpdated extends InformationState {
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }

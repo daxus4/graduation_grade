@@ -7,7 +7,6 @@ import 'package:graduation_grade/pattern/command/message/name_degree_message.dar
 /// Class used only for test of **command pattern**. It implements a dumb
 /// interface for [ControllableByMessage].
 class ControllableByMessageFake extends ControllableByMessage {
-
   String _name = "";
 
   @override

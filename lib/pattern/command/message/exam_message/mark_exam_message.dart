@@ -24,8 +24,7 @@ class MarkExamMessage extends ExamMessage {
       controllable.handleMarkExamMessage(this);
 
   @override
-  bool operator ==(Object other) =>
-      super == other && other is MarkExamMessage;
+  bool operator ==(Object other) => super == other && other is MarkExamMessage;
 
   @override
   int get hashCode => hashValues(exam, _updateAfterMarkExamFunction);

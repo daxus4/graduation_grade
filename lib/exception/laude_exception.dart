@@ -1,7 +1,6 @@
 /// [Exception] thrown when you want to set the laude of an [Exam] whose mark is
 /// not 30.
 class LaudeException implements Exception {
-
   /// Mark of the [Exam].
   final int mark;
 

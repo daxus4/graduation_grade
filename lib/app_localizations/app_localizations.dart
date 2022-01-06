@@ -5,7 +5,6 @@ import 'package:flutter/services.dart';
 
 /// Class that manage the language switching for this application.
 class AppLocalizations {
-
   /// Current system [Locale], used to retrieve current system language.
   final Locale locale;
 
@@ -26,7 +25,6 @@ class AppLocalizations {
   /// Load the localized strings that have to be used in the language indicated
   /// in [locale].
   Future<bool> load() async {
-
     // Load file with translation
     String jsonString =
         await rootBundle.loadString('lang/${locale.languageCode}.json');

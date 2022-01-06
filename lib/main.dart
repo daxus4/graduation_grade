@@ -59,12 +59,12 @@ void main() async {
       GlobalWidgetsLocalizations.delegate,
     ],
     localeResolutionCallback: (locale, supportedLocales) {
-      for(var supportedLocale in supportedLocales) {
-        if(supportedLocale.languageCode == locale.languageCode && supportedLocale.countryCode == locale.countryCode)
+      for (var supportedLocale in supportedLocales) {
+        if (supportedLocale.languageCode == locale.languageCode &&
+            supportedLocale.countryCode == locale.countryCode)
           return supportedLocale;
       }
       return supportedLocales.first;
     },
   ));
 }
-

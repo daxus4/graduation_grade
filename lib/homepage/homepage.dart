@@ -17,7 +17,6 @@ import 'degree_name_form.dart';
 /// Homepage of the application. In this we shown the name of the degree and the
 /// information about averages and CFU.
 class HomePage extends StatefulWidget {
-
   /// Homepage route.
   static final routeName = '/';
 
@@ -53,8 +52,7 @@ class _ObservableUpdateFunction extends Observable<Map<String, Function>> {
 }
 
 class _ObservableExamMessage extends Observable<Message> {
-  _ObservableExamMessage(List<Observer<Message>> observers)
-      : super(observers);
+  _ObservableExamMessage(List<Observer<Message>> observers) : super(observers);
 }
 
 class _HomePageState extends State<HomePage> {
@@ -104,7 +102,8 @@ class _HomePageState extends State<HomePage> {
                 context: context,
                 builder: (_) => AlertDialog(
                   title: Text(GlobalData.appName),
-                  content: Text(AppLocalizations.of(context).translate("dgr_nm_upd")),
+                  content: Text(
+                      AppLocalizations.of(context).translate("dgr_nm_upd")),
                   actions: <Widget>[
                     TextButton(
                       child: Text("Ok"),

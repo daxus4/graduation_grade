@@ -13,7 +13,6 @@ import 'package:graduation_grade/pattern/observable/observer.dart';
 
 /// Form in which insert the data of a [Exam].
 class ExamForm extends StatefulWidget {
-
   /// Route of this form.
   static const routeName = '/examForm';
 
@@ -30,8 +29,7 @@ class ExamForm extends StatefulWidget {
 }
 
 class _ObservableExamMessage extends Observable<Message> {
-  _ObservableExamMessage(List<Observer<Message>> observers)
-      : super(observers);
+  _ObservableExamMessage(List<Observer<Message>> observers) : super(observers);
 }
 
 class _ExamFormState extends State<ExamForm> {
@@ -52,7 +50,11 @@ class _ExamFormState extends State<ExamForm> {
 
   void requestAnotherExam(String name) {
     BlocProvider.of<ExamsCubit>(this.context).requestAnotherExam(
-        name, AppLocalizations.of(context).translate("exam_named") + name + AppLocalizations.of(context).translate(" is already present, insert another"));
+        name,
+        AppLocalizations.of(context).translate("exam_named") +
+            name +
+            AppLocalizations.of(context)
+                .translate(" is already present, insert another"));
   }
 
   void updateAfterAddExam(Exam e) {
@@ -124,7 +126,9 @@ class _ExamFormState extends State<ExamForm> {
       validator: (name) {
         Pattern pattern = r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
-        return !regex.hasMatch(name) ? AppLocalizations.of(context).translate('inv_e_name') : null;
+        return !regex.hasMatch(name)
+            ? AppLocalizations.of(context).translate('inv_e_name')
+            : null;
       },
       onSaved: (name) => _examName = name,
       focusNode: _examNameFocusNode,
@@ -145,9 +149,12 @@ class _ExamFormState extends State<ExamForm> {
       ),
       textInputAction: TextInputAction.next,
       validator: (cfu) {
-        if (cfu.isEmpty) return AppLocalizations.of(context).translate('inv_e_cfu');
+        if (cfu.isEmpty)
+          return AppLocalizations.of(context).translate('inv_e_cfu');
         int intCfu = int.parse(cfu);
-        return (intCfu > 0 && intCfu <= 100) ? null : AppLocalizations.of(context).translate('inv_e_cfu');
+        return (intCfu > 0 && intCfu <= 100)
+            ? null
+            : AppLocalizations.of(context).translate('inv_e_cfu');
       },
       onSaved: (cfu) => _examCfu = int.parse(cfu),
       focusNode: _examCfuFocusNode,
@@ -187,10 +194,12 @@ class _ExamFormState extends State<ExamForm> {
       textInputAction: TextInputAction.done,
       validator: (mark) {
         if (!_alreadyTaken) return null;
-        if (mark.isEmpty) return AppLocalizations.of(context).translate('inv_mark');
+        if (mark.isEmpty)
+          return AppLocalizations.of(context).translate('inv_mark');
         int intMark = int.parse(mark);
         if (intMark >= 18 && intMark <= 30) {
-          if (_cumLaude && intMark != 30) return AppLocalizations.of(context).translate('err_laude');
+          if (_cumLaude && intMark != 30)
+            return AppLocalizations.of(context).translate('err_laude');
           return null;
         }
         return AppLocalizations.of(context).translate('inv_mark');
@@ -208,7 +217,7 @@ class _ExamFormState extends State<ExamForm> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: <Widget>[
         Text(
-    AppLocalizations.of(context).translate('laude') + ":",
+          AppLocalizations.of(context).translate('laude') + ":",
           style: TextStyle(
             color: _alreadyTaken ? Colors.black : Colors.grey,
           ),
@@ -252,7 +261,7 @@ class _ExamFormState extends State<ExamForm> {
         }
       },
       child: Text(
-    AppLocalizations.of(context).translate("submit"),
+        AppLocalizations.of(context).translate("submit"),
         style: TextStyle(color: Colors.white),
       ),
     );

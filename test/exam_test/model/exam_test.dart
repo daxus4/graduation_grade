@@ -40,7 +40,6 @@ void main() {
       expect(e3 != e, true);
       expect(e.hashCode, e2.hashCode);
       expect(e.hashCode != e3.hashCode, true);
-
     });
 
     test('Exam with evaluation', () {
@@ -81,7 +80,6 @@ void main() {
       expect(e3 != e, true);
       expect(e.hashCode, e2.hashCode);
       expect(e.hashCode != e3.hashCode, true);
-
     });
 
     test('Copy method', () {
@@ -95,7 +93,6 @@ void main() {
       expect(et.copy() == et, true);
 
       expect(e.hashCode, e.copy().hashCode);
-
     });
   });
 }

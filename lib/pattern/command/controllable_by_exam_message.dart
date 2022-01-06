@@ -8,7 +8,6 @@ import 'package:graduation_grade/pattern/observable/observable.dart';
 /// pattern**. It contains the function to handle the [Message] sent by
 /// [Observable].
 abstract class ControllableByMessage {
-
   /// Function that contains what to do when this class receives an
   /// [AddExamMessage].
   void handleAddExamMessage(AddExamMessage m);

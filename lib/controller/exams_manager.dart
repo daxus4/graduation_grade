@@ -24,7 +24,6 @@ import '../pattern/command/message/exam_message/mark_exam_message.dart';
 /// **command pattern**. This is useful to get a cleaner code used for
 /// managing the different types of [ExamMessage].
 class ExamsManager implements Observer<Message>, ControllableByMessage {
-
   /// The helper class which allows to create and manage an SQL database that
   /// will contain the information about the [Exam] instances.
   final examDbHelper = DbHelper();
@@ -48,7 +47,7 @@ class ExamsManager implements Observer<Message>, ControllableByMessage {
     exams.forEach((exam) => _model.addExam(exam));
 
     bool isStoredDegreeName = await isThereDegreeName();
-    if(isStoredDegreeName) {
+    if (isStoredDegreeName) {
       String name = await SharedPreferencesManager.getDegreeName();
       _model.setDegreeName(name);
     } else {

@@ -5,7 +5,6 @@ import 'package:graduation_grade/show_exam_data_page/show_exam_data_page.dart';
 
 /// [ListView] that shows the [Exam] instances in the current model state.
 class ExamListView extends StatelessWidget {
-
   /// [Exam] instances in the current model state.
   final List<Exam> exams;
 
@@ -27,7 +26,8 @@ class ExamListView extends StatelessWidget {
                 ": " +
                 exams[i].getMark().toString();
             if (exams[i].getLaude())
-              subtitle = subtitle + " " +
+              subtitle = subtitle +
+                  " " +
                   AppLocalizations.of(context).translate("cum_laude");
           } else
             subtitle = AppLocalizations.of(context).translate("cfu") +

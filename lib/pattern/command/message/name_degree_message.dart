@@ -5,7 +5,6 @@ import 'message.dart';
 /// Class that represent the notification that have to be sent to [Observer]
 /// when there is a request to set/change the degree name.
 class NameDegreeMessage extends Message {
-
   /// New name of the degree.
   final String name;
 
@@ -18,12 +17,10 @@ class NameDegreeMessage extends Message {
 
   @override
   bool operator ==(Object other) {
-    if(identical(this, other)) return true;
-    return other is NameDegreeMessage &&
-        other.name == this.name;
+    if (identical(this, other)) return true;
+    return other is NameDegreeMessage && other.name == this.name;
   }
 
   @override
   int get hashCode => name.hashCode;
-
 }

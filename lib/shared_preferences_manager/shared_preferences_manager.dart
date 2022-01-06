@@ -3,7 +3,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 /// This class contain the methods to save and load data to [SharedPreferences].
 class SharedPreferencesManager {
-
   /// Key for degree name.
   static final String degreeNameKey = "degree_name";
 
@@ -13,7 +12,7 @@ class SharedPreferencesManager {
   /// saved.
   static Future<String> getDegreeName() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    if(!sharedPreferences.containsKey(degreeNameKey))
+    if (!sharedPreferences.containsKey(degreeNameKey))
       throw NotPresentDegreeNameException();
     return sharedPreferences.get(degreeNameKey);
   }

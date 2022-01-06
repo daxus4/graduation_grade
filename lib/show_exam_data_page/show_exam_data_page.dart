@@ -13,7 +13,6 @@ import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 
 /// Page where there are shown the information about an [Exam].
 class ShowExamDataPage extends StatefulWidget {
-
   /// Route of this page.
   static const routeName = '/showExamData';
 
@@ -31,8 +30,7 @@ class ShowExamDataPage extends StatefulWidget {
 }
 
 class _ObservableExamMessage extends Observable<Message> {
-  _ObservableExamMessage(List<Observer<Message>> observers)
-      : super(observers);
+  _ObservableExamMessage(List<Observer<Message>> observers) : super(observers);
 }
 
 class _ShowExamDataPageState extends State<ShowExamDataPage> {

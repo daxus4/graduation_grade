@@ -14,7 +14,6 @@ import 'exam_list_view.dart';
 
 /// Page that contains a [ExamListView] that shows every [Exam].
 class ShowExamsPage extends StatefulWidget {
-
   /// Route of this page.
   static const routeName = '/showExams';
 

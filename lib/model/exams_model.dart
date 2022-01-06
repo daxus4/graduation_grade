@@ -6,7 +6,6 @@ import 'exam.dart';
 /// current state of the application, which is composed by the [Exam] instances
 /// and the degree name.
 class ExamsModel {
-
   final List<Exam> _exams;
   String _degreeName;
 
@@ -44,12 +43,12 @@ class ExamsModel {
 
   /// Return the  average of [Exam] marks weighted by CFU for the exams in the
   /// current state.
-  double getWAvg() =>
-      _exams.length != 0 ?_exams
-            .where((e) => e.isTaken())
-            .fold(0, (t, exam) => t + exam.getCfu() * exam.getMark())
-        /
-        getCfuAcquired() : 0;
+  double getWAvg() => _exams.length != 0
+      ? _exams
+              .where((e) => e.isTaken())
+              .fold(0, (t, exam) => t + exam.getCfu() * exam.getMark()) /
+          getCfuAcquired()
+      : 0;
 
   /// Return the [List] of [Exam] in the current state.
   List<Exam> getExams() => _exams;
@@ -59,10 +58,9 @@ class ExamsModel {
 
   /// Return the number of CFU for the [Exam] in current state with an
   /// evaluation.
-  int getCfuAcquired() =>
-      _exams.length != 0 ?
-      _exams.where((e) => e.isTaken())
-        .fold(0, (t, exam) => t + exam.getCfu()) : 0;
+  int getCfuAcquired() => _exams.length != 0
+      ? _exams.where((e) => e.isTaken()).fold(0, (t, exam) => t + exam.getCfu())
+      : 0;
 
   /// Return the expected graduation grade by multiply the result of
   /// [getWAvg()].

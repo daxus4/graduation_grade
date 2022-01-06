@@ -5,7 +5,6 @@ import 'package:graduation_grade/pattern/command/message/message.dart';
 import 'exams_state.dart';
 
 class ExamsCubit extends Cubit<ExamsState> {
-
   ExamsCubit() : super(ExamsInitial());
 
   void setBaseState(List<Exam> list) {

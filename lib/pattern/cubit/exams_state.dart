@@ -13,7 +13,6 @@ class ExamsStateBase extends ExamsState {
   final List<Exam> exams;
 
   ExamsStateBase(this.exams);
-
 }
 
 class ExamsChanged extends ExamsState {
@@ -24,7 +23,7 @@ class ExamsChanged extends ExamsState {
 
   @override
   bool operator ==(Object other) {
-    if(identical(this, other)) return true;
+    if (identical(this, other)) return true;
 
     return other is ExamsChanged && _message == other._message;
   }
@@ -42,13 +41,14 @@ class ExamAlreadyPresent extends ExamsState {
   String getMessage() => _message;
 
   @override
-  bool operator == (o) => o is ExamAlreadyPresent && _examName == o._examName
-      && _message == o._message;
+  bool operator ==(o) =>
+      o is ExamAlreadyPresent &&
+      _examName == o._examName &&
+      _message == o._message;
 
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }
 
 class ExamsError extends ExamsState {
@@ -58,7 +58,7 @@ class ExamsError extends ExamsState {
 
   @override
   bool operator ==(Object other) {
-    if(identical(this, other)) return true;
+    if (identical(this, other)) return true;
 
     return other is ExamsError && other.message == message;
   }
@@ -66,7 +66,6 @@ class ExamsError extends ExamsState {
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }
 
 class ExamAdded extends ExamsState {
@@ -75,12 +74,11 @@ class ExamAdded extends ExamsState {
   ExamAdded(this._e);
 
   @override
-  bool operator == (o) => o is ExamAdded && _e == o._e;
+  bool operator ==(o) => o is ExamAdded && _e == o._e;
 
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }
 
 class ExamDeleted extends ExamsState {
@@ -89,12 +87,11 @@ class ExamDeleted extends ExamsState {
   ExamDeleted(this._examName);
 
   @override
-  bool operator == (o) => o is ExamDeleted && _examName == o._examName;
+  bool operator ==(o) => o is ExamDeleted && _examName == o._examName;
 
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }
 
 class ExamTaken extends ExamsState {
@@ -105,10 +102,9 @@ class ExamTaken extends ExamsState {
   Exam getExam() => _e;
 
   @override
-  bool operator == (o) => o is ExamAdded && _e == o._e;
+  bool operator ==(o) => o is ExamAdded && _e == o._e;
 
   @override
   // TODO: implement hashCode
   int get hashCode => super.hashCode;
-
 }

@@ -11,7 +11,6 @@ Database db;
 /// Class that manage a [Database] that contains the information about [Exam]
 /// instances.
 class DbHelper {
-
   /// Create the table of [Exam] instances.
   Future<void> createExamTable(Database db) async {
     final todoSql = '''CREATE TABLE ${GlobalData.examTableName} (

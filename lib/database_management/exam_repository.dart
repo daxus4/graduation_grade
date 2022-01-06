@@ -1,5 +1,3 @@
-
-
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:sqflite/sqflite.dart';
@@ -11,7 +9,6 @@ import 'db_helper.dart';
 /// Class that make SQL requests to [Database] of [Exam] instances in order to
 /// add, modify, show or delete the exams.
 class ExamRepository {
-
   /// SQL insert of a [Exam].
   static Future<void> addExam(Exam exam) async {
     await db.insert(GlobalData.examTableName, exam.toMap(),

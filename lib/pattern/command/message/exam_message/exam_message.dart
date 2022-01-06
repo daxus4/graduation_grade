@@ -12,7 +12,7 @@ abstract class ExamMessage extends Message {
 
   @override
   bool operator ==(Object other) {
-    if(identical(this, other)) return true;
+    if (identical(this, other)) return true;
     return other is ExamMessage && exam == other.exam;
   }
 

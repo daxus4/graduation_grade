@@ -34,11 +34,11 @@ class AddExamMessage extends ExamMessage {
   @override
   bool operator ==(Object other) =>
       super == other &&
-        other is AddExamMessage &&
-        _requestAnotherExamFunction == other._requestAnotherExamFunction &&
-        _updateAfterAddExamFunction == other._updateAfterAddExamFunction;
+      other is AddExamMessage &&
+      _requestAnotherExamFunction == other._requestAnotherExamFunction &&
+      _updateAfterAddExamFunction == other._updateAfterAddExamFunction;
 
   @override
-  int get hashCode => hashValues(exam, _requestAnotherExamFunction,
-      _updateAfterAddExamFunction);
+  int get hashCode => hashValues(
+      exam, _requestAnotherExamFunction, _updateAfterAddExamFunction);
 }

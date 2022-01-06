@@ -7,8 +7,7 @@ import 'package:graduation_grade/exception/mark_exception.dart';
 import 'general_data/global_data.dart';
 
 /// Class that contain the information of an university exam.
-class Exam{
-
+class Exam {
   final String _name;
   final int _cfu;
   bool _isTaken;
@@ -31,9 +30,9 @@ class Exam{
   }
 
   /// Return a deep copy of this [Exam].
-  Exam copy(){
-    if(this._isTaken)
-      return Exam.taken(this._name, this._cfu, this. _mark, this._cumLaude);
+  Exam copy() {
+    if (this._isTaken)
+      return Exam.taken(this._name, this._cfu, this._mark, this._cumLaude);
     return Exam(this._name, this._cfu);
   }
 
@@ -50,8 +49,7 @@ class Exam{
   ///
   /// Throws [ExamNotTakenException] if this [Exam] is not evaluated.
   int getMark() {
-    if(!_isTaken)
-      throw ExamNotTakenException();
+    if (!_isTaken) throw ExamNotTakenException();
     return _mark;
   }
 
@@ -59,20 +57,19 @@ class Exam{
   ///
   /// Throws [ExamNotTakenException] if this [Exam] is not evaluated.
   bool getLaude() {
-    if(!_isTaken)
-      throw ExamNotTakenException();
+    if (!_isTaken) throw ExamNotTakenException();
     return _cumLaude;
   }
 
   /// Return the information of this [Exam] as a [Map] using keys in
   /// [GlobalData].
   Map<String, dynamic> toMap() {
-    if(_isTaken)
+    if (_isTaken)
       return {
         GlobalData.examNameAttribute: _name,
         GlobalData.examCfuAttribute: _cfu,
         GlobalData.examMarkAttribute: _mark,
-        GlobalData.examLaudeAttribute: _cumLaude ? 1:0,
+        GlobalData.examLaudeAttribute: _cumLaude ? 1 : 0,
       };
     return {
       GlobalData.examNameAttribute: _name,
@@ -84,24 +81,28 @@ class Exam{
 
   @override
   String toString() {
-    if(_isTaken)
+    if (_isTaken)
       return 'Exam{name: $_name, cfu: $_cfu, mark: $_mark, laude: $_cumLaude}';
     return 'Exam{name: $_name, cfu: $_cfu}';
   }
 
   @override
-  bool operator == (o) {
-    if(!o._isTaken)
-      return o is Exam && o._name == this._name &&
-        o._cfu == this._cfu && o._isTaken == this._isTaken;
-    return o is Exam && o._name == this._name &&
-        o._cfu == this._cfu && o._isTaken == this._isTaken
-        && o._mark == this._mark && o._cumLaude == this._cumLaude;
+  bool operator ==(o) {
+    if (!o._isTaken)
+      return o is Exam &&
+          o._name == this._name &&
+          o._cfu == this._cfu &&
+          o._isTaken == this._isTaken;
+    return o is Exam &&
+        o._name == this._name &&
+        o._cfu == this._cfu &&
+        o._isTaken == this._isTaken &&
+        o._mark == this._mark &&
+        o._cumLaude == this._cumLaude;
   }
 
   @override
-  int get hashCode =>
-      this._isTaken ? hashValues(_name, _cfu, _isTaken, _mark, _cumLaude)
-        : hashValues(_name, _cfu, _isTaken);
-
+  int get hashCode => this._isTaken
+      ? hashValues(_name, _cfu, _isTaken, _mark, _cumLaude)
+      : hashValues(_name, _cfu, _isTaken);
 }
