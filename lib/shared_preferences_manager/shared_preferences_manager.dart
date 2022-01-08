@@ -24,13 +24,13 @@ class SharedPreferencesManager {
   }
 
   /// Save the degree name in a [SharedPreferences] instance.
-  static void saveDegreeName(String degreeName) async {
+  static Future<void> saveDegreeName(String degreeName) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.setString(degreeNameKey, degreeName);
   }
 
   /// Clear the [SharedPreferences] instance.
-  static void resetSharedPreferences() async {
+  static Future<void> resetSharedPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     sharedPreferences.clear();
   }

@@ -5,8 +5,7 @@ import 'package:flutter/services.dart';
 
 /// Class that manage the language switching for this application.
 class AppLocalizations {
-  /// Current system [Locale], used to retrieve current system language.
-  final Locale locale;
+  final Locale _locale;
 
   /// Map that contain the strings in current system language.
   Map<String, String> _localizedStrings;
@@ -15,19 +14,20 @@ class AppLocalizations {
   static const LocalizationsDelegate<AppLocalizations> delegate =
       _AppLocalizationDelegate();
 
-  /// Constructor that require current system [Locale].
-  AppLocalizations(this.locale);
+  /// Constructor that require current system [Locale],  used to retrieve
+  /// current system language.
+  AppLocalizations(this._locale);
 
   static AppLocalizations of(BuildContext context) {
     return Localizations.of<AppLocalizations>(context, AppLocalizations);
   }
 
   /// Load the localized strings that have to be used in the language indicated
-  /// in [locale].
+  /// in [_locale].
   Future<bool> load() async {
     // Load file with translation
     String jsonString =
-        await rootBundle.loadString('lang/${locale.languageCode}.json');
+        await rootBundle.loadString('lang/${_locale.languageCode}.json');
     Map<String, dynamic> jsonMap = json.decode(jsonString);
 
     // Create map with strings that are the translations
