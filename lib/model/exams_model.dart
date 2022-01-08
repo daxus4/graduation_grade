@@ -1,4 +1,5 @@
 import 'package:graduation_grade/exception/already_present_exam_exception.dart';
+import 'package:graduation_grade/exception/not_present_degree_name_exception.dart';
 
 import 'exam.dart';
 
@@ -7,7 +8,9 @@ import 'exam.dart';
 /// and the degree name.
 class ExamsModel {
   final List<Exam> _exams;
+
   String _degreeName;
+  bool _isThereDegreeName = false;
 
   /// Constructor that require a [List] of [Exam]. It could be an empty List.
   ExamsModel(this._exams);
@@ -54,7 +57,10 @@ class ExamsModel {
   List<Exam> getExams() => _exams;
 
   /// Set the degree name
-  void setDegreeName(String name) => _degreeName = name;
+  void setDegreeName(String name) {
+    _isThereDegreeName = true;
+    _degreeName = name;
+  }
 
   /// Return the number of CFU for the [Exam] in current state with an
   /// evaluation.
@@ -67,5 +73,15 @@ class ExamsModel {
   int getExpectedGrade() => (getWAvg() * 11 / 3).round();
 
   /// Return the degree name in current state.
-  String getDegreeName() => _degreeName;
+  ///
+  /// Throws [NotPresentDegreeNameException] if there is not the degree name in
+  /// the current state of the model.
+  String getDegreeName() {
+    if(!_isThereDegreeName)
+      throw NotPresentDegreeNameException();
+    return _degreeName;
+  }
+
+  /// Return if there is the degree name in the current state of the model.
+  bool get isThereDegreeName => _isThereDegreeName;
 }
