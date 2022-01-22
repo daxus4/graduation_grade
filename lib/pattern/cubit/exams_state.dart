@@ -1,20 +1,20 @@
+import 'dart:ui';
+
 import 'package:graduation_grade/model/exam.dart';
 import 'package:graduation_grade/pattern/command/message/message.dart';
 
+/// Abstract class that represent the skeleton for the states emitted by
+/// [ExamsCubit] in order to update the view when [ExamsModel] is modified.
 abstract class ExamsState {
   ExamsState();
 }
 
+/// Initial state, assigned to a page when it is created.
 class ExamsInitial extends ExamsState {
   ExamsInitial();
 }
 
-class ExamsStateBase extends ExamsState {
-  final List<Exam> exams;
-
-  ExamsStateBase(this.exams);
-}
-
+/// State emitted when there is a change in [ExamsModel].
 class ExamsChanged extends ExamsState {
   final Message _message;
   ExamsChanged(this._message);
@@ -29,10 +29,11 @@ class ExamsChanged extends ExamsState {
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => _message.hashCode;
 }
 
+/// State emitted when the user want to add an [Exam] that is already present in
+/// [ExamsModel] current state.
 class ExamAlreadyPresent extends ExamsState {
   final String _examName, _message;
 
@@ -47,10 +48,11 @@ class ExamAlreadyPresent extends ExamsState {
       _message == o._message;
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => hashValues(_examName, _message);
 }
 
+/// State added for future purposes, it can be used when there is an undefined
+/// error.
 class ExamsError extends ExamsState {
   final String message;
 
@@ -64,10 +66,10 @@ class ExamsError extends ExamsState {
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => message.hashCode;
 }
 
+/// State emitted when an [Exam] is added to [ExamsModel].
 class ExamAdded extends ExamsState {
   final Exam _e;
 
@@ -77,10 +79,10 @@ class ExamAdded extends ExamsState {
   bool operator ==(o) => o is ExamAdded && _e == o._e;
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => _e.hashCode;
 }
 
+/// State emitted when an [Exam] is deleted from [ExamsModel].
 class ExamDeleted extends ExamsState {
   final String _examName;
 
@@ -90,10 +92,11 @@ class ExamDeleted extends ExamsState {
   bool operator ==(o) => o is ExamDeleted && _examName == o._examName;
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => _examName.hashCode;
 }
 
+/// State emitted when is added an evaluation to an [Exam] present in
+/// [ExamsModel].
 class ExamTaken extends ExamsState {
   final Exam _e;
 
@@ -105,6 +108,5 @@ class ExamTaken extends ExamsState {
   bool operator ==(o) => o is ExamAdded && _e == o._e;
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => _e.hashCode;
 }
