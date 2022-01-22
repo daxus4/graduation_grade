@@ -4,8 +4,6 @@ import 'package:sqflite/sqflite.dart';
 
 import 'db_helper.dart';
 
-//TODO command pattern per non chiamare db
-
 /// Class that make SQL requests to [Database] of [Exam] instances in order to
 /// add, modify, show or delete the exams.
 class ExamRepository {
