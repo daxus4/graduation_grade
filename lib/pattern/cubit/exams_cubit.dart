@@ -7,6 +7,7 @@ import 'exams_state.dart';
 /// [Cubit] implementation that allows the use of **cubit pattern** when there
 /// are changes in [ExamsModel] that have to be notified to the view.
 class ExamsCubit extends Cubit<ExamsState> {
+  /// Constructor that emits a [ExamsInitial] state.
   ExamsCubit() : super(ExamsInitial());
 
   /// Called when the page have to be refreshed because there is a change in

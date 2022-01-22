@@ -1,13 +1,21 @@
+import 'dart:ui';
+
 import 'package:graduation_grade/pattern/command/message/message.dart';
 
+/// Abstract class that represent the skeleton for the states emitted by
+/// [InformationCubit] in order to update the [HomePage] when [ExamsModel]
+/// is modified.
 abstract class InformationState {
   InformationState();
 }
 
+/// Initial state, assigned to the [HomePage] when it is created.
 class InformationInitial extends InformationState {
   InformationInitial();
 }
 
+/// State emitted when there is a change in the [Exam] instances present in
+/// [ExamsModel].
 class InformationUpdated extends InformationState {
   final Message message;
   final double wAvg;
@@ -29,10 +37,11 @@ class InformationUpdated extends InformationState {
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => hashValues(message, wAvg, cfuAcquired, expectedGrade);
 }
 
+/// State emitted when there is a change in the degree name present in
+/// [ExamsModel].
 class InformationNameDegreeUpdated extends InformationState {
   final String nameDegree;
 
@@ -47,6 +56,5 @@ class InformationNameDegreeUpdated extends InformationState {
   }
 
   @override
-  // TODO: implement hashCode
-  int get hashCode => super.hashCode;
+  int get hashCode => nameDegree.hashCode;
 }
