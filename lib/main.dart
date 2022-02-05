@@ -56,6 +56,7 @@ void main() async {
     localizationsDelegates: [
       AppLocalizations.delegate,
       GlobalMaterialLocalizations.delegate,
+      GlobalCupertinoLocalizations.delegate,
       GlobalWidgetsLocalizations.delegate,
     ],
     localeResolutionCallback: (locale, supportedLocales) {

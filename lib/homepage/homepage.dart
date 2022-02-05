@@ -10,6 +10,8 @@ import 'package:graduation_grade/pattern/cubit/information_state.dart';
 import 'package:graduation_grade/pattern/observable/observable.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
+import 'package:auto_size_text/auto_size_text.dart';
+
 
 import 'change_name_dialog.dart';
 import 'degree_name_form.dart';
@@ -122,47 +124,39 @@ class _HomePageState extends State<HomePage> {
               );
             return SingleChildScrollView(
                 child: Column(
-              children: <Widget>[
-                Row(
                   children: <Widget>[
-                    Text(_degreeName),
-                    modifyNameButton(),
+                    rowName(),
+                    Text(AppLocalizations.of(context).translate("w_avg") +
+                        ": " +
+                        _wAvg.toStringAsFixed(2)),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(AppLocalizations.of(context).translate("acquired_cfu") +
+                        ": " +
+                        _cfuAcquired.toString()),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    Text(AppLocalizations.of(context).translate("expected_grade") +
+                        ": " +
+                        _expectedGrade.toString()),
+                    SizedBox(
+                      height: 16,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Theme.of(context).primaryColor, // background
+                      ),
+                      onPressed: () {
+                        Navigator.pushNamed(context, ShowExamsPage.routeName);
+                      },
+                      child: Text(
+                        AppLocalizations.of(context).translate("marks"),
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
                   ],
-                ),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(AppLocalizations.of(context).translate("w_avg") +
-                    ": " +
-                    _wAvg.toStringAsFixed(2)),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(AppLocalizations.of(context).translate("acquired_cfu") +
-                    ": " +
-                    _cfuAcquired.toString()),
-                SizedBox(
-                  height: 16,
-                ),
-                Text(AppLocalizations.of(context).translate("expected_grade") +
-                    ": " +
-                    _expectedGrade.toString()),
-                SizedBox(
-                  height: 16,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    primary: Theme.of(context).primaryColor, // background
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, ShowExamsPage.routeName);
-                  },
-                  child: Text(
-                    AppLocalizations.of(context).translate("marks"),
-                    style: TextStyle(color: Colors.white),
-                  ),
-                ),
-              ],
             ));
           },
         ),
@@ -170,16 +164,44 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget rowName() {
+    return Expanded(
+      child: Row(
+        children: <Widget>[
+          degreeNameText(_degreeName.toUpperCase()),
+          modifyNameButton(),
+        ],
+      ),
+      flex: 20,
+    );
+  }
+
   Widget modifyNameButton() {
-    return IconButton(
-      icon: Icon(Icons.mode_edit),
-      tooltip: AppLocalizations.of(context).translate('change_name'),
-      onPressed: () {
-        showDialog(
-          context: context,
-          builder: (_) => ChangeNameDialog(updateAfterChangeDegreeName),
-        );
-      },
+    return Expanded(
+      child: IconButton(
+        icon: Icon(Icons.mode_edit),
+        tooltip: AppLocalizations.of(context).translate('change_name'),
+        onPressed: () {
+          showDialog(
+            context: context,
+            builder: (_) => ChangeNameDialog(updateAfterChangeDegreeName),
+          );
+        },
+      ),
+      flex: 1,
+    );
+  }
+
+  Widget degreeNameText(String degreeName) {
+    return Expanded(
+      child: AutoSizeText(
+        degreeName,
+        style: TextStyle(fontSize: 30),
+        minFontSize: 18,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
+      flex: 9,
     );
   }
 }

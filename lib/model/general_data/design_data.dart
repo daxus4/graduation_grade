@@ -7,6 +7,7 @@ class DesignData {
   /// Setting for light theme.
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
+    fontFamily: "Arial"
   );
 
   /// Setting for dark theme.
