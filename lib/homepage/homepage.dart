@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
+import 'package:graduation_grade/model/general_data/design_data.dart';
 import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/pattern/command/message/exam_message/exam_message.dart';
 import 'package:graduation_grade/pattern/command/message/message.dart';
@@ -11,7 +12,6 @@ import 'package:graduation_grade/pattern/observable/observable.dart';
 import 'package:graduation_grade/pattern/observable/observer.dart';
 import 'package:graduation_grade/show_exams_page/show_exams_page.dart';
 import 'package:auto_size_text/auto_size_text.dart';
-
 
 import 'change_name_dialog.dart';
 import 'degree_name_form.dart';
@@ -119,45 +119,31 @@ class _HomePageState extends State<HomePage> {
           },
           builder: (context, state) {
             if (_degreeName.isEmpty)
-              return SingleChildScrollView(
-                child: DegreeNameForm(updateAfterChangeDegreeName),
-              );
-            return SingleChildScrollView(
-                child: Column(
-                  children: <Widget>[
-                    rowName(),
-                    Text(AppLocalizations.of(context).translate("w_avg") +
-                        ": " +
-                        _wAvg.toStringAsFixed(2)),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(AppLocalizations.of(context).translate("acquired_cfu") +
-                        ": " +
-                        _cfuAcquired.toString()),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    Text(AppLocalizations.of(context).translate("expected_grade") +
-                        ": " +
-                        _expectedGrade.toString()),
-                    SizedBox(
-                      height: 16,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Theme.of(context).primaryColor, // background
-                      ),
-                      onPressed: () {
-                        Navigator.pushNamed(context, ShowExamsPage.routeName);
-                      },
-                      child: Text(
-                        AppLocalizations.of(context).translate("marks"),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                  ],
-            ));
+              return DegreeNameForm(updateAfterChangeDegreeName);
+            return Column(
+              children: <Widget>[
+                rowName(),
+                avgCfuRow(),
+                box(
+                    AppLocalizations.of(context)
+                        .translate("expected_grade")
+                        .toUpperCase(),
+                    _expectedGrade.toString(),
+                    35, 30, 44),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    primary: DesignData.secondaryColor, // background
+                  ),
+                  onPressed: () {
+                    Navigator.pushNamed(context, ShowExamsPage.routeName);
+                  },
+                  child: Text(
+                    AppLocalizations.of(context).translate("marks"),
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ],
+            );
           },
         ),
       ),
@@ -167,6 +153,7 @@ class _HomePageState extends State<HomePage> {
   Widget rowName() {
     return Expanded(
       child: Row(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           degreeNameText(_degreeName.toUpperCase()),
           modifyNameButton(),
@@ -202,6 +189,60 @@ class _HomePageState extends State<HomePage> {
         overflow: TextOverflow.ellipsis,
       ),
       flex: 9,
+    );
+  }
+
+  Widget avgCfuRow() {
+    return Expanded(
+      child: Row(
+        children: [
+          box(AppLocalizations.of(context).translate("w_avg").toUpperCase(),
+              _wAvg.toStringAsFixed(2), 1, 22, 34),
+          box(AppLocalizations.of(context).translate("acquired_cfu").toUpperCase(),
+              _cfuAcquired.toString(), 1, 22, 34),
+        ],
+      ),
+      flex: 35,
+    );
+  }
+
+  Widget box(String upperText, String lowerText, int flex, double upperFontSize, double lowerFontSize) {
+    return Expanded(
+      child: Column(
+        children: [
+          Expanded(
+            child: Row(),
+            flex: 1,
+          ),
+          Expanded(
+            child: AutoSizeText(
+              upperText,
+              style: TextStyle(fontSize: upperFontSize),
+              minFontSize: 14,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center
+            ),
+            flex: 2,
+          ),
+          Expanded(
+            child: AutoSizeText(
+              lowerText,
+              style: TextStyle(fontSize: 34),
+              minFontSize: 20,
+              maxLines: 1,
+              overflow: TextOverflow.ellipsis,
+              textAlign: TextAlign.center
+            ),
+            flex: 4,
+          ),
+          Expanded(
+            child: Row(),
+            flex: 1,
+          ),
+        ],
+      ),
+      flex: flex,
     );
   }
 }

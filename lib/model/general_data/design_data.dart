@@ -7,8 +7,10 @@ class DesignData {
   /// Setting for light theme.
   static final lightTheme = ThemeData(
     primarySwatch: Colors.blue,
-    fontFamily: "Arial"
+    fontFamily: "Arial",
   );
+
+  static final secondaryColor = Colors.deepOrangeAccent;
 
   /// Setting for dark theme.
   static final darkTheme = ThemeData(
