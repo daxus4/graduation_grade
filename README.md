@@ -8,7 +8,7 @@ During the last semester of my bachelor's degree, I started worrying about my gr
 
 I started to make some predictions about how the last exams could go and how the different grades could affect my grade average. By using only the calculator, calculating my GPA was really boring because I had to recalculate the grade average with all the marks each time. Thus, since I wanted to learn how to develop a
 mobile application, I came up with the idea to create an **application** that can be useful to all 
-**university students** that wants to make predictions about their future graduation grade.
+**university students** that want to make predictions about their future graduation grade.
 
 Graduation Grade allows you to **calculate your graduation grade** by entering your marks and
 modifying them, with a very simple and quick interface.
