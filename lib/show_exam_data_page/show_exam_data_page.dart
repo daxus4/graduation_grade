@@ -83,78 +83,91 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
     return Column(
       children: <Widget>[
         Expanded(
-          child: Column(
-            children: <Widget>[
-              examNameText(exam.getName().toUpperCase()),
-              SizedBox(height: 10,),
-              examCfuText(exam.getCfu()),
-              SizedBox(height: 10,),
-              exam.isTaken() ?
-              rowMark(exam.getMark(), exam.getLaude(), true) :
-              rowMark(0, false, false),
-            ],
-            crossAxisAlignment: CrossAxisAlignment.start,
-          ),
-          flex:8
-        ),
-        Expanded(child: Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: <Widget>[
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: DesignData.secondaryColor, // background
-            ),
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (_) => AlertDialog(
-                  title: Text(AppLocalizations.of(context).translate("delete")),
-                  content: Text(
-                      AppLocalizations.of(context).translate("delete_quest")),
-                  actions: <Widget>[
-                    TextButton(
-                      child: Text(AppLocalizations.of(context).translate("no")),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                    TextButton(
-                      child:
-                      Text(AppLocalizations.of(context).translate("yes")),
-                      onPressed: () {
-                        _observableFromController.notify(
-                            DeleteExamMessage(exam, updateAfterDeleteExam));
-                      },
-                    ),
-                  ],
+            child: Column(
+              children: <Widget>[
+                examNameText(exam.getName().toUpperCase()),
+                SizedBox(
+                  height: 10,
                 ),
-              );
-            },
-            child: Text(
-              AppLocalizations.of(context).translate("delete"),
-              style: TextStyle(color: Colors.white),
+                examCfuText(exam.getCfu()),
+                SizedBox(
+                  height: 10,
+                ),
+                exam.isTaken()
+                    ? rowMark(exam.getMark(), exam.getLaude(), true)
+                    : rowMark(0, false, false),
+              ],
+              crossAxisAlignment: CrossAxisAlignment.start,
             ),
-          ),
-              SizedBox(width: 20,),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: DesignData.secondaryColor, // background
-            ),
-            onPressed: () async {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) => UpdateExamDialog(exam,
-                      _observableFromController.notify, updateAfterTakeExam));
-            },
-            child: Text(
-              AppLocalizations.of(context).translate("take"),
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-              SizedBox(width: 4,),
-        ]),
-        flex: 2),
+            flex: 8),
+        Expanded(
+            child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: DesignData.secondaryColor, // background
+                    ),
+                    onPressed: () {
+                      showDialog(
+                        context: context,
+                        builder: (_) => AlertDialog(
+                          title: Text(
+                              AppLocalizations.of(context).translate("delete")),
+                          content: Text(AppLocalizations.of(context)
+                              .translate("delete_quest")),
+                          actions: <Widget>[
+                            TextButton(
+                              child: Text(
+                                  AppLocalizations.of(context).translate("no")),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                            TextButton(
+                              child: Text(AppLocalizations.of(context)
+                                  .translate("yes")),
+                              onPressed: () {
+                                _observableFromController.notify(
+                                    DeleteExamMessage(
+                                        exam, updateAfterDeleteExam));
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).translate("delete"),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 20,
+                  ),
+                  ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      primary: DesignData.secondaryColor, // background
+                    ),
+                    onPressed: () async {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) => UpdateExamDialog(
+                              exam,
+                              _observableFromController.notify,
+                              updateAfterTakeExam));
+                    },
+                    child: Text(
+                      AppLocalizations.of(context).translate("take"),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  SizedBox(
+                    width: 4,
+                  ),
+                ]),
+            flex: 2),
       ],
     );
   }
@@ -171,58 +184,63 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
 
   Widget examNameText(String degreeName) {
     return AutoSizeText(
-        degreeName,
-        style: TextStyle(fontSize: 40),
-        minFontSize: 25,
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
+      degreeName,
+      style: TextStyle(fontSize: 40),
+      minFontSize: 25,
+      maxLines: 3,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
   Widget examCfuText(int cfu) {
     return AutoSizeText(
-          cfu.toString() + " " +
-              AppLocalizations.of(context).translate("cfu").toUpperCase(),
-          style: TextStyle(fontSize: 30),
-          minFontSize: 18,
-          maxLines: 1,
-          overflow: TextOverflow.ellipsis,
+      cfu.toString() +
+          " " +
+          AppLocalizations.of(context).translate("cfu").toUpperCase(),
+      style: TextStyle(fontSize: 30),
+      minFontSize: 18,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
     );
   }
 
-  Widget rowMark(int mark, bool laude, bool isTaken){
+  Widget rowMark(int mark, bool laude, bool isTaken) {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: isTaken ? [
-        Expanded(
-          child: AutoSizeText(
-            AppLocalizations.of(context).translate("mark").toUpperCase() + ":",
-            style: TextStyle(fontSize: 30),
-            minFontSize: 18,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-        Expanded(
-          child: AutoSizeText(
-            laude ? mark.toString() + "L" : mark.toString(),
-            style: TextStyle(fontSize: 30),
-            minFontSize: 18,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ] : [
-        Expanded(
-          child: AutoSizeText(
-            AppLocalizations.of(context).translate("mark").toUpperCase() + ":",
-            style: TextStyle(fontSize: 30, color: Colors.grey),
-            minFontSize: 18,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
-          ),
-        ),
-      ],
+      children: isTaken
+          ? [
+              Expanded(
+                child: AutoSizeText(
+                  AppLocalizations.of(context).translate("mark").toUpperCase() +
+                      ":",
+                  style: TextStyle(fontSize: 30),
+                  minFontSize: 18,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+              Expanded(
+                child: AutoSizeText(
+                  laude ? mark.toString() + "L" : mark.toString(),
+                  style: TextStyle(fontSize: 30),
+                  minFontSize: 18,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ]
+          : [
+              Expanded(
+                child: AutoSizeText(
+                  AppLocalizations.of(context).translate("mark").toUpperCase() +
+                      ":",
+                  style: TextStyle(fontSize: 30, color: Colors.grey),
+                  minFontSize: 18,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
     );
   }
 }
