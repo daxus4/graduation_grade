@@ -1,7 +1,10 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:graduation_grade/app_localizations/app_localizations.dart';
 import 'package:graduation_grade/model/exam.dart';
+import 'package:graduation_grade/model/general_data/design_data.dart';
+import 'package:graduation_grade/model/general_data/global_data.dart';
 import 'package:graduation_grade/pattern/command/message/exam_message/delete_exam_message.dart';
 import 'package:graduation_grade/pattern/command/message/message.dart';
 import 'package:graduation_grade/pattern/cubit/exams_cubit.dart';
@@ -43,7 +46,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
     Exam exam = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: AppBar(
-        title: Text(exam.getName()),
+        title: Text(GlobalData.appName),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -79,52 +82,28 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
   Widget page(Exam exam, BuildContext context) {
     return Column(
       children: <Widget>[
-        Text(exam.getName()),
-        SizedBox(
-          height: 16,
-        ),
-        Text(AppLocalizations.of(context).translate("cfu") +
-            ": " +
-            exam.getCfu().toString()),
-        SizedBox(
-          height: 16,
-        ),
-        Text(exam.isTaken().toString()),
-        SizedBox(
-          height: 16,
-        ),
-        Text(
-          exam.isTaken()
-              ? AppLocalizations.of(context).translate("mark") +
-                  ": " +
-                  exam.getMark().toString()
-              : AppLocalizations.of(context).translate('no_mark'),
-          style: TextStyle(
-            color: exam.isTaken() ? Colors.black : Colors.grey,
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              examNameText(exam.getName().toUpperCase()),
+              SizedBox(height: 10,),
+              examCfuText(exam.getCfu()),
+              SizedBox(height: 10,),
+              exam.isTaken() ?
+              rowMark(exam.getMark(), exam.getLaude(), true) :
+              rowMark(0, false, false),
+            ],
+            crossAxisAlignment: CrossAxisAlignment.start,
           ),
+          flex:8
         ),
-        SizedBox(
-          height: 16,
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: <Widget>[
-            Text(
-              AppLocalizations.of(context).translate('laude') + ":",
-              style: TextStyle(
-                color: exam.isTaken() ? Colors.black : Colors.grey,
-              ),
-            ),
-            Checkbox(
-              value: exam.isTaken() ? exam.getLaude() : false,
-              onChanged: (bool value) {},
-            ),
-          ],
-        ),
-        Row(children: <Widget>[
+        Expanded(child: Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: <Widget>[
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor, // background
+              primary: DesignData.secondaryColor, // background
             ),
             onPressed: () {
               showDialog(
@@ -142,7 +121,7 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
                     ),
                     TextButton(
                       child:
-                          Text(AppLocalizations.of(context).translate("yes")),
+                      Text(AppLocalizations.of(context).translate("yes")),
                       onPressed: () {
                         _observableFromController.notify(
                             DeleteExamMessage(exam, updateAfterDeleteExam));
@@ -157,17 +136,12 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
               style: TextStyle(color: Colors.white),
             ),
           ),
+              SizedBox(width: 20,),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              primary: Theme.of(context).primaryColor, // background
+              primary: DesignData.secondaryColor, // background
             ),
             onPressed: () async {
-              /*if (exam.isTaken()) {
-                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(AppLocalizations.of(context)
-                        .translate("no_insert_exam"))));
-                return;
-              }*/
               showDialog(
                   context: context,
                   builder: (BuildContext context) => UpdateExamDialog(exam,
@@ -178,7 +152,76 @@ class _ShowExamDataPageState extends State<ShowExamDataPage> {
               style: TextStyle(color: Colors.white),
             ),
           ),
+              SizedBox(width: 4,),
         ]),
+        flex: 2),
+      ],
+    );
+  }
+
+  Widget rowNameCfu(Exam exam) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: <Widget>[
+        examNameText(exam.getName().toUpperCase()),
+        examCfuText(exam.getCfu()),
+      ],
+    );
+  }
+
+  Widget examNameText(String degreeName) {
+    return AutoSizeText(
+        degreeName,
+        style: TextStyle(fontSize: 40),
+        minFontSize: 25,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget examCfuText(int cfu) {
+    return AutoSizeText(
+          cfu.toString() + " " +
+              AppLocalizations.of(context).translate("cfu").toUpperCase(),
+          style: TextStyle(fontSize: 30),
+          minFontSize: 18,
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
+    );
+  }
+
+  Widget rowMark(int mark, bool laude, bool isTaken){
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: isTaken ? [
+        Expanded(
+          child: AutoSizeText(
+            AppLocalizations.of(context).translate("mark").toUpperCase() + ":",
+            style: TextStyle(fontSize: 30),
+            minFontSize: 18,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+        Expanded(
+          child: AutoSizeText(
+            laude ? mark.toString() + "L" : mark.toString(),
+            style: TextStyle(fontSize: 30),
+            minFontSize: 18,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
+      ] : [
+        Expanded(
+          child: AutoSizeText(
+            AppLocalizations.of(context).translate("mark").toUpperCase() + ":",
+            style: TextStyle(fontSize: 30, color: Colors.grey),
+            minFontSize: 18,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          ),
+        ),
       ],
     );
   }
