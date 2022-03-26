@@ -1,12 +1,12 @@
 # Graduation Grade
 
-Application that help you make **predictions about your graduation grade**.
+Application that help you make **predictions about your graduation grade** (using italian marks).
 
 ## Project goal
 
-During the last semester of my bachelor's degree, I started worrying about my grade average, because I wanted to finish my degree with a good GPA.
+During the last semester of my bachelor's degree, I started worrying about my grade average, because I wanted to finish my degree with a good graduation grade.
 
-I started to make some predictions about how the last exams could go and how the different grades could affect my grade average. By using only the calculator, calculating my GPA was really boring because I had to recalculate the grade average with all the marks each time. Thus, since I wanted to learn how to develop a
+I started to make some predictions about how the last exams could go and how the different grades could affect my grade average. By using only the calculator, calculating my graduation grade was really boring because I had to recalculate the grade average with all the marks each time. Thus, since I wanted to learn how to develop a
 mobile application, I came up with the idea to create an **application** that can be useful to all 
 **university students** that want to make predictions about their future graduation grade.
 
