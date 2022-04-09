@@ -1,0 +1,4 @@
+The parts developed by the author of this application does not store any data other than the exams information added by the user.
+These information are stored physically in the user device and the application does not have the permission to use internet, so it cannot share these data.
+
+The author does not take responsibility for data collected by code not written by him.
