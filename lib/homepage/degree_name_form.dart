@@ -55,6 +55,8 @@ class _DegreeNameFormState extends State<DegreeNameForm> {
       ),
       textInputAction: TextInputAction.done,
       validator: (name) {
+        if(name.endsWith(' '))
+          name = name.substring(0, name.length - 1);
         Pattern pattern = r'^[A-Za-z0-9]+(?:[ _-][A-Za-z0-9]+)*$';
         RegExp regex = new RegExp(pattern);
         return !regex.hasMatch(name)
